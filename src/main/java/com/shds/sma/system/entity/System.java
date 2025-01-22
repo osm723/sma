@@ -1,5 +1,6 @@
-package com.shds.sma.common.entity;
+package com.shds.sma.system.entity;
 
+import com.shds.sma.common.entity.BaseEntity;
 import com.shds.sma.member.entity.Member;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;

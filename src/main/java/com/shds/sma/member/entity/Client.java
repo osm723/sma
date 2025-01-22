@@ -13,11 +13,12 @@ public class Client extends BaseEntity {
     @Column(name = "CLIENT_ID")
     private Long id;
 
-    @Column(length = 4, columnDefinition = "VARCHAR(4) COMMENT '시스템코드'")
+    @Column(length = 4, columnDefinition = "VARCHAR(4) COMMENT '고객사코드'", nullable = false)
     @NotBlank
     private String clientCode;
 
-    @Column(length = 60, columnDefinition = "VARCHAR(40) COMMENT '시스템명'")
+    @Column(length = 60, columnDefinition = "VARCHAR(60) COMMENT '고객사명'", nullable = false)
+    @NotBlank
     private String clientName;
 
 }

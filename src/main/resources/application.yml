@@ -1,4 +1,12 @@
 spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    check-template-location: true
+  mvc:
+    view:
+      prefix: /name
+  #      suffix: .html
   h2:
     console:
       enabled: true
@@ -13,8 +21,8 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
-      #ddl-auto: update
+      #ddl-auto: create
+      ddl-auto: update
       #ddl-auto: validate
     properties:
       hibernate:
@@ -26,3 +34,10 @@ spring:
         default-page-size: 20
 logging.level:
   org.hibernate.SQL: debug
+
+  server:
+    error:
+      path: /error
+
+
+

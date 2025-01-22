@@ -4,7 +4,10 @@ import com.shds.sma.manage.types.ApprovalStatus;
 import com.shds.sma.manage.types.Degree;
 import com.shds.sma.member.entity.Member;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
 
@@ -17,25 +20,32 @@ public class Approval {
     @Column(name = "APPROVAL_ID")
     private Long id;
 
-    @Column(length = 40, columnDefinition = "VARCHAR(40) COMMENT '결재번호'")
+    @Column(length = 40, columnDefinition = "VARCHAR(40) COMMENT '결재번호'", nullable = false)
+    @NotBlank
     private String approvalNo;
 
-    @Column(length = 40, columnDefinition = "INT COMMENT '기안자Id'")
+    @Column(columnDefinition = "BIGINT COMMENT '기안자Id'", nullable = false)
+    @NotNull
     private Long drafterId;
 
-    @Column(length = 10, columnDefinition = "VARCHAR(10) COMMENT '결재차수'")
+    @Column(length = 20, columnDefinition = "VARCHAR(20) COMMENT '결재차수'", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @NotNull
     private Degree degree;
 
-    @Column(length = 40, columnDefinition = "INT COMMENT '결재자Id'")
+    @Column(columnDefinition = "BIGINT COMMENT '결재자Id'", nullable = false)
+    @NotNull
     private Long approverId;
 
-    @Column(length = 12, columnDefinition = "VARCHAR(12) COMMENT '결재상테'")
+    @Column(length = 20, columnDefinition = "VARCHAR(20) COMMENT '결재상태'", nullable = false)
+    @NotNull
+    @Enumerated(EnumType.STRING)
     private ApprovalStatus status;
 
-    @Column(length = 14, columnDefinition = "VARCHAR(12) COMMENT '승인일자'")
+    @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime approveDate;
 
-    @Column(length = 14, columnDefinition = "VARCHAR(12) COMMENT '취소일자'")
+    @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime cancelDate;
 
 }

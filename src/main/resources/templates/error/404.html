@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container" style="max-width: 600px">
+    <div>
+        <h4>오류 페이지</h4>
+    </div>
+    <div>
+        <p th:text="|에러코드: ${status}|"/>
+    </div>
+    <div>
+        <p>존재하지 않는 페이지 경로 입니다.</p>
+        <p>다시 입력해주시기 바랍니다.</p>
+    </div>
+</div>
+</body>
+</html>
