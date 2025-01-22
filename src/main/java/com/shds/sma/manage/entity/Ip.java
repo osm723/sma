@@ -1,10 +1,12 @@
 package com.shds.sma.manage.entity;
 
 import com.shds.sma.common.entity.BaseEntity;
-import com.shds.sma.common.entity.System;
+import com.shds.sma.system.entity.System;
 import com.shds.sma.manage.types.IpType;
 import com.shds.sma.member.entity.Member;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
@@ -17,8 +19,14 @@ public class Ip extends BaseEntity {
     @Column(name = "IP_ID")
     private Long id;
 
+    @Column(length = 20, columnDefinition = "VARCHAR(20) COMMENT 'IP 타입'", nullable = false)
+    @Size(max = 20)
+    @NotBlank
     private IpType ipType;
 
+    @Column(length = 200, columnDefinition = "VARCHAR(200) COMMENT 'IP 주소'", nullable = false)
+    @Size(max = 200)
+    @NotBlank
     private String ipAddr;
 
     @OneToOne
@@ -30,15 +38,17 @@ public class Ip extends BaseEntity {
     private System system;
 
     @Column(length = 400, columnDefinition = "VARCHAR(400) COMMENT '내용'")
+    @Size(max = 400)
     private String content;
 
     @Column(length = 400, columnDefinition = "VARCHAR(400) COMMENT '사이트주소'")
+    @Size(max = 400)
     private String siteLink;
 
-    @Column(length = 14, columnDefinition = "VARCHAR(12) COMMENT '시작일자'")
+    @Column(columnDefinition = "TIMESTAMP")
     private LocalDate startDate;
 
-    @Column(length = 14, columnDefinition = "VARCHAR(12) COMMENT '종료일자'")
+    @Column(columnDefinition = "TIMESTAMP")
     private LocalDate endDate;
 
     @OneToOne

@@ -3,10 +3,9 @@ package com.shds.sma.common.entity;
 import com.shds.sma.common.entity.types.AlarmSendType;
 import com.shds.sma.common.entity.types.PreAlarmTarget;
 import com.shds.sma.common.entity.types.Sender;
+import com.shds.sma.system.entity.System;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDateTime;
 
@@ -19,23 +18,27 @@ public class Alarm {
     @Column(name = "ALARM_ID")
     private Long id;
 
-    @Column(length = 10, columnDefinition = "VARCHAR(10) COMMENT '알림 전달 타입'")
-    @NotBlank
+    @Column(length = 20, columnDefinition = "VARCHAR(20) COMMENT '알림 전달 타입'", nullable = false)
+    @NotNull
+    @Enumerated(EnumType.STRING)
     private AlarmSendType alarmSendType;
 
-    @Column(length = 10, columnDefinition = "VARCHAR(10) COMMENT '알림 대상 (IP,인증서)'")
+    @Column(length = 20, columnDefinition = "VARCHAR(20) COMMENT '알림 대상 (IP,인증서)'", nullable = false)
     @NotBlank
+    @Enumerated(EnumType.STRING)
     private PreAlarmTarget preAlarmTarget;
 
     @OneToOne
     @JoinColumn(name = "SYSTEM_ID")
     private System system;
 
-    @Column(length = 10, columnDefinition = "VARCHAR(10) COMMENT '송신자'")
-    @NotBlank
+    @Column(length = 20, columnDefinition = "VARCHAR(20) COMMENT '송신자'", nullable = false)
+    @NotNull
+    @Enumerated(EnumType.STRING)
     private Sender sender;
 
-    @Column(length = 100, columnDefinition = "VARCHAR(100) COMMENT '알림명'")
+    @Column(length = 100, columnDefinition = "VARCHAR(100) COMMENT '알림명'", nullable = false)
+    @Size(max = 100)
     @NotBlank
     private String subject;
 
@@ -47,11 +50,12 @@ public class Alarm {
     @Max(99)
     private Integer preAlarm;
 
-    @Column(length = 14, columnDefinition = "VARCHAR(14) COMMENT '발송일자'")
-    @NotBlank
+    @Column(columnDefinition = "TIMESTAMP", nullable = false)
+    @NotNull
     private LocalDateTime sendDate;
 
-    @Column(length = 1, columnDefinition = "VARCHAR(14) COMMENT '발송 성공유무'")
+    @Column(length = 1, columnDefinition = "VARCHAR(1) COMMENT '발송 성공유무'")
+    @Size(max = 1)
     private String isSuccess;
 
 }

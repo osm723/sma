@@ -1,4 +1,5 @@
-package com.shds.sma.common.entity.types;
+package com.shds.sma.admin.types;
+
 
 public enum NoticeType {
     NORMAL, IMPORTANT, URGENCY

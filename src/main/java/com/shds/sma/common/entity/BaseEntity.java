@@ -2,34 +2,48 @@ package com.shds.sma.common.entity;
 
 
 import jakarta.persistence.Column;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
 @MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
+@Getter
 public class BaseEntity {
 
-    @Column(length = 14, columnDefinition = "VARCHAR(14) COMMENT '등록일시'")
+    @Column(columnDefinition = "TIMESTAMP", nullable = false)
+    @CreatedDate
     private LocalDateTime regDate;
 
-    @Column(length = 40, columnDefinition = "VARCHAR(40) COMMENT '등록자'")
-    private String regMemberId;
+    @Column(columnDefinition = "BIGINT COMMENT '등록자'")
+    private Long regMemberId;
 
-    @Column(length = 14, columnDefinition = "VARCHAR(14) COMMENT '수정일시'")
+    @Column(columnDefinition = "TIMESTAMP", nullable = false)
+    @LastModifiedDate
     private LocalDateTime modDate;
 
-    @Column(length = 40, columnDefinition = "VARCHAR(40) COMMENT '수정자'")
-    private String modMemberId;
+    @Column(columnDefinition = "BIGINT COMMENT '수정자'")
+    private Long modMemberId;
 
-    @Column(length = 1, columnDefinition = "VARCHAR(1) COMMENT '사용여부'")
-    private String validity;
+    @Column(length = 1, columnDefinition = "VARCHAR(1) COMMENT '사용여부'", nullable = false)
+    @NotBlank
+    private String validity = "Y";
 
 
     /**
      * 삭제 처리 (미사용 처리)
      * validity = N
      */
-    public void baseDelete() {
+    public void setValidityN() {
         this.validity = "N";
     }
 
@@ -37,7 +51,7 @@ public class BaseEntity {
      * 복구 처리 (사용 처리)
      * validity = Y
      */
-    public void baseUse() {
+    public void setValidityY() {
         this.validity = "Y";
     }
 

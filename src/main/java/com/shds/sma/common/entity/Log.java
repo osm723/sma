@@ -3,6 +3,7 @@ package com.shds.sma.common.entity;
 import com.shds.sma.common.entity.types.LogType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
@@ -16,18 +17,20 @@ public class Log {
     @Column(name = "LOG_ID")
     private Long id;
 
-    @Column(length = 10, columnDefinition = "VARCHAR(10) COMMENT '로그타입'")
-    @NotBlank
+    @Column(length = 20, columnDefinition = "VARCHAR(20) COMMENT '로그타입'", nullable = false)
+    @NotNull
+    @Enumerated(EnumType.STRING)
     private LogType logType;
 
     @Column(length = 1000, columnDefinition = "VARCHAR(1000) COMMENT '로그내용'")
+    @Size(max = 1000)
     private String content;
 
-    @Column(length = 40, columnDefinition = "VARCHAR(40) COMMENT 'memberId'")
-    private String memberId;
+    @Column(columnDefinition = "BIGINT COMMENT 'memberId'")
+    private Long memberId;
 
-    @Column(length = 14, columnDefinition = "VARCHAR(14) COMMENT '등록일시'")
-    @NotBlank
+    @Column(columnDefinition = "TIMESTAMP", nullable = false)
+    @NotNull
     private LocalDateTime logDate;
 
 

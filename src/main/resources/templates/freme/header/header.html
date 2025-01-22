@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="/assets/dist/css/bootstrap.css">
+<script src="/assets/dist/js/color-modes.js"></script>
+<link href="/assets/dist/css/headers.css" rel="stylesheet">
+<link href="/assets/dist/css/bootstrap.css" rel="stylesheet">
+<script src="/assets/dist/js/bootstrap.bundle.min.js"></script>
+<link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="container" th:fragment="copy">
+    <header class="d-flex justify-content-center py-3">
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a th:href="@{/}" class="nav-link">Home</a></li>
+            <li class="nav-item"><a th:href="@{/stats/main}" class="nav-link">Manage</a></li>
+            <li class="nav-item"><a th:href="@{/system/main}" class="nav-link">Systems</a></li>
+            <li class="nav-item"><a th:href="@{/admin/main}" class="nav-link">Admin</a></li>
+        </ul>
+        <!--        <ul class="nav nav-pills">-->
+        <!--            <li class="nav-item"><a th:href="@{/static}" class="nav-link"-->
+        <!--                                    th:classappend="${currentUrl == '/'} ? 'active'">Home</a></li>-->
+        <!--            <li class="nav-item"><a th:href="@{/stats/main}" class="nav-link"-->
+        <!--                                    th:classappend="${currentUrl.contains('/stats')} ? 'active'">Stats</a></li>-->
+        <!--            <li class="nav-item"><a th:href="@{/generation/main}" class="nav-link"-->
+        <!--                                    th:classappend="${currentUrl.contains('/generation')} ? 'active'">Generation</a></li>-->
+        <!--            <li class="nav-item"><a th:href="@{/save/main}" class="nav-link"-->
+        <!--                                    th:classappend="${currentUrl.contains('/save')} ? 'active'">Favorite</a></li>-->
+        <!--        </ul>-->
+    </header>
+</div>

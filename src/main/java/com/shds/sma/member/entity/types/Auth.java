@@ -1,6 +1,6 @@
-package com.shds.sma.common.entity.types;
+package com.shds.sma.member.entity.types;
 
-public enum SystemAuth {
+public enum Auth {
     NORMAL("일반"),
     MANAGER("담당자"),
     HEADER("부서장"),
@@ -9,7 +9,7 @@ public enum SystemAuth {
 
     private final String systemAuth;
 
-    SystemAuth(String systemAuth) {
+    Auth(String systemAuth) {
         this.systemAuth = systemAuth;
     }
 
