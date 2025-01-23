@@ -1,12 +1,13 @@
 package com.shds.sma.admin.service;
 
+import com.shds.sma.admin.dto.NoticeCondRequestDto;
 import com.shds.sma.admin.dto.NoticeModRequestDto;
-import com.shds.sma.admin.dto.NoticeRemoveRequestDto;
 import com.shds.sma.admin.dto.NoticeResponseDto;
 import com.shds.sma.admin.dto.NoticeSaveRequestDto;
 import com.shds.sma.admin.entity.Notice;
 import com.shds.sma.admin.repositroy.NoticeRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class AdminServiceImpl implements AdminService {
 
     private final NoticeRepository noticeRepository;
@@ -29,7 +31,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void findNoticeCond() {
+    public void findNoticeCond(NoticeCondRequestDto noticeCondRequestDto, Pageable pageable) {
 
     }
 
@@ -46,13 +48,20 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void noticeModified(NoticeModRequestDto noticeModRequestDto) {
-        Notice findNotice = noticeRepository.findById(noticeModRequestDto.getId()).get();
+        log.info("noticeRemoveRequestDto={}", noticeModRequestDto.getNoticeId());
+        Notice findNotice = noticeRepository.findById(noticeModRequestDto.getNoticeId()).get();
         findNotice.noticeModified(noticeModRequestDto);
     }
 
     @Override
-    public void noticeRemove(NoticeRemoveRequestDto noticeRemoveRequestDto) {
-        Notice removeNotice = modelMapper.map(noticeRemoveRequestDto, Notice.class);
-        removeNotice.setValidityN();
+    public void noticeRemove(Long noticeId) {
+        Notice findNotice = noticeRepository.findById(noticeId).get();
+        findNotice.setValidityN();
+    }
+
+    @Override
+    public void noticeUse(Long noticeId) {
+        Notice findNotice = noticeRepository.findById(noticeId).get();
+        findNotice.setValidityY();
     }
 }

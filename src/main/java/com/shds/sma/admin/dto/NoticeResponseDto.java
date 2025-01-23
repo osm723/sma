@@ -4,6 +4,7 @@ import com.shds.sma.admin.entity.Notice;
 import com.shds.sma.admin.types.NoticeType;
 import com.shds.sma.common.entity.BaseEntity;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,10 +19,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class NoticeResponseDto {
 
-    @NotBlank
+    @NotNull
     private Long id;
 
-    @NotBlank
+    @NotNull
     private NoticeType noticeType;
 
     @NotBlank
@@ -29,19 +30,19 @@ public class NoticeResponseDto {
 
     private String content;
 
-    @NotBlank
+    @NotNull
     private LocalDate startDate;
 
-    @NotBlank
+    @NotNull
     private LocalDate endDate;
 
-    @NotBlank
+    @NotNull
     @DateTimeFormat(pattern = "YYYY-MM-dd HH:mm:ss")
     private LocalDateTime modDate;
 
     private Long modMemberId;
 
-    @NotBlank
+    @NotNull
     private String validity;
 
     public NoticeResponseDto(Notice notice) {

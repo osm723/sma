@@ -1,9 +1,6 @@
 package com.shds.sma.admin.service;
 
-import com.shds.sma.admin.dto.NoticeModRequestDto;
-import com.shds.sma.admin.dto.NoticeRemoveRequestDto;
-import com.shds.sma.admin.dto.NoticeResponseDto;
-import com.shds.sma.admin.dto.NoticeSaveRequestDto;
+import com.shds.sma.admin.dto.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -11,7 +8,7 @@ public interface AdminService {
 
     Page<NoticeResponseDto> findNoticeAll(Pageable pageable);
 
-    void findNoticeCond();
+    void findNoticeCond(NoticeCondRequestDto noticeCondRequestDto, Pageable pageable);
 
     NoticeResponseDto findNoticeById(Long noticeId);
 
@@ -19,7 +16,7 @@ public interface AdminService {
 
     void noticeModified(NoticeModRequestDto noticeModRequestDto);
 
-    void noticeRemove(NoticeRemoveRequestDto noticeRemoveRequestDto);
+    void noticeRemove(Long noticeId);
 
-
+    void noticeUse(Long noticeId);
 }

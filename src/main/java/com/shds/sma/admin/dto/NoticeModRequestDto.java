@@ -2,20 +2,20 @@ package com.shds.sma.admin.dto;
 
 import com.shds.sma.admin.types.NoticeType;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
 public class NoticeModRequestDto {
 
-    @NotBlank
-    private Long id;
+    @NotNull
+    private Long noticeId;
 
-    @NotBlank
+    @NotNull
     private NoticeType noticeType;
 
     @NotBlank
@@ -23,10 +23,10 @@ public class NoticeModRequestDto {
 
     private String content;
 
-    @NotBlank
+    @NotNull
     private LocalDate startDate;
 
-    @NotBlank
+    @NotNull
     private LocalDate endDate;
 
 }
