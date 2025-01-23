@@ -43,84 +43,73 @@
 
         <div class="d-flex justify-content-center align-items-center vh-40">
             <label>
-                <a th:href="@{/admin/notice/save}" methods="get" class="nav-link">공지등록</a>
-            </label>
-        </div>
-
-        <div class="d-flex justify-content-center align-items-center vh-40">
-            <label>
                 <a th:href="@{/admin/main}" methods="get" class="nav-link">뒤로가기</a>
             </label>
         </div>
 
         <div class="row g-5">
             <div class="col-md-7 col-lg-8">
-                <h4 class="mb-3">공지 조회 조건</h4>
-<!--                <form class="needs-validation" novalidate action="#" id="statsForm" th:action="@{/stats/statsNames}" method="get">-->
-<!--                    <input type="hidden" id="sortField">-->
-<!--                    <input type="hidden" id="isAscending">-->
-<!--                    <div class="row g-3">-->
+                <h4 class="mb-3">공지 조회</h4>
+                <form class="needs-validation" novalidate action="#" id="noticeForm" th:action="@{/admin/notice/cond}" method="get">
+                    <input type="hidden" id="sortField">
+                    <input type="hidden" id="isAscending">
+                    <div class="row g-3">
 
-<!--                        &lt;!&ndash; 연도 조건 &ndash;&gt;-->
-<!--                        <div class="col-sm-6">-->
-<!--                            <label class="form-label">연도 : </label>-->
-<!--                            <label>-->
-<!--                                <select id="startYear" name="startYear" ONCHANGE="formSubmit()">-->
-<!--                                    <option th:each="year : ${years}"-->
-<!--                                            th:value="${year}"-->
-<!--                                            th:text="${year}"-->
-<!--                                            th:selected="${statsName.startYear == '' || statsName.startYear == null ? '2024' : year == statsName.startYear}">-->
-<!--                                    </option>-->
-<!--                                </select>-->
-<!--                            </label>-->
-<!--                            <label>-->
-<!--                                <b>부터</b>-->
-<!--                            </label>-->
-<!--                            <label>-->
-<!--                                <select id="endYear" name="endYear" ONCHANGE="formSubmit()">-->
-<!--                                    <option th:each="year : ${years}"-->
-<!--                                            th:value="${year}"-->
-<!--                                            th:text="${year}"-->
-<!--                                            th:selected="${statsName.endYear == '' || statsName.endYear == null ? 2024 : year == statsName.endYear}">-->
-<!--                                    </option>-->
-<!--                                </select>-->
-<!--                            </label>-->
-<!--                            <label>-->
-<!--                                <b>까지</b>-->
-<!--                            </label>-->
-<!--                        </div>-->
+                        <!-- 일자 조건 -->
+                        <div class="col-sm-6">
+                            <label class="form-label">일자 : </label>
+                            <label>
+                                <input type="date" name="startDate" th:value="20250123"/>
+                            </label>
+                            <label>
+                                <b>부터</b>
+                            </label>
+                            <label>
+                                <input type="date" name="endDate" th:value="20250123"/>
+                            </label>
+                            <label>
+                                <b>까지</b>
+                            </label>
+                        </div>
 
-<!--                        &lt;!&ndash; 성별 조건 &ndash;&gt;-->
-<!--                        <div class="col-12">-->
-<!--                            <label class="form-label">성별 : </label>-->
-<!--                            <label>-->
-<!--                                <input type="radio" name="gender" value="" ONCHANGE="formSubmit()"-->
-<!--                                       th:checked="${statsName.gender == '' || statsName.gender == null}"> 전체-->
-<!--                            </label>-->
-<!--                            <label>-->
-<!--                                <input type="radio" name="gender" value="남" ONCHANGE="formSubmit()"-->
-<!--                                       th:checked="${statsName.gender == '남'}"> 남-->
-<!--                            </label>-->
-<!--                            <label>-->
-<!--                                <input type="radio" name="gender" value="여" ONCHANGE="formSubmit()"-->
-<!--                                       th:checked="${statsName.gender == '여'}"> 여-->
-<!--                            </label>-->
-<!--                        </div>-->
+                        <!-- 공지종류 조건 -->
+                        <div>
+                            <label class="form-label">공지종류 : </label>
+                            <label>
+                                <input type="checkbox" name="noticeType" th:value="NORMAL"/> 일반
+                                <input type="checkbox" name="noticeType" th:value="IMPORTANT"/> 중요
+                                <input type="checkbox" name="noticeType" th:value="URGENT"/> 긴급
+                            </label>
+                        </div>
 
-<!--                        &lt;!&ndash; 이름 조건 &ndash;&gt;-->
-<!--                        <div class="col-12">-->
-<!--                            <label class="form-label" th:name="이름">이름 : </label>-->
-<!--                            <label>-->
-<!--                                <input type="text" name="name" th:value="${statsName.name}"/>-->
-<!--                            </label>-->
-<!--                        </div>-->
+                        <!-- 제목 조건 -->
+                        <div class="col-12">
+                            <label class="form-label" th:name="제목">제목 : </label>
+                            <label>
+                                <input type="text" name="subject"/>
+                            </label>
+                        </div>
 
-<!--                        <div class="col-12">-->
-<!--                            <button class="w-40 btn btn-primary btn-sm" type="submit">조회</button>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                        <!-- 사용유무 조건 -->
+                        <div class="col-12">
+                            <label class="form-label" th:name="사용유무">사용유무 : </label>
+                            <label>
+                                <input type="radio" name="validity" value=""> 전체
+                            </label>
+                            <label>
+                                <input type="radio" name="validity" value="Y"> 사용
+                            </label>
+                            <label>
+                                <input type="radio" name="validity" value="N"> 미사용
+                            </label>
+                        </div>
 
-<!--                </form>-->
+                        <div class="col-12">
+                            <button class="w-40 btn btn-primary btn-sm" type="submit">조회</button>
+                        </div>
+                    </div>
+
+                </form>
             </div>
         </div>
 

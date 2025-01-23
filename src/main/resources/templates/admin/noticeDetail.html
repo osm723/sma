@@ -13,9 +13,74 @@
 <link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="/assets/dist/css/layout.css" rel="stylesheet">
 <script>
-    // 팝업 창 종료
+
+    /**
+     * 공지 사용 함수
+     * noticeUse
+     */
+    function noticeUse(noticeId) {
+        if (confirm("공지를 사용 하시겠습니까?")) {
+            fetch('/admin/notice/use?noticeId=' + noticeId, {
+                method: 'POST'
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('시스템 담당자에게 문의해주세요.');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    alert(data);
+                    closePopup();
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        }
+    }
+
+    /**
+     * 공지 삭제 함수
+     * noticeDelete
+     */
+    function noticeDelete(noticeId) {
+        if (confirm("공지를 삭제 하시겠습니까?")) {
+            fetch('/admin/notice/remove?noticeId=' + noticeId, {
+                method: 'POST'
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('시스템 담당자에게 문의해주세요.');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    alert(data);
+                    closePopup();
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        }
+    }
+
+    /**
+     * 팝업 종료 함수
+     * closePopup
+     */
     function closePopup() {
         window.close();
+    }
+
+    /**
+     * submit 호출 함수
+     * formSubmit
+     */
+    function formSubmit() {
+        if (confirm("공지를 수정 하시겠습니까?")) {
+            const form = document.getElementById("noticeForm");
+            form.submit();
+        }
     }
 
 </script>
@@ -27,75 +92,99 @@
             <h4 class="mb-3">공지 상세 페이지</h4>
             <br>
             <div class="row g-3">
+                <form class="needs-validation" novalidate action="#" id="noticeForm"
+                      th:action="@{/admin/notice/modified}" method="post">
+                    <div class="col-12">
+                        <label>
+                            <button class="w-40 btn btn-primary btn-sm" onclick="formSubmit()">공지수정</button>
+                        </label>
+                        <label>
+                            <button th:if="${notice.getValidity() == 'Y'}"
+                                    class="w-30 btn btn-primary btn-sm"
+                                    th:attr="onclick=|noticeDelete('${notice.getId()}')|">공지삭제
+                            </button>
 
-                <div class="col-12">
-                    <button class="w-30 btn btn-primary btn-sm" onclick="closePopup()">팝업닫기</button>
-                </div>
+                            <button th:if="${notice.getValidity() == 'N'}"
+                                    class="w-30 btn btn-primary btn-sm"
+                                    th:attr="onclick=|noticeUse('${notice.getId()}')|">공지사용
+                            </button>
+                        </label>
+                        <label>
+                            <button class="w-30 btn btn-primary btn-sm" onclick="closePopup()">팝업닫기</button>
+                        </label>
+                    </div>
 
-                <!-- 공지종류 -->
-                <div class="col-12">
-                    <label class="form-label">공지 종류 : </label>
-                    <label>
-                        <input type="text" name="noticeType" th:value="${notice.getNoticeType()}"/>
-                    </label>
-                </div>
+                    <div class="col-12">
+                        <label>
+                            <input type="hidden" name="noticeId" th:value="${notice.getId()}"/>
+                        </label>
+                    </div>
 
-                <!-- 제목 -->
-                <div class="col-12">
-                    <label class="form-label">제목 : </label>
-                    <label>
-                        <input type="text" name="subject" th:value="${notice.getSubject()}"/>
-                    </label>
-                </div>
+                    <!-- 공지종류 -->
+                    <div class="col-12">
+                        <label class="form-label">공지 종류 : </label>
+                        <label>
+                            <input type="text" name="noticeType" th:value="${notice.getNoticeType()}"/>
+                        </label>
+                    </div>
 
-                <!-- 내용 -->
-                <div class="col-12">
-                    <label class="form-label">내용 : </label>
-                    <label>
-                        <input type="text" name="content" th:value="${notice.getContent()}"/>
-                    </label>
-                </div>
+                    <!-- 제목 -->
+                    <div class="col-12">
+                        <label class="form-label">제목 : </label>
+                        <label>
+                            <input type="text" name="subject" th:value="${notice.getSubject()}"/>
+                        </label>
+                    </div>
 
-                <!-- 공지 시작일자 -->
-                <div class="col-12">
-                    <label class="form-label">공지 시작일자 : </label>
-                    <label>
-                        <input type="date" name="startDate" th:value="${notice.getStartDate()}"/>
-                    </label>
-                </div>
+                    <!-- 내용 -->
+                    <div class="col-12">
+                        <label class="form-label">내용 : </label>
+                        <label>
+                            <input type="text" name="content" th:value="${notice.getContent()}"/>
+                        </label>
+                    </div>
 
-                <!-- 공지 종료일자 -->
-                <div class="col-12">
-                    <label class="form-label">공지 종료일자 : </label>
-                    <label>
-                        <input type="date" name="endDate" th:value="${notice.getEndDate()}"/>
-                    </label>
-                </div>
+                    <!-- 공지 시작일자 -->
+                    <div class="col-12">
+                        <label class="form-label">공지 시작일자 : </label>
+                        <label>
+                            <input type="date" name="startDate" th:value="${notice.getStartDate()}"/>
+                        </label>
+                    </div>
 
-                <!-- 공지 등록.수정일자 -->
-                <div class="col-12">
-                    <label class="form-label">공지 등록.수정일자 : </label>
-                    <label>
-                        <input type="text" readonly disabled name="modDate" th:value="${notice.getModDate()}"/>
-                    </label>
-                </div>
+                    <!-- 공지 종료일자 -->
+                    <div class="col-12">
+                        <label class="form-label">공지 종료일자 : </label>
+                        <label>
+                            <input type="date" name="endDate" th:value="${notice.getEndDate()}"/>
+                        </label>
+                    </div>
 
-                <!-- 공지 등록.수정자 -->
-                <div class="col-12">
-                    <label class="form-label">공지 등록.수정자 : </label>
-                    <label>
-                        <input type="text" readonly disabled name="modMemberId" th:value="${notice.getModMemberId()}"/>
-                    </label>
-                </div>
+                    <!-- 공지 등록.수정일자 -->
+                    <div class="col-12">
+                        <label class="form-label">공지 등록.수정일자 : </label>
+                        <label>
+                            <input type="text" readonly disabled name="modDate" th:value="${notice.getModDate()}"/>
+                        </label>
+                    </div>
 
-                <!-- 사용유무 -->
-                <div class="col-12">
-                    <label class="form-label">사용유무 : </label>
-                    <label>
-                        <input type="text" readonly disabled name="validity" th:value="${notice.getValidity()}"/>
-                    </label>
-                </div>
+                    <!-- 공지 등록.수정자 -->
+                    <div class="col-12">
+                        <label class="form-label">공지 등록.수정자 : </label>
+                        <label>
+                            <input type="text" readonly disabled name="modMemberId" th:value="${notice.getModMemberId()}"/>
+                        </label>
+                    </div>
 
+                    <!-- 사용유무 -->
+                    <div class="col-12">
+                        <label class="form-label">사용유무 : </label>
+                        <label>
+                            <input type="text" readonly disabled name="validity" th:value="${notice.getValidity()}"/>
+                        </label>
+                    </div>
+
+                </form>
             </div>
         </div>
     </div>

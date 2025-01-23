@@ -6,13 +6,20 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @Setter
-public class NoticeRemoveRequestDto {
+public class NoticeCondRequestDto {
 
-    @NotNull
-    private Long noticeId;
+    private NoticeType noticeType;
+
+    private String subject;
+
+    private LocalDate startDate;
+
+    private LocalDate endDate;
+
+    private String validity;
 
 }
