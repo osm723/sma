@@ -8,7 +8,9 @@ public interface AdminService {
 
     Page<NoticeResponseDto> findNoticeAll(Pageable pageable);
 
-    void findNoticeCond(NoticeCondRequestDto noticeCondRequestDto, Pageable pageable);
+    Page<NoticeResponseDto> findNoticeCond(NoticeCondRequestDto noticeCondRequestDto, Pageable pageable);
+
+    Page<HomeNoticeResponseDto> findHomeNotice(Pageable pageable);
 
     NoticeResponseDto findNoticeById(Long noticeId);
 

@@ -1,9 +1,6 @@
 package com.shds.sma.admin.service;
 
-import com.shds.sma.admin.dto.NoticeCondRequestDto;
-import com.shds.sma.admin.dto.NoticeModRequestDto;
-import com.shds.sma.admin.dto.NoticeResponseDto;
-import com.shds.sma.admin.dto.NoticeSaveRequestDto;
+import com.shds.sma.admin.dto.*;
 import com.shds.sma.admin.entity.Notice;
 import com.shds.sma.admin.repositroy.NoticeRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +28,15 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void findNoticeCond(NoticeCondRequestDto noticeCondRequestDto, Pageable pageable) {
+    public Page<NoticeResponseDto> findNoticeCond(NoticeCondRequestDto noticeCondRequestDto, Pageable pageable) {
+        Page<Notice> notices = noticeRepository.findNoticeCond(noticeCondRequestDto, pageable);
+        return notices.map(NoticeResponseDto::new);
+    }
 
+    @Override
+    public Page<HomeNoticeResponseDto> findHomeNotice(Pageable pageable) {
+        Page<Notice> notices = noticeRepository.findHomeNotice(pageable);
+        return notices.map(HomeNoticeResponseDto::new);
     }
 
     @Override

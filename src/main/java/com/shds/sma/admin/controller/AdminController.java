@@ -28,16 +28,18 @@ public class AdminController {
     }
 
     /**
-     * 공지사항 조회화면
+     * 공지사항 조회화면 (조건)
      * notice
      * @param pageable
      * @param model
      * @return String
      */
     @GetMapping("/notice")
-    public String notice(Pageable pageable, Model model) {
-        Page<NoticeResponseDto> notices = adminService.findNoticeAll(pageable);
+    public String notice(NoticeCondRequestDto noticeCondRequestDto,Pageable pageable, Model model) {
+        //Page<NoticeResponseDto> notices = adminService.findNoticeAll(pageable);
+        Page<NoticeResponseDto> notices = adminService.findNoticeCond(noticeCondRequestDto, pageable);
         model.addAttribute("notices", notices);
+        model.addAttribute("cond", noticeCondRequestDto);
         return "/admin/notice";
     }
 
@@ -48,11 +50,13 @@ public class AdminController {
      * @param model
      * @return String
      */
-    @GetMapping("/notice/cond")
-    public String noticeCond(NoticeCondRequestDto noticeCondRequestDto, Pageable pageable, Model model) {
-        adminService.findNoticeCond(noticeCondRequestDto, pageable);
-        return "/admin/notice";
-    }
+//    @GetMapping("/notice/cond")
+//    public String noticeCond(NoticeCondRequestDto noticeCondRequestDto, Pageable pageable, Model model) {
+//        Page<NoticeResponseDto> notices = adminService.findNoticeCond(noticeCondRequestDto, pageable);
+//        model.addAttribute("noticesCond", notices);
+//        model.addAttribute("cond", noticeCondRequestDto);
+//        return "/admin/notice";
+//    }
 
     /**
      * 공지사항 상세화면
