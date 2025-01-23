@@ -34,9 +34,9 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Page<HomeNoticeResponseDto> findHomeNotice(Pageable pageable) {
+    public Page<NoticeHomeResponseDto> findHomeNotice(Pageable pageable) {
         Page<Notice> notices = noticeRepository.findHomeNotice(pageable);
-        return notices.map(HomeNoticeResponseDto::new);
+        return notices.map(NoticeHomeResponseDto::new);
     }
 
     @Override

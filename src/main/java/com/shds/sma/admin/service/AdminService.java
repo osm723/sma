@@ -10,7 +10,7 @@ public interface AdminService {
 
     Page<NoticeResponseDto> findNoticeCond(NoticeCondRequestDto noticeCondRequestDto, Pageable pageable);
 
-    Page<HomeNoticeResponseDto> findHomeNotice(Pageable pageable);
+    Page<NoticeHomeResponseDto> findHomeNotice(Pageable pageable);
 
     NoticeResponseDto findNoticeById(Long noticeId);
 

@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class HomeNoticeResponseDto {
+public class NoticeHomeResponseDto {
 
     @NotNull
     private NoticeType noticeType;
@@ -30,7 +30,7 @@ public class HomeNoticeResponseDto {
     @NotNull
     private LocalDate endDate;
 
-    public HomeNoticeResponseDto(Notice notice) {
+    public NoticeHomeResponseDto(Notice notice) {
         this.noticeType = notice.getNoticeType();
         this.subject = notice.getSubject();
         this.content = notice.getContent();
