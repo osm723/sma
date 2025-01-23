@@ -1,7 +1,6 @@
 package com.shds.sma.home.controller;
 
-import com.shds.sma.admin.dto.HomeNoticeResponseDto;
-import com.shds.sma.admin.dto.NoticeResponseDto;
+import com.shds.sma.admin.dto.NoticeHomeResponseDto;
 import com.shds.sma.home.service.HomeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,7 +17,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model, Pageable pageable) {
-        Page<HomeNoticeResponseDto> homeNotice = homeService.findHomeNotice(pageable);
+        Page<NoticeHomeResponseDto> homeNotice = homeService.findHomeNotice(pageable);
         model.addAttribute("homeNotice", homeNotice);
         return "/home";
     }
