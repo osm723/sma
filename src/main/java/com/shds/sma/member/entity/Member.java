@@ -1,9 +1,10 @@
 package com.shds.sma.member.entity;
 
+import com.shds.sma.admin.entity.Client;
+import com.shds.sma.admin.entity.System;
 import com.shds.sma.member.entity.types.SystemRole;
 import com.shds.sma.member.entity.types.EmpStatus;
 import com.shds.sma.member.entity.types.Auth;
-import com.shds.sma.admin.entity.System;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
