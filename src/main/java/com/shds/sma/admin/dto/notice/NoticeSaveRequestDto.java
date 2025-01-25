@@ -1,20 +1,18 @@
-package com.shds.sma.admin.dto;
+package com.shds.sma.admin.dto.notice;
 
 import com.shds.sma.admin.entity.Notice;
 import com.shds.sma.admin.types.NoticeType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class NoticeHomeResponseDto {
+public class NoticeSaveRequestDto {
 
     @NotNull
     private NoticeType noticeType;
@@ -30,11 +28,4 @@ public class NoticeHomeResponseDto {
     @NotNull
     private LocalDate endDate;
 
-    public NoticeHomeResponseDto(Notice notice) {
-        this.noticeType = notice.getNoticeType();
-        this.subject = notice.getSubject();
-        this.content = notice.getContent();
-        this.startDate = notice.getStartDate();
-        this.endDate = notice.getEndDate();
-    }
 }

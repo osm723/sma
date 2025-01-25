@@ -1,4 +1,4 @@
-package com.shds.sma.admin.dto;
+package com.shds.sma.admin.dto.notice;
 
 import com.shds.sma.admin.types.NoticeType;
 import jakarta.validation.constraints.NotBlank;

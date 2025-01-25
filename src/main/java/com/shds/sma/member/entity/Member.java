@@ -1,7 +1,9 @@
 package com.shds.sma.member.entity;
 
+import com.shds.sma.member.entity.types.SystemRole;
 import com.shds.sma.member.entity.types.EmpStatus;
 import com.shds.sma.member.entity.types.Auth;
+import com.shds.sma.admin.entity.System;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -51,5 +53,11 @@ public class Member {
     @NotNull
     @Enumerated(EnumType.STRING)
     private Auth auth;
+
+    @ManyToOne
+    @JoinColumn(name = "SYSTEM_ID")
+    private System system;
+
+    private SystemRole systemRole;
 
 }

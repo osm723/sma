@@ -3,7 +3,7 @@ package com.shds.sma.common.entity;
 import com.shds.sma.common.entity.types.AlarmSendType;
 import com.shds.sma.common.entity.types.PreAlarmTarget;
 import com.shds.sma.common.entity.types.Sender;
-import com.shds.sma.system.entity.System;
+import com.shds.sma.admin.entity.System;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 

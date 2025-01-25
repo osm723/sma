@@ -1,6 +1,13 @@
 package com.shds.sma.admin.controller;
 
-import com.shds.sma.admin.dto.*;
+import com.shds.sma.admin.dto.notice.NoticeCondRequestDto;
+import com.shds.sma.admin.dto.notice.NoticeModRequestDto;
+import com.shds.sma.admin.dto.notice.NoticeResponseDto;
+import com.shds.sma.admin.dto.notice.NoticeSaveRequestDto;
+import com.shds.sma.admin.dto.system.SystemModRequestDto;
+import com.shds.sma.admin.dto.system.SystemRequestDto;
+import com.shds.sma.admin.dto.system.SystemResponseDto;
+import com.shds.sma.admin.dto.system.SystemSaveRequestDto;
 import com.shds.sma.admin.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -35,7 +42,7 @@ public class AdminController {
      * @return String
      */
     @GetMapping("/notice")
-    public String notice(NoticeCondRequestDto noticeCondRequestDto,Pageable pageable, Model model) {
+    public String notice(NoticeCondRequestDto noticeCondRequestDto, Pageable pageable, Model model) {
         //Page<NoticeResponseDto> notices = adminService.findNoticeAll(pageable);
         Page<NoticeResponseDto> notices = adminService.findNoticeCond(noticeCondRequestDto, pageable);
         model.addAttribute("notices", notices);
@@ -44,28 +51,13 @@ public class AdminController {
     }
 
     /**
-     * 공지사항 조회화면 (조건)
-     * noticeCond
-     * @param pageable
-     * @param model
-     * @return String
-     */
-//    @GetMapping("/notice/cond")
-//    public String noticeCond(NoticeCondRequestDto noticeCondRequestDto, Pageable pageable, Model model) {
-//        Page<NoticeResponseDto> notices = adminService.findNoticeCond(noticeCondRequestDto, pageable);
-//        model.addAttribute("noticesCond", notices);
-//        model.addAttribute("cond", noticeCondRequestDto);
-//        return "/admin/notice";
-//    }
-
-    /**
      * 공지사항 상세화면
      * noticeDetail
      * @param noticeId
      * @param model
      * @return String
      */
-    @GetMapping("/noticeDetail")
+    @GetMapping("/notice/detail")
     public String noticeDetail(Long noticeId, Model model) {
         NoticeResponseDto notice = adminService.findNoticeById(noticeId);
         model.addAttribute("notice", notice);
@@ -74,11 +66,11 @@ public class AdminController {
 
     /**
      * 공지사항 등록화면 폼
-     * saveNoticeForm
+     * noticeSaveForm
      * @return String
      */
     @GetMapping("/notice/save")
-    public String saveNoticeForm() {
+    public String noticeSaveForm() {
         return "/admin/noticeSaveForm";
     }
 
@@ -90,19 +82,19 @@ public class AdminController {
      */
     @PostMapping("/notice/save")
     public String noticeSave(NoticeSaveRequestDto noticeSaveRequestDto) {
-        adminService.noticeSave(noticeSaveRequestDto);
+        adminService.saveNotice(noticeSaveRequestDto);
         return "redirect:/admin/notice";
     }
 
     /**
      * 공지사항 수정
-     * noticeModified
+     * modifiedNotice
      * @param noticeModRequestDto
      * @return String
      */
     @PostMapping("/notice/modified")
     public String noticeModified(NoticeModRequestDto noticeModRequestDto) {
-        adminService.noticeModified(noticeModRequestDto);
+        adminService.modifiedNotice(noticeModRequestDto);
         return "redirect:/admin/noticeDetail?noticeId="+noticeModRequestDto.getNoticeId();
     }
 
@@ -114,7 +106,7 @@ public class AdminController {
      */
     @PostMapping("/notice/remove")
     public ResponseEntity<String> noticeRemove(@RequestParam Long noticeId) {
-        adminService.noticeRemove(noticeId);
+        adminService.removeNotice(noticeId);
         return ResponseEntity.ok("공지를 삭제 완료했습니다.");
     }
 
@@ -126,7 +118,81 @@ public class AdminController {
      */
     @PostMapping("/notice/use")
     public ResponseEntity<String> noticeUse(@RequestParam Long noticeId) {
-        adminService.noticeUse(noticeId);
+        adminService.useNotice(noticeId);
+        return ResponseEntity.ok("공지를 사용 완료했습니다.");
+    }
+
+    /**
+     * 시스템 조회화면 (조건)
+     * system
+     * @param pageable
+     * @param model
+     * @return String
+     */
+    @GetMapping("/system")
+    public String system(SystemRequestDto systemRequestDto, Pageable pageable, Model model) {
+        Page<SystemResponseDto> systems = adminService.findSystemCond(systemRequestDto, pageable);
+        model.addAttribute("systems", systems);
+        model.addAttribute("cond", systemRequestDto);
+        return "/admin/system";
+    }
+
+    /**
+     * 시스템 등록화면 폼
+     * systemSaveForm
+     * @return String
+     */
+    @GetMapping("/system/save")
+    public String systemSaveForm() {
+        return "/admin/systemSaveForm";
+    }
+
+    /**
+     * 시스템 저장
+     * systemSave
+     * @param systemSaveRequestDto
+     * @return String
+     */
+    @PostMapping("/system/save")
+    public String systemSave(SystemSaveRequestDto systemSaveRequestDto) {
+        System.out.println("시스템명======" + systemSaveRequestDto.getSystemName());
+        adminService.systemSave(systemSaveRequestDto);
+        return "redirect:/admin/system";
+    }
+
+    /**
+     * 시스템 수정
+     * systemModified
+     * @param systemModRequestDto
+     * @return String
+     */
+    @PostMapping("/system/modified")
+    public String systemModified(SystemModRequestDto systemModRequestDto) {
+        adminService.modifiedSystem(systemModRequestDto);
+        return "redirect:/admin/noticeDetail?noticeId="+systemModRequestDto.getSystemId();
+    }
+
+    /**
+     * 시스템 삭제
+     * systemRemove
+     * @param systemId
+     * @return ResponseEntity<String>
+     */
+    @PostMapping("/system/remove")
+    public ResponseEntity<String> systemRemove(@RequestParam Long systemId) {
+        adminService.removeSystem(systemId);
+        return ResponseEntity.ok("공지를 삭제 완료했습니다.");
+    }
+
+    /**
+     * 시스템 사용
+     * systemUse
+     * @param systemId
+     * @return ResponseEntity<String>
+     */
+    @PostMapping("/system/use")
+    public ResponseEntity<String> systemUse(@RequestParam Long systemId) {
+        adminService.useSystem(systemId);
         return ResponseEntity.ok("공지를 사용 완료했습니다.");
     }
 
