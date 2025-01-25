@@ -6,15 +6,16 @@ import com.shds.sma.member.entity.Member;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
 @Table(name = "SMA_SYSTEM")
 @Getter
+@Setter
 public class System extends BaseEntity {
 
     @Id
@@ -23,7 +24,7 @@ public class System extends BaseEntity {
     private Long id;
 
     @Column(length = 40, columnDefinition = "VARCHAR(40) COMMENT '시스템명'", nullable = false)
-    @NotBlank
+    @NotNull
     private String systemName;
 
     @OneToMany(mappedBy = "system")

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>IP 인증서 관리 프로그램</title>
+</head>
+<link rel="stylesheet" href="/assets/dist/css/bootstrap.css">
+<script src="/assets/dist/js/color-modes.js"></script>
+<link href="/assets/dist/css/headers.css" rel="stylesheet">
+<link href="/assets/dist/css/bootstrap.css" rel="stylesheet">
+<script src="/assets/dist/js/bootstrap.bundle.min.js"></script>
+<link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="/assets/dist/css/layout.css" rel="stylesheet">
+<body>
+<div th:insert="~{freme/header/header :: copy}"></div>
+<script>
+    /**
+     * submit 호출 함수
+     * formSubmit
+     */
+    function formSubmit() {
+        const form = document.getElementById("clientForm");
+        form.submit();
+    }
+
+</script>
+<div class="container">
+    <main>
+
+        <div class="py-1 text-center">
+            <h2>관리자 화면</h2>
+            <p class="lead">그룹사 등록 페이지</p>
+        </div>
+
+        <div class="d-flex justify-content-center align-items-center vh-20">
+            <label>
+                <a th:href="@{/admin/main}" class="nav-link">뒤로가기</a>
+            </label>
+        </div>
+
+        <div class="row g-5">
+            <div class="col-md-7 col-lg-8">
+                <h4 class="mb-3">시스템 등록</h4>
+                <form class="needs-validation" novalidate action="#" id="clientForm" th:action="@{/admin/client/save}" method="post">
+                    <div class="row g-3">
+
+                        <!-- 그룹사 코드 -->
+                        <div class="col-12">
+                            <label class="form-label">그룹사 코드 : </label>
+                            <label>
+                                <input type="text" name="clientCode" maxlength="4"/>
+                            </label>
+                        </div>
+
+                        <!-- 그룹사 명 -->
+                        <div class="col-12">
+                            <label class="form-label">그룹사 명 : </label>
+                            <label>
+                                <input type="text" name="clientName" maxlength="100"/>
+                            </label>
+                        </div>
+
+                        <div class="col-12">
+                            <button class="w-40 btn btn-primary btn-sm" onclick="formSubmit()">
+                                등록
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+    </main>
+</div>
+<div th:insert="~{freme/footer/footer :: copy}"></div>
+</body>
+</html>

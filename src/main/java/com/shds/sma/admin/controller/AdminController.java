@@ -1,5 +1,9 @@
 package com.shds.sma.admin.controller;
 
+import com.shds.sma.admin.dto.client.ClientModRequestDto;
+import com.shds.sma.admin.dto.client.ClientRequestDto;
+import com.shds.sma.admin.dto.client.ClientResponseDto;
+import com.shds.sma.admin.dto.client.ClientSaveRequestDto;
 import com.shds.sma.admin.dto.notice.NoticeCondRequestDto;
 import com.shds.sma.admin.dto.notice.NoticeModRequestDto;
 import com.shds.sma.admin.dto.notice.NoticeResponseDto;
@@ -155,7 +159,6 @@ public class AdminController {
      */
     @PostMapping("/system/save")
     public String systemSave(SystemSaveRequestDto systemSaveRequestDto) {
-        System.out.println("시스템명======" + systemSaveRequestDto.getSystemName());
         adminService.systemSave(systemSaveRequestDto);
         return "redirect:/admin/system";
     }
@@ -181,7 +184,7 @@ public class AdminController {
     @PostMapping("/system/remove")
     public ResponseEntity<String> systemRemove(@RequestParam Long systemId) {
         adminService.removeSystem(systemId);
-        return ResponseEntity.ok("공지를 삭제 완료했습니다.");
+        return ResponseEntity.ok("시스템 삭제 완료했습니다.");
     }
 
     /**
@@ -193,6 +196,93 @@ public class AdminController {
     @PostMapping("/system/use")
     public ResponseEntity<String> systemUse(@RequestParam Long systemId) {
         adminService.useSystem(systemId);
+        return ResponseEntity.ok("시스템 사용 완료했습니다.");
+    }
+
+    /**
+     * 그룹사 조회화면 (조건)
+     * system
+     * @param pageable
+     * @param model
+     * @return String
+     */
+    @GetMapping("/client")
+    public String client(ClientRequestDto clientRequestDto, Pageable pageable, Model model) {
+        Page<ClientResponseDto> clients = adminService.findClientCond(clientRequestDto, pageable);
+        model.addAttribute("clients", clients);
+        model.addAttribute("cond", clientRequestDto);
+        return "/admin/client";
+    }
+
+    /**
+     * 그룹사 상세화면
+     * clientDetail
+     * @param clientId
+     * @param model
+     * @return String
+     */
+    @GetMapping("/client/detail")
+    public String clientDetail(Long clientId, Model model) {
+        ClientResponseDto client = adminService.findClientById(clientId);
+        model.addAttribute("client", client);
+        return "/admin/clientDetail";
+    }
+
+    /**
+     * 그룹사 등록화면 폼
+     * clientSaveForm
+     * @return String
+     */
+    @GetMapping("/client/save")
+    public String clientSaveForm() {
+        return "/admin/clientSaveForm";
+    }
+
+    /**
+     * 그룹사 저장
+     * clientSave
+     * @param clientSaveRequestDto
+     * @return String
+     */
+    @PostMapping("/client/save")
+    public String systemSave(ClientSaveRequestDto clientSaveRequestDto) {
+        adminService.clientSave(clientSaveRequestDto);
+        return "redirect:/admin/client";
+    }
+
+    /**
+     * 그룹사 수정
+     * clientModified
+     * @param clientModRequestDto
+     * @return String
+     */
+    @PostMapping("/client/modified")
+    public String clientModified(ClientModRequestDto clientModRequestDto) {
+        adminService.modifiedClient(clientModRequestDto);
+        return "redirect:/admin/clientDetail?clientId="+clientModRequestDto.getClientId();
+    }
+
+    /**
+     * 그룹사 삭제
+     * clientRemove
+     * @param clientId
+     * @return ResponseEntity<String>
+     */
+    @PostMapping("/client/remove")
+    public ResponseEntity<String> clientRemove(@RequestParam Long clientId) {
+        adminService.removeClient(clientId);
+        return ResponseEntity.ok("공지를 삭제 완료했습니다.");
+    }
+
+    /**
+     * 그룹사 사용
+     * systemUse
+     * @param clientId
+     * @return ResponseEntity<String>
+     */
+    @PostMapping("/client/use")
+    public ResponseEntity<String> clientUse(@RequestParam Long clientId) {
+        adminService.useClient(clientId);
         return ResponseEntity.ok("공지를 사용 완료했습니다.");
     }
 

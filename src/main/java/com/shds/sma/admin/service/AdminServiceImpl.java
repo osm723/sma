@@ -1,12 +1,18 @@
 package com.shds.sma.admin.service;
 
+import com.shds.sma.admin.dto.client.ClientModRequestDto;
+import com.shds.sma.admin.dto.client.ClientRequestDto;
+import com.shds.sma.admin.dto.client.ClientResponseDto;
+import com.shds.sma.admin.dto.client.ClientSaveRequestDto;
 import com.shds.sma.admin.dto.notice.*;
 import com.shds.sma.admin.dto.system.SystemModRequestDto;
 import com.shds.sma.admin.dto.system.SystemRequestDto;
 import com.shds.sma.admin.dto.system.SystemResponseDto;
 import com.shds.sma.admin.dto.system.SystemSaveRequestDto;
+import com.shds.sma.admin.entity.Client;
 import com.shds.sma.admin.entity.Notice;
 import com.shds.sma.admin.entity.System;
+import com.shds.sma.admin.repositroy.client.ClientRepository;
 import com.shds.sma.admin.repositroy.notice.NoticeRepository;
 import com.shds.sma.admin.repositroy.system.SystemRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +32,8 @@ public class AdminServiceImpl implements AdminService {
     private final NoticeRepository noticeRepository;
 
     private final SystemRepository systemRepository;
+
+    private final ClientRepository clientRepository;
 
     private final ModelMapper modelMapper;
 
@@ -84,7 +92,6 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void systemSave(SystemSaveRequestDto systemSaveRequestDto) {
-        log.info("systemName={}",systemSaveRequestDto.getSystemName());
         systemRepository.save(modelMapper.map(systemSaveRequestDto, System.class));
     }
 
@@ -104,6 +111,41 @@ public class AdminServiceImpl implements AdminService {
     public void useSystem(Long systemId) {
         System findSystem = systemRepository.findById(systemId).get();
         findSystem.setValidityY();
+    }
+
+    @Override
+    public Page<ClientResponseDto> findClientCond(ClientRequestDto clientRequestDto, Pageable pageable) {
+        Page<Client> clients = clientRepository.findClientCond(clientRequestDto, pageable);
+        return clients.map(ClientResponseDto::new);
+    }
+
+    @Override
+    public ClientResponseDto findClientById(Long clientId) {
+        Client findClient = clientRepository.findById(clientId).get();
+        return modelMapper.map(findClient, ClientResponseDto.class);
+    }
+
+    @Override
+    public void clientSave(ClientSaveRequestDto clientSaveRequestDto) {
+        clientRepository.save(modelMapper.map(clientSaveRequestDto, Client.class));
+    }
+
+    @Override
+    public void modifiedClient(ClientModRequestDto clientModRequestDto) {
+        Client findClient = clientRepository.findById(clientModRequestDto.getClientId()).get();
+        findClient.clientModified(clientModRequestDto);
+    }
+
+    @Override
+    public void removeClient(Long clientId) {
+        Client findClient = clientRepository.findById(clientId).get();
+        findClient.setValidityN();
+    }
+
+    @Override
+    public void useClient(Long clientId) {
+        Client findClient = clientRepository.findById(clientId).get();
+        findClient.setValidityY();
     }
 
 

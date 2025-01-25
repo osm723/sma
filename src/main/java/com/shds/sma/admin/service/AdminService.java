@@ -1,5 +1,9 @@
 package com.shds.sma.admin.service;
 
+import com.shds.sma.admin.dto.client.ClientModRequestDto;
+import com.shds.sma.admin.dto.client.ClientRequestDto;
+import com.shds.sma.admin.dto.client.ClientResponseDto;
+import com.shds.sma.admin.dto.client.ClientSaveRequestDto;
 import com.shds.sma.admin.dto.notice.*;
 import com.shds.sma.admin.dto.system.SystemModRequestDto;
 import com.shds.sma.admin.dto.system.SystemRequestDto;
@@ -35,6 +39,18 @@ public interface AdminService {
     void removeSystem(Long systemId);
 
     void useSystem(Long systemId);
+
+    Page<ClientResponseDto> findClientCond(ClientRequestDto clientRequestDto, Pageable pageable);
+
+    ClientResponseDto findClientById(Long clientId);
+
+    void clientSave(ClientSaveRequestDto clientSaveRequestDto);
+
+    void modifiedClient(ClientModRequestDto clientModRequestDto);
+
+    void removeClient(Long clientId);
+
+    void useClient(Long clientId);
 
 
 }

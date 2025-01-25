@@ -2,12 +2,9 @@ package com.shds.sma.manage.entity;
 
 import com.shds.sma.manage.types.ApprovalStatus;
 import com.shds.sma.manage.types.Degree;
-import com.shds.sma.member.entity.Member;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
 
