@@ -1,6 +1,10 @@
 package com.shds.sma.admin.service;
 
-import com.shds.sma.admin.dto.*;
+import com.shds.sma.admin.dto.notice.*;
+import com.shds.sma.admin.dto.system.SystemModRequestDto;
+import com.shds.sma.admin.dto.system.SystemRequestDto;
+import com.shds.sma.admin.dto.system.SystemResponseDto;
+import com.shds.sma.admin.dto.system.SystemSaveRequestDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -14,11 +18,23 @@ public interface AdminService {
 
     NoticeResponseDto findNoticeById(Long noticeId);
 
-    void noticeSave(NoticeSaveRequestDto noticeSaveRequestDto);
+    void saveNotice(NoticeSaveRequestDto noticeSaveRequestDto);
 
-    void noticeModified(NoticeModRequestDto noticeModRequestDto);
+    void modifiedNotice(NoticeModRequestDto noticeModRequestDto);
 
-    void noticeRemove(Long noticeId);
+    void removeNotice(Long noticeId);
 
-    void noticeUse(Long noticeId);
+    void useNotice(Long noticeId);
+
+    Page<SystemResponseDto> findSystemCond(SystemRequestDto systemRequestDto, Pageable pageable);
+
+    void systemSave(SystemSaveRequestDto systemSaveRequestDto);
+
+    void modifiedSystem(SystemModRequestDto systemModRequestDto);
+
+    void removeSystem(Long systemId);
+
+    void useSystem(Long systemId);
+
+
 }

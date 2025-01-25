@@ -1,6 +1,5 @@
-package com.shds.sma.admin.dto;
+package com.shds.sma.admin.dto.notice;
 
-import com.shds.sma.admin.entity.Notice;
 import com.shds.sma.admin.types.NoticeType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -8,24 +7,20 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
-public class NoticeSaveRequestDto {
+public class NoticeCondRequestDto {
 
-    @NotNull
-    private NoticeType noticeType;
+    private List<String> noticeType;
 
-    @NotBlank
     private String subject;
 
-    private String content;
-
-    @NotNull
     private LocalDate startDate;
 
-    @NotNull
     private LocalDate endDate;
+
+    private String validity;
 
 }

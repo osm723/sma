@@ -1,6 +1,6 @@
 package com.shds.sma.home.controller;
 
-import com.shds.sma.admin.dto.NoticeHomeResponseDto;
+import com.shds.sma.admin.dto.notice.NoticeHomeResponseDto;
 import com.shds.sma.home.service.HomeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

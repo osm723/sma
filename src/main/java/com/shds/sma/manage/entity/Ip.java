@@ -1,7 +1,7 @@
 package com.shds.sma.manage.entity;
 
 import com.shds.sma.common.entity.BaseEntity;
-import com.shds.sma.system.entity.System;
+import com.shds.sma.admin.entity.System;
 import com.shds.sma.manage.types.IpType;
 import com.shds.sma.member.entity.Member;
 import jakarta.persistence.*;

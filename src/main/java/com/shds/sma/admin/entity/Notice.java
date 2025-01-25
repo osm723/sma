@@ -1,6 +1,6 @@
 package com.shds.sma.admin.entity;
 
-import com.shds.sma.admin.dto.NoticeModRequestDto;
+import com.shds.sma.admin.dto.notice.NoticeModRequestDto;
 import com.shds.sma.common.entity.BaseEntity;
 import com.shds.sma.admin.types.NoticeType;
 import jakarta.persistence.*;
