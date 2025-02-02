@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>IP 인증서 관리 프로그램</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="/assets/dist/css/bootstrap.css">
+<script src="/assets/dist/js/color-modes.js"></script>
+<link href="/assets/dist/css/headers.css" rel="stylesheet">
+<link href="/assets/dist/css/bootstrap.css" rel="stylesheet">
+<script src="/assets/dist/js/bootstrap.bundle.min.js"></script>
+<link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="/assets/dist/css/layout.css" rel="stylesheet">
+<script>
+
+    /**
+     * 시스템 사용 함수
+     * systemUse
+     */
+    function systemUse(systemId) {
+        if (confirm("시스템을 사용 하시겠습니까?")) {
+            fetch('/admin/system/use?systemId=' + systemId, {
+                method: 'POST'
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('시스템 담당자에게 문의해주세요.');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    alert(data);
+                    closePopup();
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        }
+    }
+
+    /**
+     * 시스템 삭제 함수
+     * systemDelete
+     */
+    function systemDelete(systemId) {
+        if (confirm("시스템을 삭제 하시겠습니까?")) {
+            fetch('/admin/system/remove?systemId=' + systemId, {
+                method: 'POST'
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('시스템 담당자에게 문의해주세요.');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    alert(data);
+                    closePopup();
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        }
+    }
+
+    /**
+     * 팝업 종료 함수
+     * closePopup
+     */
+    function closePopup() {
+        window.close();
+    }
+
+    /**
+     * submit 호출 함수
+     * formSubmit
+     */
+    function formSubmit() {
+        if (confirm("시스템을 수정 하시겠습니까?")) {
+            const form = document.getElementById("systemForm");
+            form.submit();
+        }
+    }
+
+</script>
+<body>
+<div class="container">
+
+    <div class="row g-5">
+        <div class="col g-5">
+            <h4 class="mb-3">공지 상세 페이지</h4>
+            <br>
+            <div class="row g-3">
+                <form class="needs-validation" novalidate action="#" id="systemForm"
+                      th:action="@{/admin/system/modified}" method="post">
+                    <div class="col-12">
+                        <label>
+                            <button class="w-40 btn btn-primary btn-sm" onclick="formSubmit()">시스템수정</button>
+                        </label>
+                        <label>
+                            <button th:if="${system.getValidity() == 'Y'}"
+                                    class="w-30 btn btn-primary btn-sm"
+                                    th:attr="onclick=|systemDelete('${system.getSystemId()}')|">시스템삭제
+                            </button>
+
+                            <button th:if="${system.getValidity() == 'N'}"
+                                    class="w-30 btn btn-primary btn-sm"
+                                    th:attr="onclick=|systemUse('${system.getSystemId()}')|">시스템사용
+                            </button>
+                        </label>
+                        <label>
+                            <button class="w-30 btn btn-primary btn-sm" onclick="closePopup()">팝업닫기</button>
+                        </label>
+                    </div>
+
+                    <div class="col-12">
+                        <label>
+                            <input type="hidden" name="systemId" th:value="${system.getSystemId()}"/>
+                        </label>
+                    </div>
+
+                    <!-- 시스템 명 -->
+                    <div class="col-12">
+                        <label class="form-label">시스템 명 : </label>
+                        <label>
+                            <input type="text" name="systemName" th:value="${system.getSystemName()}"/>
+                        </label>
+                    </div>
+
+                    <!-- 시스템 담당자 -->
+                    <div class="col-12">
+                        <label class="form-label">시스템 담당자 : </label>
+                        <label>
+                            <input type="text" name="systemManagers" th:value="${system.getSystemManagers()}"/>
+                        </label>
+                    </div>
+
+                    <!-- IP 만료전 알림 일자 -->
+                    <div class="col-12">
+                        <label class="form-label">IP 만료전 알림 일자 : </label>
+                        <label>
+                            <input type="text" name="preIpAlarm" th:value="${system.getPreIpAlarm()}"/>
+                        </label>
+                    </div>
+
+                    <!-- 인증서 만료전 알림 일자 -->
+                    <div class="col-12">
+                        <label class="form-label">인증서 만료전 알림 일자 : </label>
+                        <label>
+                            <input type="text" name="preCertAlarm" th:value="${system.getPreCertAlarm()}"/>
+                        </label>
+                    </div>
+
+                    <!-- 공지 등록.수정일자 -->
+                    <div class="col-12">
+                        <label class="form-label">공지 등록.수정일자 : </label>
+                        <label>
+                            <input type="text" readonly disabled name="modDate" th:value="${system.getModDate()}"/>
+                        </label>
+                    </div>
+
+                    <!-- 공지 등록.수정자 -->
+                    <div class="col-12">
+                        <label class="form-label">공지 등록.수정자 : </label>
+                        <label>
+                            <input type="text" readonly disabled name="modMemberId" th:value="${system.getModMemberId()}"/>
+                        </label>
+                    </div>
+
+                    <!-- 사용유무 -->
+                    <div class="col-12">
+                        <label class="form-label">사용유무 : </label>
+                        <label>
+                            <input type="text" readonly disabled name="validity" th:value="${system.getValidity()}"/>
+                        </label>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

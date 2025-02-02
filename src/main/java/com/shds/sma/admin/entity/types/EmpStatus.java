@@ -1,4 +1,4 @@
-package com.shds.sma.member.entity.types;
+package com.shds.sma.admin.entity.types;
 
 public enum EmpStatus {
     EMPLOYEE("재직"),

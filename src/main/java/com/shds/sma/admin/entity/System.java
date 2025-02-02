@@ -2,12 +2,13 @@ package com.shds.sma.admin.entity;
 
 import com.shds.sma.admin.dto.system.SystemModRequestDto;
 import com.shds.sma.common.entity.BaseEntity;
-import com.shds.sma.member.entity.Member;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 @Table(name = "SMA_SYSTEM")
 @Getter
 @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class System extends BaseEntity {
 
     @Id

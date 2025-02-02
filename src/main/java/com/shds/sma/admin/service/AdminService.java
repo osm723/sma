@@ -4,11 +4,16 @@ import com.shds.sma.admin.dto.client.ClientModRequestDto;
 import com.shds.sma.admin.dto.client.ClientRequestDto;
 import com.shds.sma.admin.dto.client.ClientResponseDto;
 import com.shds.sma.admin.dto.client.ClientSaveRequestDto;
+import com.shds.sma.admin.dto.member.MemberModRequestDto;
+import com.shds.sma.admin.dto.member.MemberRequestDto;
+import com.shds.sma.admin.dto.member.MemberResponseDto;
+import com.shds.sma.admin.dto.member.MemberSaveRequestDto;
 import com.shds.sma.admin.dto.notice.*;
 import com.shds.sma.admin.dto.system.SystemModRequestDto;
 import com.shds.sma.admin.dto.system.SystemRequestDto;
 import com.shds.sma.admin.dto.system.SystemResponseDto;
 import com.shds.sma.admin.dto.system.SystemSaveRequestDto;
+import com.shds.sma.admin.entity.types.EmpStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -30,7 +35,7 @@ public interface AdminService {
 
     void useNotice(Long noticeId);
 
-    Page<SystemResponseDto> findSystemCond(SystemRequestDto systemRequestDto, Pageable pageable);
+    Page<SystemResponseDto> findSystemByCond(SystemRequestDto systemRequestDto, Pageable pageable);
 
     SystemResponseDto findSystemById(Long systemId);
 
@@ -42,17 +47,27 @@ public interface AdminService {
 
     void useSystem(Long systemId);
 
-    Page<ClientResponseDto> findClientCond(ClientRequestDto clientRequestDto, Pageable pageable);
+    Page<ClientResponseDto> findClientByCond(ClientRequestDto clientRequestDto, Pageable pageable);
 
     ClientResponseDto findClientById(Long clientId);
 
-    void clientSave(ClientSaveRequestDto clientSaveRequestDto);
+    void saveClient(ClientSaveRequestDto clientSaveRequestDto);
 
     void modifiedClient(ClientModRequestDto clientModRequestDto);
 
     void removeClient(Long clientId);
 
     void useClient(Long clientId);
+
+    Page<MemberResponseDto> findMemberCond(MemberRequestDto memberRequestDto, Pageable pageable);
+
+    MemberResponseDto findMemberById(Long memberId);
+
+    void saveMember(MemberSaveRequestDto memberSaveRequestDto);
+
+    void modifiedMember(MemberModRequestDto memberModRequestDto);
+
+    void memberChangeStatus(Long memberId, EmpStatus empStatus);
 
 
 }

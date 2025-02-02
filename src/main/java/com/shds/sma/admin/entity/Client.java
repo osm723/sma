@@ -4,13 +4,16 @@ import com.shds.sma.admin.dto.client.ClientModRequestDto;
 import com.shds.sma.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "SMA_CLIENT")
 @Getter
 @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Client extends BaseEntity {
 
     @Id

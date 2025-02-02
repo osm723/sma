@@ -4,6 +4,10 @@ import com.shds.sma.admin.dto.client.ClientModRequestDto;
 import com.shds.sma.admin.dto.client.ClientRequestDto;
 import com.shds.sma.admin.dto.client.ClientResponseDto;
 import com.shds.sma.admin.dto.client.ClientSaveRequestDto;
+import com.shds.sma.admin.dto.member.MemberModRequestDto;
+import com.shds.sma.admin.dto.member.MemberRequestDto;
+import com.shds.sma.admin.dto.member.MemberResponseDto;
+import com.shds.sma.admin.dto.member.MemberSaveRequestDto;
 import com.shds.sma.admin.dto.notice.NoticeCondRequestDto;
 import com.shds.sma.admin.dto.notice.NoticeModRequestDto;
 import com.shds.sma.admin.dto.notice.NoticeResponseDto;
@@ -12,6 +16,7 @@ import com.shds.sma.admin.dto.system.SystemModRequestDto;
 import com.shds.sma.admin.dto.system.SystemRequestDto;
 import com.shds.sma.admin.dto.system.SystemResponseDto;
 import com.shds.sma.admin.dto.system.SystemSaveRequestDto;
+import com.shds.sma.admin.entity.types.EmpStatus;
 import com.shds.sma.admin.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -51,7 +56,7 @@ public class AdminController {
         Page<NoticeResponseDto> notices = adminService.findNoticeCond(noticeCondRequestDto, pageable);
         model.addAttribute("notices", notices);
         model.addAttribute("cond", noticeCondRequestDto);
-        return "/admin/notice";
+        return "/admin/notice/noticeMain";
     }
 
     /**
@@ -65,7 +70,7 @@ public class AdminController {
     public String noticeDetail(Long noticeId, Model model) {
         NoticeResponseDto notice = adminService.findNoticeById(noticeId);
         model.addAttribute("notice", notice);
-        return "/admin/noticeDetail";
+        return "/admin/notice/noticeDetail";
     }
 
     /**
@@ -75,7 +80,7 @@ public class AdminController {
      */
     @GetMapping("/notice/save")
     public String noticeSaveForm() {
-        return "/admin/noticeSaveForm";
+        return "/admin/notice/noticeSaveForm";
     }
 
     /**
@@ -135,10 +140,10 @@ public class AdminController {
      */
     @GetMapping("/system")
     public String system(SystemRequestDto systemRequestDto, Pageable pageable, Model model) {
-        Page<SystemResponseDto> systems = adminService.findSystemCond(systemRequestDto, pageable);
+        Page<SystemResponseDto> systems = adminService.findSystemByCond(systemRequestDto, pageable);
         model.addAttribute("systems", systems);
         model.addAttribute("cond", systemRequestDto);
-        return "/admin/system";
+        return "/admin/system/systemMain";
     }
 
     /**
@@ -152,7 +157,7 @@ public class AdminController {
     public String systemDetail(Long systemId, Model model) {
         SystemResponseDto system = adminService.findSystemById(systemId);
         model.addAttribute("system", system);
-        return "/admin/systemDetail";
+        return "/admin/system/systemDetail";
     }
 
     /**
@@ -162,7 +167,7 @@ public class AdminController {
      */
     @GetMapping("/system/save")
     public String systemSaveForm() {
-        return "/admin/systemSaveForm";
+        return "/admin/system/systemSaveForm";
     }
 
     /**
@@ -172,7 +177,7 @@ public class AdminController {
      * @return String
      */
     @PostMapping("/system/save")
-    public String systemSave(SystemSaveRequestDto systemSaveRequestDto) {
+    public String clientSave(SystemSaveRequestDto systemSaveRequestDto) {
         adminService.systemSave(systemSaveRequestDto);
         return "redirect:/admin/system";
     }
@@ -222,10 +227,10 @@ public class AdminController {
      */
     @GetMapping("/client")
     public String client(ClientRequestDto clientRequestDto, Pageable pageable, Model model) {
-        Page<ClientResponseDto> clients = adminService.findClientCond(clientRequestDto, pageable);
+        Page<ClientResponseDto> clients = adminService.findClientByCond(clientRequestDto, pageable);
         model.addAttribute("clients", clients);
         model.addAttribute("cond", clientRequestDto);
-        return "/admin/client";
+        return "/admin/client/clientMain";
     }
 
     /**
@@ -239,7 +244,7 @@ public class AdminController {
     public String clientDetail(Long clientId, Model model) {
         ClientResponseDto client = adminService.findClientById(clientId);
         model.addAttribute("client", client);
-        return "/admin/clientDetail";
+        return "/admin/client/clientDetail";
     }
 
     /**
@@ -249,7 +254,7 @@ public class AdminController {
      */
     @GetMapping("/client/save")
     public String clientSaveForm() {
-        return "/admin/clientSaveForm";
+        return "/admin/client/clientSaveForm";
     }
 
     /**
@@ -259,8 +264,8 @@ public class AdminController {
      * @return String
      */
     @PostMapping("/client/save")
-    public String systemSave(ClientSaveRequestDto clientSaveRequestDto) {
-        adminService.clientSave(clientSaveRequestDto);
+    public String clientSave(ClientSaveRequestDto clientSaveRequestDto) {
+        adminService.saveClient(clientSaveRequestDto);
         return "redirect:/admin/client";
     }
 
@@ -290,7 +295,7 @@ public class AdminController {
 
     /**
      * 그룹사 사용
-     * systemUse
+     * clientUse
      * @param clientId
      * @return ResponseEntity<String>
      */
@@ -300,6 +305,81 @@ public class AdminController {
         return ResponseEntity.ok("그룹사를 사용처리 완료했습니다.");
     }
 
+    /**
+     * 직원 조회화면 (조건)
+     * member
+     * @param
+     * @param pageable
+     * @param model
+     * @return String
+     */
+    @GetMapping("/member")
+    public String member(MemberRequestDto memberRequestDto, Pageable pageable, Model model) {
+        Page<MemberResponseDto> members = adminService.findMemberCond(memberRequestDto, pageable);
+        model.addAttribute("members", members);
+        model.addAttribute("cond", memberRequestDto);
+        return "/admin/member/memberMain";
+    }
 
+    /**
+     * 직원 상세화면
+     * memberDetail
+     * @param memberId
+     * @param model
+     * @return String
+     */
+    @GetMapping("/member/detail")
+    public String memberDetail(Long memberId, Model model) {
+        MemberResponseDto member = adminService.findMemberById(memberId);
+        model.addAttribute("member", member);
+        return "/admin/member/memberDetail";
+    }
+
+    /**
+     * 직원 등록화면 폼
+     * memberSaveForm
+     * @return String
+     */
+    @GetMapping("/member/save")
+    public String memberSaveForm() {
+        return "/admin/member/memberSaveForm";
+    }
+
+    /**
+     * 직원 저장
+     * memberSave
+     * @param memberSaveRequestDto
+     * @return String
+     */
+    @PostMapping("/member/save")
+    public String memberSave(MemberSaveRequestDto memberSaveRequestDto) {
+        adminService.saveMember(memberSaveRequestDto);
+        return "redirect:/admin/member";
+    }
+
+    /**
+     * 직원 수정
+     * memberModified
+     * @param memberModRequestDto
+     * @return String
+     */
+    @PostMapping("/member/modified")
+    public String memberModified(MemberModRequestDto memberModRequestDto) {
+        adminService.modifiedMember(memberModRequestDto);
+        return "redirect:/admin/member/detail?memberId="+memberModRequestDto.getMemberId();
+    }
+
+    /**
+     * 직원 재직정보 변견
+     * memberChangeStatus
+     * @param memberId
+     * @param empStatus
+     * @return ResponseEntity<String>
+     */
+    @PostMapping("/member/remove")
+    public ResponseEntity<String> memberChangeStatus(@RequestParam Long memberId, EmpStatus empStatus) {
+        adminService.memberChangeStatus(memberId, empStatus);
+        return ResponseEntity.ok("직원 재직정보를 변경 완료했습니다.");
+    }
 
 }

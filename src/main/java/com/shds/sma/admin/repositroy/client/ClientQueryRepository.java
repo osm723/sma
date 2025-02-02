@@ -7,5 +7,5 @@ import org.springframework.data.domain.Pageable;
 
 public interface ClientQueryRepository {
 
-    Page<Client> findClientCond(ClientRequestDto clientRequestDto, Pageable pageable);
+    Page<Client> findClientByCond(ClientRequestDto clientRequestDto, Pageable pageable);
 }
