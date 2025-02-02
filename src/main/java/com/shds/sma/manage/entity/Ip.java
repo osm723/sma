@@ -3,7 +3,7 @@ package com.shds.sma.manage.entity;
 import com.shds.sma.common.entity.BaseEntity;
 import com.shds.sma.admin.entity.System;
 import com.shds.sma.manage.types.IpType;
-import com.shds.sma.member.entity.Member;
+import com.shds.sma.admin.entity.Member;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

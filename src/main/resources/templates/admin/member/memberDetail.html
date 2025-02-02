@@ -140,7 +140,7 @@
                     <div class="col-12">
                         <label class="form-label">IP 만료전 알림 일자 : </label>
                         <label>
-                            <input type="text" disabled name="preIpAlarm" th:value="${system.getPreIpAlarm()}"/>
+                            <input type="text" name="preIpAlarm" th:value="${system.getPreIpAlarm()}"/>
                         </label>
                     </div>
 
@@ -148,7 +148,7 @@
                     <div class="col-12">
                         <label class="form-label">인증서 만료전 알림 일자 : </label>
                         <label>
-                            <input type="text" disabled name="preCertAlarm" th:value="${system.getPreCertAlarm()}"/>
+                            <input type="text" name="preCertAlarm" th:value="${system.getPreCertAlarm()}"/>
                         </label>
                     </div>
 

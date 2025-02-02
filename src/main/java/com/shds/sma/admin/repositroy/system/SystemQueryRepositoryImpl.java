@@ -15,7 +15,6 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 
 import static com.shds.sma.admin.entity.QSystem.system;
-import static com.shds.sma.member.entity.QMember.member;
 
 
 @Repository
@@ -28,7 +27,7 @@ public class SystemQueryRepositoryImpl implements SystemQueryRepository {
     }
 
     @Override
-    public Page<System> findSystemCond(SystemRequestDto systemRequestDto, Pageable pageable) {
+    public Page<System> findSystemByCond(SystemRequestDto systemRequestDto, Pageable pageable) {
         QueryResults<System> result = query.select(system)
                 .from(system)
                 .leftJoin(system.systemManagers)

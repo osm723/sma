@@ -1,6 +1,6 @@
 package com.shds.sma.admin.dto.system;
 
-import com.shds.sma.member.entity.Member;
+import com.shds.sma.admin.entity.Member;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;

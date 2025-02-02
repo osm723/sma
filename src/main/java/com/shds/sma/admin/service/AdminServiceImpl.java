@@ -4,15 +4,22 @@ import com.shds.sma.admin.dto.client.ClientModRequestDto;
 import com.shds.sma.admin.dto.client.ClientRequestDto;
 import com.shds.sma.admin.dto.client.ClientResponseDto;
 import com.shds.sma.admin.dto.client.ClientSaveRequestDto;
+import com.shds.sma.admin.dto.member.MemberModRequestDto;
+import com.shds.sma.admin.dto.member.MemberRequestDto;
+import com.shds.sma.admin.dto.member.MemberResponseDto;
+import com.shds.sma.admin.dto.member.MemberSaveRequestDto;
 import com.shds.sma.admin.dto.notice.*;
 import com.shds.sma.admin.dto.system.SystemModRequestDto;
 import com.shds.sma.admin.dto.system.SystemRequestDto;
 import com.shds.sma.admin.dto.system.SystemResponseDto;
 import com.shds.sma.admin.dto.system.SystemSaveRequestDto;
 import com.shds.sma.admin.entity.Client;
+import com.shds.sma.admin.entity.Member;
 import com.shds.sma.admin.entity.Notice;
 import com.shds.sma.admin.entity.System;
+import com.shds.sma.admin.entity.types.EmpStatus;
 import com.shds.sma.admin.repositroy.client.ClientRepository;
+import com.shds.sma.admin.repositroy.member.MemberRepository;
 import com.shds.sma.admin.repositroy.notice.NoticeRepository;
 import com.shds.sma.admin.repositroy.system.SystemRepository;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +41,8 @@ public class AdminServiceImpl implements AdminService {
     private final SystemRepository systemRepository;
 
     private final ClientRepository clientRepository;
+
+    private final MemberRepository memberRepository;
 
     private final ModelMapper modelMapper;
 
@@ -85,8 +94,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Page<SystemResponseDto> findSystemCond(SystemRequestDto systemRequestDto, Pageable pageable) {
-        Page<System> systems = systemRepository.findSystemCond(systemRequestDto, pageable);
+    public Page<SystemResponseDto> findSystemByCond(SystemRequestDto systemRequestDto, Pageable pageable) {
+        Page<System> systems = systemRepository.findSystemByCond(systemRequestDto, pageable);
         return systems.map(SystemResponseDto::new);
     }
 
@@ -120,8 +129,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Page<ClientResponseDto> findClientCond(ClientRequestDto clientRequestDto, Pageable pageable) {
-        Page<Client> clients = clientRepository.findClientCond(clientRequestDto, pageable);
+    public Page<ClientResponseDto> findClientByCond(ClientRequestDto clientRequestDto, Pageable pageable) {
+        Page<Client> clients = clientRepository.findClientByCond(clientRequestDto, pageable);
         return clients.map(ClientResponseDto::new);
     }
 
@@ -132,7 +141,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void clientSave(ClientSaveRequestDto clientSaveRequestDto) {
+    public void saveClient(ClientSaveRequestDto clientSaveRequestDto) {
         clientRepository.save(modelMapper.map(clientSaveRequestDto, Client.class));
     }
 
@@ -144,9 +153,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void removeClient(Long clientId) {
-        log.info("clientId = {}", clientId);
         Client findClient = clientRepository.findById(clientId).get();
-        log.info("findClient = {}", findClient.getValidity());
         findClient.setValidityN();
     }
 
@@ -156,5 +163,33 @@ public class AdminServiceImpl implements AdminService {
         findClient.setValidityY();
     }
 
+    @Override
+    public Page<MemberResponseDto> findMemberCond(MemberRequestDto memberRequestDto, Pageable pageable) {
+        memberRepository.findMemberByCond(memberRequestDto, pageable);
+        return null;
+    }
+
+    @Override
+    public MemberResponseDto findMemberById(Long memberId) {
+        Member member = memberRepository.findById(memberId).get();
+        return modelMapper.map(member, MemberResponseDto.class);
+    }
+
+    @Override
+    public void saveMember(MemberSaveRequestDto memberSaveRequestDto) {
+        memberRepository.save(modelMapper.map(memberSaveRequestDto, Member.class));
+    }
+
+    @Override
+    public void modifiedMember(MemberModRequestDto memberModRequestDto) {
+        Member findMember = memberRepository.findById(memberModRequestDto.getMemberId()).get();
+        findMember.memberModified(memberModRequestDto);
+    }
+
+    @Override
+    public void memberChangeStatus(Long memberId, EmpStatus empStatus) {
+        Member findMember = memberRepository.findById(memberId).get();
+        findMember.empStatusChange(empStatus);
+    }
 
 }

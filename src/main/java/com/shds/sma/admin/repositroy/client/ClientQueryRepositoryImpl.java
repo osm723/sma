@@ -27,7 +27,7 @@ public class ClientQueryRepositoryImpl implements ClientQueryRepository {
     }
 
     @Override
-    public Page<Client> findClientCond(ClientRequestDto clientRequestDto, Pageable pageable) {
+    public Page<Client> findClientByCond(ClientRequestDto clientRequestDto, Pageable pageable) {
         QueryResults<Client> result = query.select(client)
                 .from(client)
                 .where(clientCodeEq(clientRequestDto.getClientCode())
