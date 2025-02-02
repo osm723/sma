@@ -142,6 +142,20 @@ public class AdminController {
     }
 
     /**
+     * 시스템 상세화면
+     * systemDetail
+     * @param systemId
+     * @param model
+     * @return String
+     */
+    @GetMapping("/system/detail")
+    public String systemDetail(Long systemId, Model model) {
+        SystemResponseDto system = adminService.findSystemById(systemId);
+        model.addAttribute("system", system);
+        return "/admin/systemDetail";
+    }
+
+    /**
      * 시스템 등록화면 폼
      * systemSaveForm
      * @return String
@@ -172,7 +186,7 @@ public class AdminController {
     @PostMapping("/system/modified")
     public String systemModified(SystemModRequestDto systemModRequestDto) {
         adminService.modifiedSystem(systemModRequestDto);
-        return "redirect:/admin/noticeDetail?noticeId="+systemModRequestDto.getSystemId();
+        return "redirect:/admin/system/detail?systemId="+systemModRequestDto.getSystemId();
     }
 
     /**
@@ -259,7 +273,7 @@ public class AdminController {
     @PostMapping("/client/modified")
     public String clientModified(ClientModRequestDto clientModRequestDto) {
         adminService.modifiedClient(clientModRequestDto);
-        return "redirect:/admin/clientDetail?clientId="+clientModRequestDto.getClientId();
+        return "redirect:/admin/client/detail?clientId="+clientModRequestDto.getClientId();
     }
 
     /**
@@ -271,7 +285,7 @@ public class AdminController {
     @PostMapping("/client/remove")
     public ResponseEntity<String> clientRemove(@RequestParam Long clientId) {
         adminService.removeClient(clientId);
-        return ResponseEntity.ok("공지를 삭제 완료했습니다.");
+        return ResponseEntity.ok("그룹사를 미사용처리 완료했습니다.");
     }
 
     /**
@@ -283,7 +297,7 @@ public class AdminController {
     @PostMapping("/client/use")
     public ResponseEntity<String> clientUse(@RequestParam Long clientId) {
         adminService.useClient(clientId);
-        return ResponseEntity.ok("공지를 사용 완료했습니다.");
+        return ResponseEntity.ok("그룹사를 사용처리 완료했습니다.");
     }
 
 

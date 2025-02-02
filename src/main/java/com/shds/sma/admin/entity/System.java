@@ -43,7 +43,7 @@ public class System extends BaseEntity {
 
     public void systemModified(SystemModRequestDto systemModRequestDto) {
         this.systemName = systemModRequestDto.getSystemName();
-        this.systemManagers = systemModRequestDto.getSystemManagers();
+        //this.systemManagers = systemModRequestDto.getSystemManagers();
         this.preIpAlarm = systemModRequestDto.getPreIpAlarm();
         this.preCertAlarm = systemModRequestDto.getPreCertAlarm();
     }

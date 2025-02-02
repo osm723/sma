@@ -91,6 +91,12 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public SystemResponseDto findSystemById(Long systemId) {
+        System findSystem = systemRepository.findById(systemId).get();
+        return modelMapper.map(findSystem, SystemResponseDto.class);
+    }
+
+    @Override
     public void systemSave(SystemSaveRequestDto systemSaveRequestDto) {
         systemRepository.save(modelMapper.map(systemSaveRequestDto, System.class));
     }
@@ -138,7 +144,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void removeClient(Long clientId) {
+        log.info("clientId = {}", clientId);
         Client findClient = clientRepository.findById(clientId).get();
+        log.info("findClient = {}", findClient.getValidity());
         findClient.setValidityN();
     }
 

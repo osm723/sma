@@ -16,7 +16,7 @@ public class SystemModRequestDto {
     @NotBlank
     private String systemName;
 
-    private List<Member> systemManagers;
+    //private List<Member> systemManagers;
 
     private Integer preIpAlarm;
 

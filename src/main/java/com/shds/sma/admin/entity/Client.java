@@ -26,7 +26,6 @@ public class Client extends BaseEntity {
     @NotBlank
     private String clientName;
 
-
     public void clientModified(ClientModRequestDto clientModRequestDto) {
         this.clientCode = clientModRequestDto.getClientCode();
         this.clientName = clientModRequestDto.getClientName();
