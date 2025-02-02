@@ -32,6 +32,8 @@ public interface AdminService {
 
     Page<SystemResponseDto> findSystemCond(SystemRequestDto systemRequestDto, Pageable pageable);
 
+    SystemResponseDto findSystemById(Long systemId);
+
     void systemSave(SystemSaveRequestDto systemSaveRequestDto);
 
     void modifiedSystem(SystemModRequestDto systemModRequestDto);

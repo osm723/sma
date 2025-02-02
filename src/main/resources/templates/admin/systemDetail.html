@@ -15,12 +15,12 @@
 <script>
 
     /**
-     * 그룹사 사용 함수
-     * clientUse
+     * 시스템 사용 함수
+     * systemUse
      */
-    function clientUse(clientId) {
-        if (confirm("그룹사를 사용 하시겠습니까?")) {
-            fetch('/admin/client/use?clientId=' + clientId, {
+    function systemUse(systemId) {
+        if (confirm("시스템을 사용 하시겠습니까?")) {
+            fetch('/admin/system/use?systemId=' + systemId, {
                 method: 'POST'
             })
                 .then(response => {
@@ -40,12 +40,12 @@
     }
 
     /**
-     * 그룹사 삭제 함수
-     * clientDelete
+     * 시스템 삭제 함수
+     * systemDelete
      */
-    function clientDelete(clientId) {
-        if (confirm("그룹사를 삭제 하시겠습니까?")) {
-            fetch('/admin/client/remove?clientId=' + clientId, {
+    function systemDelete(systemId) {
+        if (confirm("시스템을 삭제 하시겠습니까?")) {
+            fetch('/admin/system/remove?systemId=' + systemId, {
                 method: 'POST'
             })
                 .then(response => {
@@ -77,8 +77,8 @@
      * formSubmit
      */
     function formSubmit() {
-        if (confirm("그룹사를 수정 하시겠습니까?")) {
-            const form = document.getElementById("clientForm");
+        if (confirm("시스템을 수정 하시겠습니까?")) {
+            const form = document.getElementById("systemForm");
             form.submit();
         }
     }
@@ -92,21 +92,21 @@
             <h4 class="mb-3">공지 상세 페이지</h4>
             <br>
             <div class="row g-3">
-                <form class="needs-validation" novalidate action="#" id="clientForm"
-                      th:action="@{/admin/client/modified}" method="post">
+                <form class="needs-validation" novalidate action="#" id="systemForm"
+                      th:action="@{/admin/system/modified}" method="post">
                     <div class="col-12">
                         <label>
-                            <button class="w-40 btn btn-primary btn-sm" onclick="formSubmit()">그룹사수정</button>
+                            <button class="w-40 btn btn-primary btn-sm" onclick="formSubmit()">시스템수정</button>
                         </label>
                         <label>
-                            <button th:if="${client.getValidity() == 'Y'}"
+                            <button th:if="${system.getValidity() == 'Y'}"
                                     class="w-30 btn btn-primary btn-sm"
-                                    th:attr="onclick=|clientDelete('${client.getClientId()}')|">그룹사삭제
+                                    th:attr="onclick=|systemDelete('${system.getSystemId()}')|">시스템삭제
                             </button>
 
-                            <button th:if="${client.getValidity() == 'N'}"
+                            <button th:if="${system.getValidity() == 'N'}"
                                     class="w-30 btn btn-primary btn-sm"
-                                    th:attr="onclick=|clientUse('${client.getClientId()}')|">그룹사사용
+                                    th:attr="onclick=|systemUse('${system.getSystemId()}')|">시스템사용
                             </button>
                         </label>
                         <label>
@@ -116,23 +116,39 @@
 
                     <div class="col-12">
                         <label>
-                            <input type="hidden" name="clientId" th:value="${client.getClientId()}"/>
+                            <input type="hidden" name="systemId" th:value="${system.getSystemId()}"/>
                         </label>
                     </div>
 
-                    <!-- 그룹사 코드 -->
+                    <!-- 시스템 명 -->
                     <div class="col-12">
-                        <label class="form-label">그룹사 코드 : </label>
+                        <label class="form-label">시스템 명 : </label>
                         <label>
-                            <input type="text" name="clientCode" th:value="${client.getClientCode()}"/>
+                            <input type="text" name="systemName" th:value="${system.getSystemName()}"/>
                         </label>
                     </div>
 
-                    <!-- 그룹사 명 -->
+                    <!-- 시스템 담당자 -->
                     <div class="col-12">
-                        <label class="form-label">그룹사 명 : </label>
+                        <label class="form-label">시스템 담당자 : </label>
                         <label>
-                            <input type="text" name="clientName" th:value="${client.getClientName()}"/>
+                            <input type="text" name="systemManagers" th:value="${system.getSystemManagers()}"/>
+                        </label>
+                    </div>
+
+                    <!-- IP 만료전 알림 일자 -->
+                    <div class="col-12">
+                        <label class="form-label">IP 만료전 알림 일자 : </label>
+                        <label>
+                            <input type="text" disabled name="preIpAlarm" th:value="${system.getPreIpAlarm()}"/>
+                        </label>
+                    </div>
+
+                    <!-- 인증서 만료전 알림 일자 -->
+                    <div class="col-12">
+                        <label class="form-label">인증서 만료전 알림 일자 : </label>
+                        <label>
+                            <input type="text" disabled name="preCertAlarm" th:value="${system.getPreCertAlarm()}"/>
                         </label>
                     </div>
 
@@ -140,7 +156,7 @@
                     <div class="col-12">
                         <label class="form-label">공지 등록.수정일자 : </label>
                         <label>
-                            <input type="text" readonly disabled name="modDate" th:value="${client.getModDate()}"/>
+                            <input type="text" readonly disabled name="modDate" th:value="${system.getModDate()}"/>
                         </label>
                     </div>
 
@@ -148,7 +164,7 @@
                     <div class="col-12">
                         <label class="form-label">공지 등록.수정자 : </label>
                         <label>
-                            <input type="text" readonly disabled name="modMemberId" th:value="${client.getModMemberId()}"/>
+                            <input type="text" readonly disabled name="modMemberId" th:value="${system.getModMemberId()}"/>
                         </label>
                     </div>
 
@@ -156,7 +172,7 @@
                     <div class="col-12">
                         <label class="form-label">사용유무 : </label>
                         <label>
-                            <input type="text" readonly disabled name="validity" th:value="${client.getValidity()}"/>
+                            <input type="text" readonly disabled name="validity" th:value="${system.getValidity()}"/>
                         </label>
                     </div>
 

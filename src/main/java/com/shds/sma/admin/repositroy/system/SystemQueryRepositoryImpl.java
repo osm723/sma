@@ -30,7 +30,8 @@ public class SystemQueryRepositoryImpl implements SystemQueryRepository {
     @Override
     public Page<System> findSystemCond(SystemRequestDto systemRequestDto, Pageable pageable) {
         QueryResults<System> result = query.select(system)
-                .from(system, member)
+                .from(system)
+                .leftJoin(system.systemManagers)
                 .where(systemNameEq(systemRequestDto.getSystemName())
                         , (validityEq(systemRequestDto.getValidity()))
                 )

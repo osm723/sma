@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -28,11 +29,20 @@ public class SystemResponseDto {
 
     private Integer preCertAlarm;
 
+    private LocalDateTime modDate;
+
+    private Long modMemberId;
+
+    private String validity;
+
     public SystemResponseDto(System system) {
         this.systemId = system.getId();
         this.systemName = system.getSystemName();
         this.systemManagers = system.getSystemManagers();
         this.preIpAlarm = system.getPreIpAlarm();
         this.preCertAlarm = system.getPreCertAlarm();
+        this.modDate = system.getModDate();
+        this.modMemberId = system.getModMemberId();
+        this.validity = system.getValidity();
     }
 }
