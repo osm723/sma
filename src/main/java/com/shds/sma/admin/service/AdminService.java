@@ -17,6 +17,8 @@ import com.shds.sma.admin.entity.types.EmpStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface AdminService {
 
     Page<NoticeResponseDto> findNoticeAll(Pageable pageable);
@@ -34,6 +36,8 @@ public interface AdminService {
     void removeNotice(Long noticeId);
 
     void useNotice(Long noticeId);
+
+    List<SystemResponseDto> findSystemAll();
 
     Page<SystemResponseDto> findSystemByCond(SystemRequestDto systemRequestDto, Pageable pageable);
 

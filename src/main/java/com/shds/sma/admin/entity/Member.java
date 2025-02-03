@@ -3,7 +3,7 @@ package com.shds.sma.admin.entity;
 import com.shds.sma.admin.dto.member.MemberModRequestDto;
 import com.shds.sma.admin.entity.types.EmpAuth;
 import com.shds.sma.admin.entity.types.EmpStatus;
-import com.shds.sma.admin.entity.types.SystemAuth;
+import com.shds.sma.admin.entity.types.SystemRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -63,10 +63,10 @@ public class Member {
     @JoinColumn(name = "SYSTEM_ID")
     private System system;
 
-    @Column(length = 20, columnDefinition = "VARCHAR(20) COMMENT '시스템 권한'", nullable = false)
+    @Column(length = 20, columnDefinition = "VARCHAR(20) COMMENT '담당 시스템 역할'", nullable = false)
     @NotNull
     @Enumerated(EnumType.STRING)
-    private SystemAuth systemAuth;
+    private SystemRole systemRole;
 
     public void memberModified(MemberModRequestDto memberModRequestDto) {
         this.name = memberModRequestDto.getName();
@@ -80,6 +80,7 @@ public class Member {
         this.empStatue = memberModRequestDto.getEmpStatue();
         this.empAuth = memberModRequestDto.getEmpAuth();
         this.system = memberModRequestDto.getSystem();
+        this.systemRole = memberModRequestDto.getSystemRole();
     }
 
     public void empStatusChange(EmpStatus empStatue) {

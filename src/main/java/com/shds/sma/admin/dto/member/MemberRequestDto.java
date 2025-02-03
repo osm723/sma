@@ -3,7 +3,7 @@ package com.shds.sma.admin.dto.member;
 import com.shds.sma.admin.entity.Client;
 import com.shds.sma.admin.entity.System;
 import com.shds.sma.admin.entity.types.EmpAuth;
-import com.shds.sma.admin.entity.types.SystemAuth;
+import com.shds.sma.admin.entity.types.SystemRole;
 import com.shds.sma.admin.entity.types.EmpStatus;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,7 +32,7 @@ public class MemberRequestDto {
 
     private EmpAuth empAuth;
 
-    private SystemAuth systemAuth;
+    private SystemRole systemRole;
 
     private System system;
 

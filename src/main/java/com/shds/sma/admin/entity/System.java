@@ -1,7 +1,6 @@
 package com.shds.sma.admin.entity;
 
 import com.shds.sma.admin.dto.system.SystemModRequestDto;
-import com.shds.sma.admin.entity.types.SystemAuth;
 import com.shds.sma.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;

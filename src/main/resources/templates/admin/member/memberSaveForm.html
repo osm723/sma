@@ -124,10 +124,34 @@
                         <div class="col-12">
                             <label class="form-label">권한 : </label>
                             <label th:each="empAuth : ${empAuths}">
-                                <input type="radio" name="systemAuth"
+                                <input type="radio" name="empAuth"
                                        th:text="${empAuth.getEmpAuth()}"
                                        th:value="${empAuth.name()}"
                                        th:checked="${empAuth.name() == 'NORMAL'}"
+                                />
+                            </label>
+                        </div>
+
+                        <!-- 담당 시스템 -->
+                        <div class="col-12">
+                            <label class="form-label">담당 시스템 : </label>
+                            <label th:each="system : ${systems}">
+                                <input type="radio" name="system"
+                                       th:text="${system.getSystemName()}"
+                                       th:value="${system.getSystemId()}"
+                                       th:checked="${system.getSystemId() == '1'}"
+                                />
+                            </label>
+                        </div>
+
+                        <!-- 담당 시스템 역할 -->
+                        <div class="col-12">
+                            <label class="form-label">담당 시스템 역할 : </label>
+                            <label th:each="systemRole : ${systemRoles}">
+                                <input type="radio" name="systemAuth"
+                                       th:text="${systemRole.getSystemRole()}"
+                                       th:value="${systemRole.name()}"
+                                       th:checked="${systemRole.name() == 'NORMAL'}"
                                 />
                             </label>
                         </div>

@@ -17,7 +17,7 @@ import com.shds.sma.admin.dto.system.SystemRequestDto;
 import com.shds.sma.admin.dto.system.SystemResponseDto;
 import com.shds.sma.admin.dto.system.SystemSaveRequestDto;
 import com.shds.sma.admin.entity.types.EmpAuth;
-import com.shds.sma.admin.entity.types.SystemAuth;
+import com.shds.sma.admin.entity.types.SystemRole;
 import com.shds.sma.admin.entity.types.EmpStatus;
 import com.shds.sma.admin.service.AdminService;
 import lombok.RequiredArgsConstructor;
@@ -170,9 +170,7 @@ public class AdminController {
      * @return String
      */
     @GetMapping("/system/save")
-    public String systemSaveForm(Model model) {
-        List<SystemAuth> systemAuths = List.of(SystemAuth.values());
-        model.addAttribute("systemAuths", systemAuths);
+    public String systemSaveForm() {
         return "/admin/system/systemSaveForm";
     }
 
@@ -347,12 +345,18 @@ public class AdminController {
      * @return String
      */
     @GetMapping("/member/save")
-    public String memberSaveForm(Model model) {
+    public String memberSaveForm(Model model, Pageable pageable) {
         List<EmpStatus> empStatuses = List.of(EmpStatus.values());
         model.addAttribute("empStatuses", empStatuses);
 
         List<EmpAuth> empAuths = List.of(EmpAuth.values());
         model.addAttribute("empAuths", empAuths);
+
+        List<SystemRole> systemRoles = List.of(SystemRole.values());
+        model.addAttribute("systemRoles", systemRoles);
+
+        List<SystemResponseDto> systems = adminService.findSystemAll();
+        model.addAttribute("systems", systems);
 
         return "/admin/member/memberSaveForm";
     }
