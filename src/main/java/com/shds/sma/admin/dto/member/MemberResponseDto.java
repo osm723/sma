@@ -1,6 +1,7 @@
 package com.shds.sma.admin.dto.member;
 
 import com.shds.sma.admin.entity.Client;
+import com.shds.sma.admin.entity.Member;
 import com.shds.sma.admin.entity.System;
 import com.shds.sma.admin.entity.types.EmpAuth;
 import com.shds.sma.admin.entity.types.SystemRole;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 public class MemberResponseDto {
 
-    private Long id;
+    private Long memberId;
 
     private String name;
 
@@ -32,7 +33,7 @@ public class MemberResponseDto {
 
     private String roleName;
 
-    private EmpStatus empStatue;
+    private EmpStatus empStatus;
 
     private EmpAuth empAuth;
 
@@ -46,4 +47,19 @@ public class MemberResponseDto {
 
     private String validity;
 
+    public MemberResponseDto(Member member) {
+        this.memberId = member.getId();
+        this.name = member.getName();
+        this.client = member.getClient();
+        this.deptCode = member.getDeptCode();
+        this.deptName = member.getDeptName();
+        this.gradeCode = member.getGradeCode();
+        this.gradeName = member.getGradeName();
+        this.roleCode = member.getRoleCode();
+        this.roleName = member.getRoleName();
+        this.empStatus = member.getEmpStatus();
+        this.empAuth = member.getEmpAuth();
+        this.system = member.getSystem();
+        this.systemRole = member.getSystemRole();
+    }
 }

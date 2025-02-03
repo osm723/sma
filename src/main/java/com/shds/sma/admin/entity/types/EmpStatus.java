@@ -9,10 +9,10 @@ public enum EmpStatus {
     LEAVE("휴직"),
     ETC("기타");
 
-    private final String empStatus;
+    private final String description;
 
-    EmpStatus(String empStatus) {
-        this.empStatus = empStatus;
+    EmpStatus(String description) {
+        this.description = description;
     }
 
 }

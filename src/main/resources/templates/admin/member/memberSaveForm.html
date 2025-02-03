@@ -41,22 +41,27 @@
         <div class="row g-5">
             <div class="col-md-7 col-lg-8">
                 <h4 class="mb-3">직원 등록</h4>
-                <form class="needs-validation" novalidate action="#" id="memberForm" th:action="@{/admin/member/save}" method="post">
+                <form class="needs-validation" novalidate action="#" id="memberForm" th:object="${member}" th:action="@{/admin/member/save}" method="post">
                     <div class="row g-3">
 
                         <!-- 직원명 -->
                         <div class="col-12">
                             <label class="form-label">직원명 : </label>
                             <label>
-                                <input type="text" name="name" maxlength="100"/>
+                                <input type="text" name="name" id="name" th:field="*{name}" maxlength="100"/>
                             </label>
                         </div>
 
                         <!-- 회사명 -->
                         <div class="col-12">
                             <label class="form-label">회사명 : </label>
-                            <label>
-                                <input type="text" name="clientName" maxlength="100"/>
+                            <label for="clientId">
+                                <select id="clientId" th:field="*{clientId}">
+                                    <option th:each="client : ${clients}"
+                                            th:value="${client.getClientId()}"
+                                            th:text="${client.getClientName()}">
+                                    </option>
+                                </select>
                             </label>
                         </div>
 
@@ -64,7 +69,7 @@
                         <div class="col-12">
                             <label class="form-label">부서코드 : </label>
                             <label>
-                                <input type="text" name="deptCode" maxlength="20"/>
+                                <input type="text" name="deptCode" id="deptCode" th:field="*{deptCode}" maxlength="20"/>
                             </label>
                         </div>
 
@@ -72,7 +77,7 @@
                         <div class="col-12">
                             <label class="form-label">부서명 : </label>
                             <label>
-                                <input type="text" name="deptName" maxlength="40"/>
+                                <input type="text" name="deptName" id="deptName" th:field="*{deptName}" maxlength="40"/>
                             </label>
                         </div>
 
@@ -80,7 +85,7 @@
                         <div class="col-12">
                             <label class="form-label">직위코드 : </label>
                             <label>
-                                <input type="text" name="gradeCode" maxlength="20"/>
+                                <input type="text" name="gradeCode" id="gradeCode" th:field="*{gradeCode}" maxlength="20"/>
                             </label>
                         </div>
 
@@ -88,7 +93,7 @@
                         <div class="col-12">
                             <label class="form-label">직위명 : </label>
                             <label>
-                                <input type="text" name="gradeName" maxlength="40"/>
+                                <input type="text" name="gradeName" id="gradeName" th:field="*{gradeName}" maxlength="40"/>
                             </label>
                         </div>
 
@@ -96,7 +101,7 @@
                         <div class="col-12">
                             <label class="form-label">직책코드 : </label>
                             <label>
-                                <input type="text" name="roleCode" maxlength="20"/>
+                                <input type="text" name="roleCode" id="roleCode" th:field="*{roleCode}" maxlength="20"/>
                             </label>
                         </div>
 
@@ -104,55 +109,59 @@
                         <div class="col-12">
                             <label class="form-label">직책명 : </label>
                             <label>
-                                <input type="text" name="roleName" maxlength="40"/>
+                                <input type="text" name="roleName" id="roleName" th:field="*{roleName}" maxlength="40"/>
                             </label>
                         </div>
 
                         <!-- 재직상태 -->
                         <div class="col-12">
-                            <label class="form-label">재직상태 : </label>
-                            <label th:each="empStatuse : ${empStatuses}">
-                                <input type="radio" name="empStatuse"
-                                       th:text="${empStatuse.getEmpStatus()}"
-                                       th:value="${empStatuse.name()}"
-                                       th:checked="${empStatuse.name() == 'EMPLOYEE'}"
-                                />
+                            <label>재직상태 : </label>
+                            <label for="empStatus">
+                                <select id="empStatus" th:field="*{empStatus}">
+                                    <option th:each="status : ${empStatuses}"
+                                            th:value="${status.name()}"
+                                            th:text="${status.getDescription()}">
+                                    </option>
+                                </select>
                             </label>
                         </div>
 
                         <!-- 권한 -->
                         <div class="col-12">
                             <label class="form-label">권한 : </label>
-                            <label th:each="empAuth : ${empAuths}">
-                                <input type="radio" name="empAuth"
-                                       th:text="${empAuth.getEmpAuth()}"
-                                       th:value="${empAuth.name()}"
-                                       th:checked="${empAuth.name() == 'NORMAL'}"
-                                />
+                            <label for="empAuth">
+                                <select id="empAuth" th:field="*{empAuth}">
+                                    <option th:each="auth : ${empAuths}"
+                                            th:value="${auth.name()}"
+                                            th:text="${auth.getDescription()}">
+                                    </option>
+                                </select>
                             </label>
                         </div>
 
                         <!-- 담당 시스템 -->
                         <div class="col-12">
                             <label class="form-label">담당 시스템 : </label>
-                            <label th:each="system : ${systems}">
-                                <input type="radio" name="system"
-                                       th:text="${system.getSystemName()}"
-                                       th:value="${system.getSystemId()}"
-                                       th:checked="${system.getSystemId() == '1'}"
-                                />
+                            <label for="systemId">
+                                <select id="systemId" th:field="*{systemId}">
+                                    <option th:each="system : ${systems}"
+                                            th:value="${system.getSystemId()}"
+                                            th:text="${system.getSystemName()}">
+                                    </option>
+                                </select>
                             </label>
                         </div>
 
                         <!-- 담당 시스템 역할 -->
                         <div class="col-12">
                             <label class="form-label">담당 시스템 역할 : </label>
-                            <label th:each="systemRole : ${systemRoles}">
-                                <input type="radio" name="systemAuth"
-                                       th:text="${systemRole.getSystemRole()}"
-                                       th:value="${systemRole.name()}"
-                                       th:checked="${systemRole.name() == 'NORMAL'}"
-                                />
+                            <label for="systemRole">
+                                <select id="systemRole" th:field="*{systemRole}">
+                                    <option th:each="role : ${systemRoles}"
+                                            th:value="${role.name()}"
+                                            th:text="${role.getDescription()}">
+                                    </option>
+                                </select>
                             </label>
                         </div>
 

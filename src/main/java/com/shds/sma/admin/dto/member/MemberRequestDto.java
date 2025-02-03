@@ -28,7 +28,7 @@ public class MemberRequestDto {
 
     private String roleName;
 
-    private EmpStatus empStatue;
+    private EmpStatus empStatus;
 
     private EmpAuth empAuth;
 

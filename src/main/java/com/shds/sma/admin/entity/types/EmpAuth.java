@@ -1,5 +1,6 @@
 package com.shds.sma.admin.entity.types;
 
+
 import lombok.Getter;
 
 @Getter
@@ -11,9 +12,10 @@ public enum EmpAuth {
     TEMP("임시")
     ;
 
-    private final String empAuth;
+    private final String description;
 
-    EmpAuth(String empAuth) {
-        this.empAuth = empAuth;
+    EmpAuth(String description) {
+        this.description = description;
     }
+
 }
