@@ -1,9 +1,9 @@
 package com.shds.sma.admin.entity;
 
 import com.shds.sma.admin.dto.member.MemberModRequestDto;
-import com.shds.sma.admin.entity.types.SystemRole;
+import com.shds.sma.admin.entity.types.EmpAuth;
 import com.shds.sma.admin.entity.types.EmpStatus;
-import com.shds.sma.admin.entity.types.Auth;
+import com.shds.sma.admin.entity.types.SystemAuth;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -57,13 +57,16 @@ public class Member {
     @Column(length = 20, columnDefinition = "VARCHAR(20) COMMENT '시스템 권한'", nullable = false)
     @NotNull
     @Enumerated(EnumType.STRING)
-    private Auth auth;
+    private EmpAuth empAuth;
 
     @ManyToOne
     @JoinColumn(name = "SYSTEM_ID")
     private System system;
 
-    private SystemRole systemRole;
+    @Column(length = 20, columnDefinition = "VARCHAR(20) COMMENT '시스템 권한'", nullable = false)
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private SystemAuth systemAuth;
 
     public void memberModified(MemberModRequestDto memberModRequestDto) {
         this.name = memberModRequestDto.getName();
@@ -75,9 +78,8 @@ public class Member {
         this.roleCode = memberModRequestDto.getRoleCode();
         this.roleName = memberModRequestDto.getRoleName();
         this.empStatue = memberModRequestDto.getEmpStatue();
-        this.auth = memberModRequestDto.getAuth();
+        this.empAuth = memberModRequestDto.getEmpAuth();
         this.system = memberModRequestDto.getSystem();
-        this.systemRole = memberModRequestDto.getSystemRole();
     }
 
     public void empStatusChange(EmpStatus empStatue) {

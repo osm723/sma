@@ -136,6 +136,14 @@
                         </label>
                     </div>
 
+                    <!-- 시스템 정보 -->
+                    <div class="col-12">
+                        <label class="form-label">시스템 정보 : </label>
+                        <label>
+                            <input type="text" name="systemInfo" th:value="${system.getSystemInfo()}"/>
+                        </label>
+                    </div>
+
                     <!-- IP 만료전 알림 일자 -->
                     <div class="col-12">
                         <label class="form-label">IP 만료전 알림 일자 : </label>

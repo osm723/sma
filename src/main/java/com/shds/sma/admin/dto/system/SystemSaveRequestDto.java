@@ -20,4 +20,6 @@ public class SystemSaveRequestDto {
 
     private Integer preCertAlarm;
 
+    private String systemInfo;
+
 }

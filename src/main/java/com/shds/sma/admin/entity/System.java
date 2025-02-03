@@ -1,11 +1,10 @@
 package com.shds.sma.admin.entity;
 
 import com.shds.sma.admin.dto.system.SystemModRequestDto;
+import com.shds.sma.admin.entity.types.SystemAuth;
 import com.shds.sma.common.entity.BaseEntity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,7 +25,7 @@ public class System extends BaseEntity {
     private Long id;
 
     @Column(length = 40, columnDefinition = "VARCHAR(40) COMMENT '시스템명'", nullable = false)
-    @NotNull
+    @NotBlank
     private String systemName;
 
     @OneToMany(mappedBy = "system")
@@ -43,10 +42,15 @@ public class System extends BaseEntity {
     @Max(99)
     private Integer preCertAlarm;
 
+    @Size(max = 400)
+    @Column(length = 400, columnDefinition = "VARCHAR(400) COMMENT '시스템 정보'")
+    private String systemInfo;
+
     public void systemModified(SystemModRequestDto systemModRequestDto) {
         this.systemName = systemModRequestDto.getSystemName();
         //this.systemManagers = systemModRequestDto.getSystemManagers();
         this.preIpAlarm = systemModRequestDto.getPreIpAlarm();
         this.preCertAlarm = systemModRequestDto.getPreCertAlarm();
+        this.systemInfo = systemModRequestDto.getSystemInfo();
     }
 }
