@@ -1,5 +1,8 @@
 package com.shds.sma.admin.entity.types;
 
+import lombok.Getter;
+
+@Getter
 public enum EmpStatus {
     EMPLOYEE("재직"),
     RETIRE("퇴직"),
@@ -12,7 +15,4 @@ public enum EmpStatus {
         this.empStatus = empStatus;
     }
 
-    public String getEmpStatus() {
-        return empStatus;
-    }
 }

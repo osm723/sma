@@ -44,15 +44,15 @@
                 <form class="needs-validation" novalidate action="#" id="systemForm" th:action="@{/admin/system/save}" method="post">
                     <div class="row g-3">
 
-                        <!-- 시스템명 -->
+                        <!-- 시스템 명 -->
                         <div class="col-12">
-                            <label class="form-label">시스템명 : </label>
+                            <label class="form-label">시스템 명 : </label>
                             <label>
                                 <input type="text" name="systemName" maxlength="100"/>
                             </label>
                         </div>
 
-                        <!-- 내용 -->
+                        <!-- 담당자 명 -->
                         <div class="col-12">
                             <label class="form-label">담당자 명 : </label>
                             <label>
@@ -60,7 +60,15 @@
                             </label>
                         </div>
 
-                        <!-- 내용 -->
+                        <!-- 시스템 정보 -->
+                        <div class="col-12">
+                            <label class="form-label">시스템 정보 : </label>
+                            <label>
+                                <input type="text" name="systemInfo" maxlength="400"/>
+                            </label>
+                        </div>
+
+                        <!-- IP 만료전 알림 일자 -->
                         <div class="col-12">
                             <label class="form-label">IP 만료전 알림 일자 : </label>
                             <label>
@@ -68,7 +76,7 @@
                             </label>
                         </div>
 
-                        <!-- 내용 -->
+                        <!-- 인증서 만료전 알림 일자 -->
                         <div class="col-12">
                             <label class="form-label">인증서 만료전 알림 일자 : </label>
                             <label>

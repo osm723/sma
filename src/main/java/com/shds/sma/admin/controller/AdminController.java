@@ -16,6 +16,8 @@ import com.shds.sma.admin.dto.system.SystemModRequestDto;
 import com.shds.sma.admin.dto.system.SystemRequestDto;
 import com.shds.sma.admin.dto.system.SystemResponseDto;
 import com.shds.sma.admin.dto.system.SystemSaveRequestDto;
+import com.shds.sma.admin.entity.types.EmpAuth;
+import com.shds.sma.admin.entity.types.SystemAuth;
 import com.shds.sma.admin.entity.types.EmpStatus;
 import com.shds.sma.admin.service.AdminService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -166,7 +170,9 @@ public class AdminController {
      * @return String
      */
     @GetMapping("/system/save")
-    public String systemSaveForm() {
+    public String systemSaveForm(Model model) {
+        List<SystemAuth> systemAuths = List.of(SystemAuth.values());
+        model.addAttribute("systemAuths", systemAuths);
         return "/admin/system/systemSaveForm";
     }
 
@@ -341,7 +347,13 @@ public class AdminController {
      * @return String
      */
     @GetMapping("/member/save")
-    public String memberSaveForm() {
+    public String memberSaveForm(Model model) {
+        List<EmpStatus> empStatuses = List.of(EmpStatus.values());
+        model.addAttribute("empStatuses", empStatuses);
+
+        List<EmpAuth> empAuths = List.of(EmpAuth.values());
+        model.addAttribute("empAuths", empAuths);
+
         return "/admin/member/memberSaveForm";
     }
 

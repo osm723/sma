@@ -2,6 +2,7 @@ package com.shds.sma.admin.dto.system;
 
 import com.shds.sma.admin.entity.System;
 import com.shds.sma.admin.entity.Member;
+import com.shds.sma.admin.entity.types.SystemAuth;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -29,6 +30,8 @@ public class SystemResponseDto {
 
     private Integer preCertAlarm;
 
+    private String systemInfo;
+
     private LocalDateTime modDate;
 
     private Long modMemberId;
@@ -41,6 +44,7 @@ public class SystemResponseDto {
         this.systemManagers = system.getSystemManagers();
         this.preIpAlarm = system.getPreIpAlarm();
         this.preCertAlarm = system.getPreCertAlarm();
+        this.systemInfo = system.getSystemInfo();
         this.modDate = system.getModDate();
         this.modMemberId = system.getModMemberId();
         this.validity = system.getValidity();

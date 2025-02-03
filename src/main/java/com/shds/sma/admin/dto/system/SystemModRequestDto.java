@@ -19,4 +19,6 @@ public class SystemModRequestDto {
 
     private Integer preCertAlarm;
 
+    private String systemInfo;
+
 }

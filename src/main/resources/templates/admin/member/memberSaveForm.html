@@ -111,24 +111,24 @@
                         <!-- 재직상태 -->
                         <div class="col-12">
                             <label class="form-label">재직상태 : </label>
-                            <label>
-                                <input type="text" name="empStatus" maxlength="40"/>
+                            <label th:each="empStatuse : ${empStatuses}">
+                                <input type="radio" name="empStatuse"
+                                       th:text="${empStatuse.getEmpStatus()}"
+                                       th:value="${empStatuse.name()}"
+                                       th:checked="${empStatuse.name() == 'EMPLOYEE'}"
+                                />
                             </label>
                         </div>
 
                         <!-- 권한 -->
                         <div class="col-12">
                             <label class="form-label">권한 : </label>
-                            <label>
-                                <input type="text" name="auth" maxlength="40"/>
-                            </label>
-                        </div>
-
-                        <!-- 시스템 담당 -->
-                        <div class="col-12">
-                            <label class="form-label">시스템 담당 : </label>
-                            <label>
-                                <input type="text" name="systemRole" maxlength="40"/>
+                            <label th:each="empAuth : ${empAuths}">
+                                <input type="radio" name="systemAuth"
+                                       th:text="${empAuth.getEmpAuth()}"
+                                       th:value="${empAuth.name()}"
+                                       th:checked="${empAuth.name() == 'NORMAL'}"
+                                />
                             </label>
                         </div>
 
