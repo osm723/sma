@@ -14,6 +14,8 @@ public class MemberSaveRequestDto {
 
     private String name;
 
+    private Long clientId;
+
     private Client client;
 
     private String deptCode;
@@ -28,9 +30,11 @@ public class MemberSaveRequestDto {
 
     private String roleName;
 
-    private EmpStatus empStatue;
+    private EmpStatus empStatus;
 
     private EmpAuth empAuth;
+
+    private Long systemId;
 
     private System system;
 

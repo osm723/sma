@@ -17,7 +17,9 @@ import com.shds.sma.admin.entity.Client;
 import com.shds.sma.admin.entity.Member;
 import com.shds.sma.admin.entity.Notice;
 import com.shds.sma.admin.entity.System;
+import com.shds.sma.admin.entity.types.EmpAuth;
 import com.shds.sma.admin.entity.types.EmpStatus;
+import com.shds.sma.admin.entity.types.SystemRole;
 import com.shds.sma.admin.repositroy.client.ClientRepository;
 import com.shds.sma.admin.repositroy.member.MemberRepository;
 import com.shds.sma.admin.repositroy.notice.NoticeRepository;
@@ -138,6 +140,12 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public List<ClientResponseDto> findClientAll() {
+        List<Client> findClient = clientRepository.findAll();
+        return findClient.stream().map(ClientResponseDto::new).collect(Collectors.toList());
+    }
+
+    @Override
     public Page<ClientResponseDto> findClientByCond(ClientRequestDto clientRequestDto, Pageable pageable) {
         Page<Client> clients = clientRepository.findClientByCond(clientRequestDto, pageable);
         return clients.map(ClientResponseDto::new);
@@ -174,8 +182,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Page<MemberResponseDto> findMemberCond(MemberRequestDto memberRequestDto, Pageable pageable) {
-        memberRepository.findMemberByCond(memberRequestDto, pageable);
-        return null;
+        Page<Member> findMember = memberRepository.findMemberByCond(memberRequestDto, pageable);
+        return findMember.map(MemberResponseDto::new);
     }
 
     @Override
@@ -186,7 +194,29 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void saveMember(MemberSaveRequestDto memberSaveRequestDto) {
-        memberRepository.save(modelMapper.map(memberSaveRequestDto, Member.class));
+        Long systemId = memberSaveRequestDto.getSystemId();
+        System findSystem = systemRepository.findById(systemId).get();
+        memberSaveRequestDto.setSystem(findSystem);
+
+        Long clientId = memberSaveRequestDto.getClientId();
+        Client findClient = clientRepository.findById(clientId).get();
+        memberSaveRequestDto.setClient(findClient);
+
+        Member saveMember = Member.builder()
+                .name(memberSaveRequestDto.getName())
+                .client(findClient)
+                .deptCode(memberSaveRequestDto.getDeptCode())
+                .deptName(memberSaveRequestDto.getDeptName())
+                .gradeCode(memberSaveRequestDto.getGradeCode())
+                .gradeName(memberSaveRequestDto.getGradeName())
+                .roleCode(memberSaveRequestDto.getRoleCode())
+                .roleName(memberSaveRequestDto.getRoleName())
+                .empStatus(memberSaveRequestDto.getEmpStatus())
+                .empAuth(memberSaveRequestDto.getEmpAuth())
+                .system(findSystem)
+                .systemRole(memberSaveRequestDto.getSystemRole()).build();
+
+        memberRepository.save(saveMember);
     }
 
     @Override

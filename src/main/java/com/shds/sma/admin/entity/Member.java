@@ -7,13 +7,12 @@ import com.shds.sma.admin.entity.types.SystemRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "SMA_MEBER")
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
@@ -52,7 +51,7 @@ public class Member {
     @Column(length = 20, columnDefinition = "VARCHAR(20) COMMENT '재직상태'", nullable = false)
     @NotNull
     @Enumerated(EnumType.STRING)
-    private EmpStatus empStatue;
+    private EmpStatus empStatus;
 
     @Column(length = 20, columnDefinition = "VARCHAR(20) COMMENT '시스템 권한'", nullable = false)
     @NotNull
@@ -77,14 +76,29 @@ public class Member {
         this.gradeName = memberModRequestDto.getGradeName();
         this.roleCode = memberModRequestDto.getRoleCode();
         this.roleName = memberModRequestDto.getRoleName();
-        this.empStatue = memberModRequestDto.getEmpStatue();
+        this.empStatus = memberModRequestDto.getEmpStatus();
         this.empAuth = memberModRequestDto.getEmpAuth();
         this.system = memberModRequestDto.getSystem();
         this.systemRole = memberModRequestDto.getSystemRole();
     }
 
-    public void empStatusChange(EmpStatus empStatue) {
-        this.empStatue = empStatue;
+    public void empStatusChange(EmpStatus empStatus) {
+        this.empStatus = empStatus;
     }
 
+    @Builder
+    public Member(String name, Client client, String deptCode, String deptName, String gradeCode, String gradeName, String roleCode, String roleName, EmpStatus empStatus, EmpAuth empAuth, System system, SystemRole systemRole) {
+        this.name = name;
+        this.client = client;
+        this.deptCode = deptCode;
+        this.deptName = deptName;
+        this.gradeCode = gradeCode;
+        this.gradeName = gradeName;
+        this.roleCode = roleCode;
+        this.roleName = roleName;
+        this.empStatus = empStatus;
+        this.empAuth = empAuth;
+        this.system = system;
+        this.systemRole = systemRole;
+    }
 }

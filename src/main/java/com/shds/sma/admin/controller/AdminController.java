@@ -345,18 +345,17 @@ public class AdminController {
      * @return String
      */
     @GetMapping("/member/save")
-    public String memberSaveForm(Model model, Pageable pageable) {
-        List<EmpStatus> empStatuses = List.of(EmpStatus.values());
-        model.addAttribute("empStatuses", empStatuses);
-
-        List<EmpAuth> empAuths = List.of(EmpAuth.values());
-        model.addAttribute("empAuths", empAuths);
-
-        List<SystemRole> systemRoles = List.of(SystemRole.values());
-        model.addAttribute("systemRoles", systemRoles);
+    public String memberSaveForm(Model model) {
+        model.addAttribute("member", new MemberSaveRequestDto());
+        model.addAttribute("empStatuses", List.of(EmpStatus.values()));
+        model.addAttribute("empAuths", List.of(EmpAuth.values()));
+        model.addAttribute("systemRoles", List.of(SystemRole.values()));
 
         List<SystemResponseDto> systems = adminService.findSystemAll();
         model.addAttribute("systems", systems);
+
+        List<ClientResponseDto> clients = adminService.findClientAll();
+        model.addAttribute("clients", clients);
 
         return "/admin/member/memberSaveForm";
     }

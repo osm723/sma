@@ -51,6 +51,8 @@ public interface AdminService {
 
     void useSystem(Long systemId);
 
+    List<ClientResponseDto> findClientAll();
+
     Page<ClientResponseDto> findClientByCond(ClientRequestDto clientRequestDto, Pageable pageable);
 
     ClientResponseDto findClientById(Long clientId);

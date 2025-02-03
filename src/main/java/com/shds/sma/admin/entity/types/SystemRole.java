@@ -16,9 +16,9 @@ public enum SystemRole {
     TEMP("임시")
     ;
 
-    private final String systemRole;
+    private final String description;
 
-    SystemRole(String systemRole) {
-        this.systemRole = systemRole;
+    SystemRole(String description) {
+        this.description = description;
     }
 }

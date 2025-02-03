@@ -5,7 +5,9 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.shds.sma.admin.dto.member.MemberRequestDto;
 import com.shds.sma.admin.entity.Member;
+import com.shds.sma.admin.entity.QClient;
 import com.shds.sma.admin.entity.QMember;
+import com.shds.sma.admin.entity.QSystem;
 import jakarta.persistence.EntityManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -15,7 +17,9 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 
+import static com.shds.sma.admin.entity.QClient.client;
 import static com.shds.sma.admin.entity.QMember.member;
+import static com.shds.sma.admin.entity.QSystem.system;
 
 
 @Repository
@@ -31,8 +35,10 @@ public class MemberQueryRepositoryImpl implements MemberQueryRepository {
     public Page<Member> findMemberByCond(MemberRequestDto memberRequestDto, Pageable pageable) {
         QueryResults<Member> result = query.select(member)
                 .from(member)
+                .join(member.client, client).fetchJoin()
+                .join(member.system, system).fetchJoin()
                 .where(nameEq(memberRequestDto.getName())
-                        ,clientNameEq(memberRequestDto.getClient().getClientName())
+//                        ,clientNameEq(memberRequestDto.getClient().getClientName())
                         ,deptNameNameEq(memberRequestDto.getDeptName())
                         ,gradeNameEq(memberRequestDto.getGradeName())
                         ,roleNameEq(memberRequestDto.getRoleName())
@@ -53,6 +59,10 @@ public class MemberQueryRepositoryImpl implements MemberQueryRepository {
 
     private static BooleanExpression clientNameEq(String clientName) {
         return StringUtils.hasText(clientName) ? member.client.clientName.eq(clientName) : null;
+    }
+
+    private static BooleanExpression systemNameNameEq(String systemName) {
+        return StringUtils.hasText(systemName) ? member.system.systemName.eq(systemName) : null;
     }
 
     private static BooleanExpression deptNameNameEq(String deptName) {
