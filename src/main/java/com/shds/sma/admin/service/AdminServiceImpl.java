@@ -30,6 +30,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -91,6 +94,12 @@ public class AdminServiceImpl implements AdminService {
     public void useNotice(Long noticeId) {
         Notice findNotice = noticeRepository.findById(noticeId).get();
         findNotice.setValidityY();
+    }
+
+    @Override
+    public List<SystemResponseDto> findSystemAll() {
+        List<System> findSystem = systemRepository.findAll();
+        return findSystem.stream().map(SystemResponseDto::new).collect(Collectors.toList());
     }
 
     @Override

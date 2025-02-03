@@ -3,7 +3,7 @@ package com.shds.sma.admin.entity.types;
 import lombok.Getter;
 
 @Getter
-public enum SystemAuth {
+public enum SystemRole {
     NORMAL("일반"),
     MANAGER("담당자"),
     HEADER("부서장"),
@@ -16,9 +16,9 @@ public enum SystemAuth {
     TEMP("임시")
     ;
 
-    private final String systemAuth;
+    private final String systemRole;
 
-    SystemAuth(String systemAuth) {
-        this.systemAuth = systemAuth;
+    SystemRole(String systemRole) {
+        this.systemRole = systemRole;
     }
 }
