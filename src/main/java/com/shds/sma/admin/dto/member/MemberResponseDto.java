@@ -3,15 +3,13 @@ package com.shds.sma.admin.dto.member;
 import com.shds.sma.admin.entity.Client;
 import com.shds.sma.admin.entity.Member;
 import com.shds.sma.admin.entity.System;
-import com.shds.sma.admin.entity.types.EmpAuth;
-import com.shds.sma.admin.entity.types.SystemRole;
-import com.shds.sma.admin.entity.types.EmpStatus;
+import com.shds.sma.admin.types.EmpAuth;
+import com.shds.sma.admin.types.SystemRole;
+import com.shds.sma.admin.types.EmpStatus;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Setter

@@ -13,7 +13,7 @@ import com.shds.sma.admin.dto.system.SystemModRequestDto;
 import com.shds.sma.admin.dto.system.SystemRequestDto;
 import com.shds.sma.admin.dto.system.SystemResponseDto;
 import com.shds.sma.admin.dto.system.SystemSaveRequestDto;
-import com.shds.sma.admin.entity.types.EmpStatus;
+import com.shds.sma.admin.types.EmpStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
