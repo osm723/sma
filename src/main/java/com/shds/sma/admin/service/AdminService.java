@@ -4,6 +4,8 @@ import com.shds.sma.admin.dto.client.ClientModRequestDto;
 import com.shds.sma.admin.dto.client.ClientRequestDto;
 import com.shds.sma.admin.dto.client.ClientResponseDto;
 import com.shds.sma.admin.dto.client.ClientSaveRequestDto;
+import com.shds.sma.admin.dto.ip.IpModRequestDto;
+import com.shds.sma.admin.dto.ip.IpSaveRequestDto;
 import com.shds.sma.admin.dto.member.MemberModRequestDto;
 import com.shds.sma.admin.dto.member.MemberRequestDto;
 import com.shds.sma.admin.dto.member.MemberResponseDto;
@@ -14,6 +16,8 @@ import com.shds.sma.admin.dto.system.SystemRequestDto;
 import com.shds.sma.admin.dto.system.SystemResponseDto;
 import com.shds.sma.admin.dto.system.SystemSaveRequestDto;
 import com.shds.sma.admin.types.EmpStatus;
+import com.shds.sma.manage.dto.ip.IpRequestDto;
+import com.shds.sma.manage.dto.ip.IpResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -65,7 +69,9 @@ public interface AdminService {
 
     void useClient(Long clientId);
 
-    Page<MemberResponseDto> findMemberCond(MemberRequestDto memberRequestDto, Pageable pageable);
+    List<MemberResponseDto> findMemberAll();
+
+    Page<MemberResponseDto> findMemberByCond(MemberRequestDto memberRequestDto, Pageable pageable);
 
     MemberResponseDto findMemberById(Long memberId);
 
@@ -75,5 +81,15 @@ public interface AdminService {
 
     void memberChangeStatus(Long memberId, EmpStatus empStatus);
 
+    Page<IpResponseDto> findIpByCond(IpRequestDto ipRequestDto, Pageable pageable);
 
+    IpResponseDto findIpById(Long ipId);
+
+    void saveIp(IpSaveRequestDto ipSaveRequestDto);
+
+    void modifiedIp(IpModRequestDto ipModRequestDto);
+
+    void removeIp(Long ipId);
+
+    void useIp(Long ipId);
 }

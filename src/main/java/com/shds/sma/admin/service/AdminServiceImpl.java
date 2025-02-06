@@ -4,6 +4,8 @@ import com.shds.sma.admin.dto.client.ClientModRequestDto;
 import com.shds.sma.admin.dto.client.ClientRequestDto;
 import com.shds.sma.admin.dto.client.ClientResponseDto;
 import com.shds.sma.admin.dto.client.ClientSaveRequestDto;
+import com.shds.sma.admin.dto.ip.IpModRequestDto;
+import com.shds.sma.admin.dto.ip.IpSaveRequestDto;
 import com.shds.sma.admin.dto.member.MemberModRequestDto;
 import com.shds.sma.admin.dto.member.MemberRequestDto;
 import com.shds.sma.admin.dto.member.MemberResponseDto;
@@ -22,6 +24,11 @@ import com.shds.sma.admin.repositroy.client.ClientRepository;
 import com.shds.sma.admin.repositroy.member.MemberRepository;
 import com.shds.sma.admin.repositroy.notice.NoticeRepository;
 import com.shds.sma.admin.repositroy.system.SystemRepository;
+import com.shds.sma.manage.dto.ip.IpRequestDto;
+import com.shds.sma.manage.dto.ip.IpResponseDto;
+import com.shds.sma.manage.entity.Ip;
+import com.shds.sma.manage.repository.ip.IpRepository;
+import com.shds.sma.manage.service.ManageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -46,6 +53,10 @@ public class AdminServiceImpl implements AdminService {
     private final ClientRepository clientRepository;
 
     private final MemberRepository memberRepository;
+
+    //private final ManageService manageService;
+
+    private final IpRepository ipRepository;
 
     private final ModelMapper modelMapper;
 
@@ -179,7 +190,13 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Page<MemberResponseDto> findMemberCond(MemberRequestDto memberRequestDto, Pageable pageable) {
+    public List<MemberResponseDto> findMemberAll() {
+        List<Member> findMember = memberRepository.findAll();
+        return findMember.stream().map(MemberResponseDto::new).collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<MemberResponseDto> findMemberByCond(MemberRequestDto memberRequestDto, Pageable pageable) {
         Page<Member> findMember = memberRepository.findMemberByCond(memberRequestDto, pageable);
         return findMember.map(MemberResponseDto::new);
     }
@@ -235,6 +252,70 @@ public class AdminServiceImpl implements AdminService {
     public void memberChangeStatus(Long memberId, EmpStatus empStatus) {
         Member findMember = memberRepository.findById(memberId).get();
         findMember.empStatusChange(empStatus);
+    }
+
+    @Override
+    public Page<IpResponseDto> findIpByCond(IpRequestDto ipRequestDto, Pageable pageable) {
+        Page<Ip> findIp = ipRepository.findIpByCond(ipRequestDto, pageable);
+        return findIp.map(IpResponseDto::new);
+    }
+
+    @Override
+    public IpResponseDto findIpById(Long ipId) {
+        Ip findIp = ipRepository.findById(ipId).get();
+        return modelMapper.map(findIp, IpResponseDto.class);
+    }
+
+    @Override
+    public void saveIp(IpSaveRequestDto ipSaveRequestDto) {
+        Long systemId = ipSaveRequestDto.getSystemId();
+        System findSystem = systemRepository.findById(systemId).get();
+        ipSaveRequestDto.setSystem(findSystem);
+
+        Long memberId = ipSaveRequestDto.getMemberId();
+        Member findMember = memberRepository.findById(memberId).get();
+        ipSaveRequestDto.setMember(findMember);
+
+        Ip saveIp = Ip.builder()
+                .ipType(ipSaveRequestDto.getIpType())
+                .startIpAddr(ipSaveRequestDto.getStartIpAddr())
+                .endIpAddr(ipSaveRequestDto.getEndIpAddr())
+                .system(findSystem)
+                .content(ipSaveRequestDto.getContent())
+                .siteLink(ipSaveRequestDto.getSiteLink())
+                .startDate(ipSaveRequestDto.getStartDate())
+                .endDate(ipSaveRequestDto.getEndDate())
+                .member(findMember)
+                .approval(ipSaveRequestDto.getApproval()).build();
+
+        ipRepository.save(saveIp);
+    }
+
+    @Override
+    public void modifiedIp(IpModRequestDto ipModRequestDto) {
+        Ip findIp = ipRepository.findById(ipModRequestDto.getIpId()).get();
+
+        Long systemId = ipModRequestDto.getSystemId();
+        System findSystem = systemRepository.findById(systemId).get();
+        ipModRequestDto.setSystem(findSystem);
+
+        Long memberId = ipModRequestDto.getMemberId();
+        Member findMember = memberRepository.findById(memberId).get();
+        ipModRequestDto.setMember(findMember);
+
+        findIp.ipModified(ipModRequestDto);
+    }
+
+    @Override
+    public void removeIp(Long ipId) {
+        Ip findIp = ipRepository.findById(ipId).get();
+        findIp.setValidityN();
+    }
+
+    @Override
+    public void useIp(Long ipId) {
+        Ip findIp = ipRepository.findById(ipId).get();
+        findIp.setValidityY();
     }
 
 }

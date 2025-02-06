@@ -41,7 +41,8 @@
         <div class="row g-5">
             <div class="col-md-7 col-lg-8">
                 <h4 class="mb-3">직원 등록</h4>
-                <form class="needs-validation" novalidate action="#" id="memberForm" th:object="${member}" th:action="@{/admin/member/save}" method="post">
+                <form class="needs-validation" novalidate action="#" id="memberForm" th:object="${member}"
+                      th:action="@{/admin/member/save}" method="post">
                     <div class="row g-3">
 
                         <!-- 직원명 -->
@@ -85,7 +86,8 @@
                         <div class="col-12">
                             <label class="form-label">직위코드 : </label>
                             <label>
-                                <input type="text" name="gradeCode" id="gradeCode" th:field="*{gradeCode}" maxlength="20"/>
+                                <input type="text" name="gradeCode" id="gradeCode" th:field="*{gradeCode}"
+                                       maxlength="20"/>
                             </label>
                         </div>
 
@@ -93,7 +95,8 @@
                         <div class="col-12">
                             <label class="form-label">직위명 : </label>
                             <label>
-                                <input type="text" name="gradeName" id="gradeName" th:field="*{gradeName}" maxlength="40"/>
+                                <input type="text" name="gradeName" id="gradeName" th:field="*{gradeName}"
+                                       maxlength="40"/>
                             </label>
                         </div>
 
@@ -173,7 +176,7 @@
                     </div>
                 </form>
             </div>
-
+        </div>
     </main>
 </div>
 <div th:insert="~{freme/footer/footer :: copy}"></div>

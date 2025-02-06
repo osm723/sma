@@ -29,7 +29,7 @@
      * @param ipId
      */
     function openPopup(ipId) {
-        window.open("/manage/ip/detail?ipId="+ipId, "PopupWindow", "width=480,height=640");
+        window.open("/admin/ip/detail?ipId="+ipId, "PopupWindow", "width=480,height=640");
     }
 
 </script>
@@ -37,14 +37,20 @@
     <main>
 
         <div class="py-1 text-center">
-            <h2>Ip 현황 화면</h2>
-            <p class="lead">Ip 조회 페이지</p>
+            <h2>관리자 화면</h2>
+            <p class="lead">IP 조회 페이지</p>
+        </div>
+
+        <div class="d-flex justify-content-center align-items-center vh-40">
+            <label>
+                <a th:href="@{/admin/main}" methods="get" class="nav-link">뒤로가기</a>
+            </label>
         </div>
 
         <div class="row g-5">
             <div class="col-md-7 col-lg-8">
                 <h4 class="mb-3">Ip 조회</h4>
-                <form class="needs-validation" novalidate action="#" id="ipForm" th:action="@{/manage/ip}" method="get">
+                <form class="needs-validation" novalidate action="#" id="ipForm" th:action="@{/admin/ip}" method="get">
                     <div class="row g-3">
 
 <!--                        &lt;!&ndash; 그룹사코드 조건 &ndash;&gt;-->
@@ -68,8 +74,7 @@
 <!--                        <div class="col-12">-->
 <!--                            <button class="w-40 btn btn-primary btn-sm" type="submit">조회</button>-->
 <!--                        </div>-->
-<!--                    </div>-->
-
+                    </div>
                 </form>
             </div>
         </div>
@@ -80,10 +85,11 @@
                 <thead>
                 <tr>
                     <th scope="col">#IP 타입</th>
-                    <th scope="col">#IP 주소</th>
+                    <th scope="col">#출발지 IP 주소</th>
+                    <th scope="col">#도착지 IP 주소</th>
                     <th scope="col">#시스템명</th>
-                    <th scope="col">#내용</th>
-                    <th scope="col">#사이트링크</th>
+<!--                    <th scope="col">#내용</th>-->
+<!--                    <th scope="col">#사이트링크</th>-->
                     <th scope="col">#시작일자</th>
                     <th scope="col">#종료일자</th>
                     <th scope="col">#담당자</th>
@@ -96,19 +102,20 @@
                 <tbody id="ipContainer">
                 <tr th:each="ip : ${ips}">
                     <td name="ipType" th:text="${ip.getIpType()}">IP 타입</td>
-                    <td name="ipAddr" th:text="${ip.getIpAddr()}">IP 주소</td>
+                    <td name="startIpAddr" th:text="${ip.getStartIpAddr()}">출발지 IP 주소</td>
+                    <td name="endIpAddr" th:text="${ip.getEndIpAddr()}">도착지 IP 주소</td>
                     <td name="system" th:text="${ip.getSystem().getSystemName()}">시스템명</td>
-                    <td name="content" th:text="${ip.getContent()}">내용</td>
-                    <td name="siteLink" th:text="${ip.getSiteLink()}">사이트링크</td>
+<!--                    <td name="content" th:text="${ip.getContent()}">내용</td>-->
+<!--                    <td name="siteLink" th:text="${ip.getSiteLink()}">사이트링크</td>-->
                     <td name="startDate" th:text="${ip.getStartDate()}">시작일자</td>
-                    <td name="endDate" th:text="${ip.getEndDate()()}">종료일자</td>
+                    <td name="endDate" th:text="${ip.getEndDate()}">종료일자</td>
                     <td name="member" th:text="${ip.getMember().getName()}">담당자</td>
                     <td name="modDate" th:text="${ip.getModDate()}">등록.수정일자</td>
                     <td name="validity" th:text="${ip.getValidity()}">사용유무</td>
                     <td name="modMemberId" th:text="${ip.getModMemberId()}">등록.수정자</td>
                     <td name="ipId">
                         <button type="button" class="w-30 btn btn-primary btn-sm"
-                                th:attr="onclick=|openPopup('${ip.getIpId()}')|">결재보기
+                                th:attr="onclick=|openPopup('${ip.getIpId()}')|">상세보기
                         </button>
                     </td>
                 </tr>
