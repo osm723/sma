@@ -1,9 +1,9 @@
 package com.shds.sma.admin.entity;
 
 import com.shds.sma.admin.dto.member.MemberModRequestDto;
-import com.shds.sma.admin.entity.types.EmpAuth;
-import com.shds.sma.admin.entity.types.EmpStatus;
-import com.shds.sma.admin.entity.types.SystemRole;
+import com.shds.sma.admin.types.EmpAuth;
+import com.shds.sma.admin.types.EmpStatus;
+import com.shds.sma.admin.types.SystemRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

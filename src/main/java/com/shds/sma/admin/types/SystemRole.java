@@ -1,4 +1,4 @@
-package com.shds.sma.admin.entity.types;
+package com.shds.sma.admin.types;
 
 import lombok.Getter;
 
