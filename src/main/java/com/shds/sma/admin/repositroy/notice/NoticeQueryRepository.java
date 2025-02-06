@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface NoticeQueryRepository {
 
-    Page<Notice> findNoticeCond(NoticeCondRequestDto noticeCondRequestDto, Pageable pageable);
+    Page<Notice> findNoticeByCond(NoticeCondRequestDto noticeCondRequestDto, Pageable pageable);
 
     Page<Notice> findHomeNotice(Pageable pageable);
 }

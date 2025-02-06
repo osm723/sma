@@ -1,5 +1,5 @@
 package com.shds.sma.manage.types;
 
 public enum CertType {
-    AUTH, SELF
+    AUTH, SELF, EXTERNAL, INNER, GROUPWARE
 }

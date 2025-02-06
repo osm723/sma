@@ -1,4 +1,4 @@
-package com.shds.sma.common.entity.types;
+package com.shds.sma.common.types;
 
 public enum PreAlarmTarget {
     IP, CERT

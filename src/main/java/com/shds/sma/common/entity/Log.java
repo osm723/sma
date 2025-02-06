@@ -1,15 +1,19 @@
 package com.shds.sma.common.entity;
 
-import com.shds.sma.common.entity.types.LogType;
+import com.shds.sma.common.types.LogType;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "SMA_LOG")
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Log {
 
     @Id

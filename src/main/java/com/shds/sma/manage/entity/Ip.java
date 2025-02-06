@@ -7,11 +7,16 @@ import com.shds.sma.admin.entity.Member;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "SMA_IP")
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Ip extends BaseEntity {
 
     @Id
@@ -29,9 +34,9 @@ public class Ip extends BaseEntity {
     @NotBlank
     private String ipAddr;
 
-    @OneToOne
-    @JoinColumn(name = "ROLE_ID")
-    private Role role;
+//    @OneToOne
+//    @JoinColumn(name = "ROLE_ID")
+//    private Role role;
 
     @OneToOne
     @JoinColumn(name = "SYSTEM_ID")
