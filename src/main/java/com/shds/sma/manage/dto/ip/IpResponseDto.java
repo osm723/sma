@@ -22,7 +22,11 @@ public class IpResponseDto {
 
     private IpType ipType;
 
-    private String ipAddr;
+    private String startIpAddr;
+
+    private String endIpAddr;
+
+    private Long systemId;
 
     private System system;
 
@@ -33,6 +37,8 @@ public class IpResponseDto {
     private LocalDate startDate;
 
     private LocalDate endDate;
+
+    private Long memberId;
 
     private Member member;
 
@@ -47,7 +53,8 @@ public class IpResponseDto {
     public IpResponseDto(Ip ip) {
         this.ipId = ip.getId();
         this.ipType = ip.getIpType();
-        this.ipAddr = ip.getIpAddr();
+        this.startIpAddr = ip.getStartIpAddr();
+        this.endIpAddr = ip.getEndIpAddr();
         this.system = ip.getSystem();
         this.content = ip.getContent();
         this.siteLink = ip.getSiteLink();

@@ -4,6 +4,7 @@ import com.shds.sma.admin.dto.client.ClientModRequestDto;
 import com.shds.sma.admin.dto.client.ClientRequestDto;
 import com.shds.sma.admin.dto.client.ClientResponseDto;
 import com.shds.sma.admin.dto.client.ClientSaveRequestDto;
+import com.shds.sma.admin.dto.ip.IpModRequestDto;
 import com.shds.sma.admin.dto.member.MemberModRequestDto;
 import com.shds.sma.admin.dto.member.MemberRequestDto;
 import com.shds.sma.admin.dto.member.MemberResponseDto;
@@ -20,6 +21,10 @@ import com.shds.sma.admin.types.EmpAuth;
 import com.shds.sma.admin.types.SystemRole;
 import com.shds.sma.admin.types.EmpStatus;
 import com.shds.sma.admin.service.AdminService;
+import com.shds.sma.manage.dto.ip.IpRequestDto;
+import com.shds.sma.manage.dto.ip.IpResponseDto;
+import com.shds.sma.admin.dto.ip.IpSaveRequestDto;
+import com.shds.sma.manage.types.IpType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -224,7 +229,7 @@ public class AdminController {
 
     /**
      * 그룹사 조회화면 (조건)
-     * system
+     * client
      * @param pageable
      * @param model
      * @return String
@@ -319,7 +324,7 @@ public class AdminController {
      */
     @GetMapping("/member")
     public String member(MemberRequestDto memberRequestDto, Pageable pageable, Model model) {
-        Page<MemberResponseDto> members = adminService.findMemberCond(memberRequestDto, pageable);
+        Page<MemberResponseDto> members = adminService.findMemberByCond(memberRequestDto, pageable);
         model.addAttribute("members", members);
         model.addAttribute("cond", memberRequestDto);
         return "/admin/member/memberMain";
@@ -336,7 +341,7 @@ public class AdminController {
     public String memberDetail(Long memberId, Model model) {
         MemberResponseDto member = adminService.findMemberById(memberId);
         model.addAttribute("member", member);
-        setModel(model);
+        setMemberModel(model);
 
         return "/admin/member/memberDetail";
     }
@@ -349,7 +354,7 @@ public class AdminController {
     @GetMapping("/member/save")
     public String memberSaveForm(Model model) {
         model.addAttribute("member", new MemberSaveRequestDto());
-        setModel(model);
+        setMemberModel(model);
 
         return "/admin/member/memberSaveForm";
     }
@@ -379,7 +384,7 @@ public class AdminController {
     }
 
     /**
-     * 직원 재직정보 변견
+     * 직원 재직정보 변경
      * memberChangeStatus
      * @param memberId
      * @param empStatus
@@ -392,11 +397,191 @@ public class AdminController {
     }
 
     /**
-     * 화면 model 설정
-     * setModel
+     * ip 조회화면 (조건)
+     * ip
+     * @param pageable
+     * @param model
+     * @return String
+     */
+    @GetMapping("/ip")
+    public String ip(IpRequestDto ipRequestDto, Pageable pageable, Model model) {
+        Page<IpResponseDto> ips = adminService.findIpByCond(ipRequestDto, pageable);
+        model.addAttribute("ips", ips);
+        model.addAttribute("cond", ipRequestDto);
+        return "/admin/ip/ipMain";
+    }
+
+    /**
+     * ip 상세화면
+     * ipDetail
+     * @param ipId
+     * @param model
+     * @return String
+     */
+    @GetMapping("/ip/detail")
+    public String ipDetail(Long ipId, Model model) {
+        IpResponseDto ip = adminService.findIpById(ipId);
+        model.addAttribute("ip", ip);
+        setIpModel(model);
+
+        return "/admin/ip/ipDetail";
+    }
+
+    /**
+     * ip 등록화면 폼
+     * ipSaveForm
+     * @return String
+     */
+    @GetMapping("/ip/save")
+    public String ipSaveForm(Model model) {
+        model.addAttribute("ip", new IpSaveRequestDto());
+        setIpModel(model);
+        return "/admin/ip/ipSaveForm";
+    }
+
+    /**
+     * ip 저장
+     * ipSave
+     * @param ipSaveRequestDto
+     * @return String
+     */
+    @PostMapping("/ip/save")
+    public String ipSave(IpSaveRequestDto ipSaveRequestDto) {
+        adminService.saveIp(ipSaveRequestDto);
+        return "redirect:/admin/ip";
+    }
+
+    /**
+     * ip 수정
+     * ipModified
+     * @param ipModRequestDto
+     * @return String
+     */
+    @PostMapping("/ip/modified")
+    public String ipModified(IpModRequestDto ipModRequestDto) {
+        adminService.modifiedIp(ipModRequestDto);
+        return "redirect:/admin/ip/detail?ipId="+ipModRequestDto.getIpId();
+    }
+
+    /**
+     * ip 삭제
+     * ipRemove
+     * @param ipId
+     * @return ResponseEntity<String>
+     */
+    @PostMapping("/ip/remove")
+    public ResponseEntity<String> ipRemove(@RequestParam Long ipId) {
+        adminService.removeIp(ipId);
+        return ResponseEntity.ok("IP를 미사용처리 완료했습니다.");
+    }
+
+    /**
+     * ip 사용
+     * ipUse
+     * @param ipId
+     * @return ResponseEntity<String>
+     */
+    @PostMapping("/ip/use")
+    public ResponseEntity<String> ipUse(@RequestParam Long ipId) {
+        adminService.useIp(ipId);
+        return ResponseEntity.ok("IP를 사용처리 완료했습니다.");
+    }
+
+//    /**
+//     * 인증서 조회화면 (조건)
+//     * cert
+//     * @param pageable
+//     * @param model
+//     * @return String
+//     */
+//    @GetMapping("/cert")
+//    public String cert(IpRequestDto ipRequestDto, Pageable pageable, Model model) {
+//        Page<IpResponseDto> ips = adminService.findIpByCond(ipRequestDto, pageable);
+//        model.addAttribute("ips", ips);
+//        model.addAttribute("cond", ipRequestDto);
+//        return "/admin/cert/certMain";
+//    }
+//
+//    /**
+//     * 인증서 상세화면
+//     * certDetail
+//     * @param certId
+//     * @param model
+//     * @return String
+//     */
+//    @GetMapping("/cert/detail")
+//    public String certDetail(Long certId, Model model) {
+//        ClientResponseDto client = adminService.findClientById(certId);
+//        model.addAttribute("client", client);
+//        return "/admin/cert/certDetail";
+//    }
+//
+//    /**
+//     * 인증서 등록화면 폼
+//     * certSaveForm
+//     * @return String
+//     */
+//    @GetMapping("/cert/save")
+//    public String certSaveForm(Model model) {
+//        model.addAttribute("ip", new IpSaveRequestDto());
+//        setIpModel(model);
+//        return "/admin/cert/certSaveForm";
+//    }
+//
+//    /**
+//     * 인증서 저장
+//     * certSave
+//     * @param clientSaveRequestDto
+//     * @return String
+//     */
+//    @PostMapping("/cert/save")
+//    public String certSave(ClientSaveRequestDto clientSaveRequestDto) {
+//        adminService.saveClient(clientSaveRequestDto);
+//        return "redirect:/admin/cert";
+//    }
+//
+//    /**
+//     * 인증서 수정
+//     * certModified
+//     * @param clientModRequestDto
+//     * @return String
+//     */
+//    @PostMapping("/cert/modified")
+//    public String certModified(ClientModRequestDto clientModRequestDto) {
+//        adminService.modifiedClient(clientModRequestDto);
+//        return "redirect:/admin/cert/detail?certId="+clientModRequestDto.getClientId();
+//    }
+//
+//    /**
+//     * 인증서 삭제
+//     * certRemove
+//     * @param certId
+//     * @return ResponseEntity<String>
+//     */
+//    @PostMapping("/cert/remove")
+//    public ResponseEntity<String> certRemove(@RequestParam Long certId) {
+//        adminService.removeClient(certId);
+//        return ResponseEntity.ok("인증서를 미사용처리 완료했습니다.");
+//    }
+//
+//    /**
+//     * 인증서 사용
+//     * certUse
+//     * @param certId
+//     * @return ResponseEntity<String>
+//     */
+//    @PostMapping("/cert/use")
+//    public ResponseEntity<String> certUse(@RequestParam Long certId) {
+//        adminService.useClient(certId);
+//        return ResponseEntity.ok("인증서를 사용처리 완료했습니다.");
+//    }
+
+    /**
+     * 직원 화면 model 설정
+     * setMemberModel
      * @param model
      */
-    private void setModel(Model model) {
+    private void setMemberModel(Model model) {
         model.addAttribute("empStatuses", List.of(EmpStatus.values()));
         model.addAttribute("empAuths", List.of(EmpAuth.values()));
         model.addAttribute("systemRoles", List.of(SystemRole.values()));
@@ -406,6 +591,21 @@ public class AdminController {
 
         List<ClientResponseDto> clients = adminService.findClientAll();
         model.addAttribute("clients", clients);
+    }
+
+    /**
+     * 직원 화면 model 설정
+     * setMemberModel
+     * @param model
+     */
+    private void setIpModel(Model model) {
+        model.addAttribute("ipTypes", List.of(IpType.values()));
+
+        List<MemberResponseDto> members = adminService.findMemberAll();
+        model.addAttribute("members", members);
+
+        List<SystemResponseDto> systems = adminService.findSystemAll();
+        model.addAttribute("systems", systems);
     }
 
 }
