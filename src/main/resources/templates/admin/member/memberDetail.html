@@ -15,7 +15,7 @@
 <script>
 
     /**
-     * 시스템 사용 함수
+     * 멤버 사용 함수
      * systemUse
      */
     function systemUse(systemId) {
@@ -40,7 +40,7 @@
     }
 
     /**
-     * 시스템 삭제 함수
+     * 멤버 삭제 함수
      * systemDelete
      */
     function systemDelete(systemId) {
@@ -77,8 +77,8 @@
      * formSubmit
      */
     function formSubmit() {
-        if (confirm("시스템을 수정 하시겠습니까?")) {
-            const form = document.getElementById("systemForm");
+        if (confirm("직원을 수정 하시겠습니까?")) {
+            const form = document.getElementById("memberForm");
             form.submit();
         }
     }
@@ -89,26 +89,26 @@
 
     <div class="row g-5">
         <div class="col g-5">
-            <h4 class="mb-3">공지 상세 페이지</h4>
+            <h4 class="mb-3">직원 상세 페이지</h4>
             <br>
             <div class="row g-3">
-                <form class="needs-validation" novalidate action="#" id="systemForm"
-                      th:action="@{/admin/system/modified}" method="post">
+                <form class="needs-validation" novalidate action="#" id="memberForm"
+                      th:action="@{/admin/member/modified}" th:object="${member}" method="post">
                     <div class="col-12">
                         <label>
-                            <button class="w-40 btn btn-primary btn-sm" onclick="formSubmit()">시스템수정</button>
+                            <button class="w-40 btn btn-primary btn-sm" onclick="formSubmit()">직원수정</button>
                         </label>
-                        <label>
-                            <button th:if="${system.getValidity() == 'Y'}"
-                                    class="w-30 btn btn-primary btn-sm"
-                                    th:attr="onclick=|systemDelete('${system.getSystemId()}')|">시스템삭제
-                            </button>
+                        <!--                        <label>-->
+                        <!--                            <button th:if="${system.getValidity() == 'Y'}"-->
+                        <!--                                    class="w-30 btn btn-primary btn-sm"-->
+                        <!--                                    th:attr="onclick=|systemDelete('${system.getSystemId()}')|">직원삭제-->
+                        <!--                            </button>-->
 
-                            <button th:if="${system.getValidity() == 'N'}"
-                                    class="w-30 btn btn-primary btn-sm"
-                                    th:attr="onclick=|systemUse('${system.getSystemId()}')|">시스템사용
-                            </button>
-                        </label>
+                        <!--                            <button th:if="${system.getValidity() == 'N'}"-->
+                        <!--                                    class="w-30 btn btn-primary btn-sm"-->
+                        <!--                                    th:attr="onclick=|systemUse('${system.getSystemId()}')|">직원사용-->
+                        <!--                            </button>-->
+                        <!--                        </label>-->
                         <label>
                             <button class="w-30 btn btn-primary btn-sm" onclick="closePopup()">팝업닫기</button>
                         </label>
@@ -116,63 +116,133 @@
 
                     <div class="col-12">
                         <label>
-                            <input type="hidden" name="systemId" th:value="${system.getSystemId()}"/>
+                            <input type="hidden" name="memberId" th:value="${member.getMemberId()}"/>
                         </label>
                     </div>
 
-                    <!-- 시스템 명 -->
+                    <!-- 직원명 -->
                     <div class="col-12">
-                        <label class="form-label">시스템 명 : </label>
+                        <label class="form-label">직원명 : </label>
                         <label>
-                            <input type="text" name="systemName" th:value="${system.getSystemName()}"/>
+                            <input type="text" name="name" th:field="*{name}" th:value="${member.getName()}"/>
                         </label>
                     </div>
 
-                    <!-- 시스템 담당자 -->
+                    <!-- 회사명 -->
                     <div class="col-12">
-                        <label class="form-label">시스템 담당자 : </label>
-                        <label>
-                            <input type="text" name="systemManagers" th:value="${system.getSystemManagers()}"/>
+                        <label class="form-label">회사명 : </label>
+                        <label for="clientId">
+                            <select id="clientId" th:field="*{clientId}">
+                                <option th:each="client : ${clients}"
+                                        th:value="${client.getClientId()}"
+                                        th:text="${client.getClientName()}"
+                                        th:selected="${client.getClientId()} == ${member.getClient().getId()}">
+                                </option>
+                            </select>
                         </label>
                     </div>
 
-                    <!-- IP 만료전 알림 일자 -->
+                    <!-- 부서코드 -->
                     <div class="col-12">
-                        <label class="form-label">IP 만료전 알림 일자 : </label>
+                        <label class="form-label">부서코드 : </label>
                         <label>
-                            <input type="text" name="preIpAlarm" th:value="${system.getPreIpAlarm()}"/>
+                            <input type="text" name="deptCode" th:field="*{deptCode}" th:value="${member.getDeptCode()}"/>
                         </label>
                     </div>
 
-                    <!-- 인증서 만료전 알림 일자 -->
+                    <!-- 부서명 -->
                     <div class="col-12">
-                        <label class="form-label">인증서 만료전 알림 일자 : </label>
+                        <label class="form-label">부서명 : </label>
                         <label>
-                            <input type="text" name="preCertAlarm" th:value="${system.getPreCertAlarm()}"/>
+                            <input type="text" name="deptName" th:field="*{deptName}" th:value="${member.getDeptName()}"/>
                         </label>
                     </div>
 
-                    <!-- 공지 등록.수정일자 -->
+                    <!-- 직위코드 -->
                     <div class="col-12">
-                        <label class="form-label">공지 등록.수정일자 : </label>
+                        <label class="form-label">직위코드 : </label>
                         <label>
-                            <input type="text" readonly disabled name="modDate" th:value="${system.getModDate()}"/>
+                            <input type="text" name="gradeCode" th:field="*{gradeCode}" th:value="${member.getGradeCode()}"/>
                         </label>
                     </div>
 
-                    <!-- 공지 등록.수정자 -->
+                    <!-- 직위명 -->
                     <div class="col-12">
-                        <label class="form-label">공지 등록.수정자 : </label>
+                        <label class="form-label">직위명 : </label>
                         <label>
-                            <input type="text" readonly disabled name="modMemberId" th:value="${system.getModMemberId()}"/>
+                            <input type="text" name="gradeName" th:field="*{gradeName}" th:value="${member.getGradeName()}"/>
                         </label>
                     </div>
 
-                    <!-- 사용유무 -->
+                    <!-- 직책코드 -->
                     <div class="col-12">
-                        <label class="form-label">사용유무 : </label>
+                        <label class="form-label">직책코드 : </label>
                         <label>
-                            <input type="text" readonly disabled name="validity" th:value="${system.getValidity()}"/>
+                            <input type="text" name="roleCode" th:field="*{roleCode}" th:value="${member.getRoleCode()}"/>
+                        </label>
+                    </div>
+
+                    <!-- 직책명 -->
+                    <div class="col-12">
+                        <label class="form-label">직책명 : </label>
+                        <label>
+                            <input type="text" name="roleName" th:field="*{roleName}" th:value="${member.getRoleName()}"/>
+                        </label>
+                    </div>
+
+                    <!-- 재직상태 -->
+                    <div class="col-12">
+                        <label>재직상태 : </label>
+                        <label for="empStatus">
+                            <select id="empStatus" th:field="*{empStatus}">
+                                <option th:each="status : ${empStatuses}"
+                                        th:value="${status.name()}"
+                                        th:text="${status.getDescription()}"
+                                        th:selected="${status.name()} == ${member.getEmpStatus()}">
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <!-- 권한 -->
+                    <div class="col-12">
+                        <label class="form-label">권한 : </label>
+                        <label for="empAuth">
+                            <select id="empAuth" th:field="*{empAuth}">
+                                <option th:each="auth : ${empAuths}"
+                                        th:value="${auth.name()}"
+                                        th:text="${auth.getDescription()}"
+                                        th:selected="${auth.name()} == ${member.getEmpAuth()}">
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <!-- 담당 시스템 -->
+                    <div class="col-12">
+                        <label class="form-label">담당 시스템 : </label>
+                        <label for="systemId">
+                            <select id="systemId" th:field="*{systemId}">
+                                <option th:each="system : ${systems}"
+                                        th:value="${system.getSystemId()}"
+                                        th:text="${system.getSystemName()}"
+                                        th:selected="${system.getSystemId()} == ${member.getSystem().getId()}">
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <!-- 담당 시스템 역할 -->
+                    <div class="col-12">
+                        <label class="form-label">담당 시스템 역할 : </label>
+                        <label for="systemRole">
+                            <select id="systemRole" th:field="*{systemRole}">
+                                <option th:each="role : ${systemRoles}"
+                                        th:value="${role.name()}"
+                                        th:text="${role.getDescription()}"
+                                        th:selected="${role.name()} == ${member.getSystemRole()}">
+                                </option>
+                            </select>
                         </label>
                     </div>
 

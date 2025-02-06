@@ -221,6 +221,14 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void modifiedMember(MemberModRequestDto memberModRequestDto) {
+        Long systemId = memberModRequestDto.getSystemId();
+        System findSystem = systemRepository.findById(systemId).get();
+        memberModRequestDto.setSystem(findSystem);
+
+        Long clientId = memberModRequestDto.getClientId();
+        Client findClient = clientRepository.findById(clientId).get();
+        memberModRequestDto.setClient(findClient);
+
         Member findMember = memberRepository.findById(memberModRequestDto.getMemberId()).get();
         findMember.memberModified(memberModRequestDto);
     }
