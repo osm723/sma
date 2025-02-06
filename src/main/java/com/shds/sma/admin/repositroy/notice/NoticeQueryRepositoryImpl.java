@@ -28,7 +28,7 @@ public class NoticeQueryRepositoryImpl implements NoticeQueryRepository {
     }
 
     @Override
-    public Page<Notice> findNoticeCond(NoticeCondRequestDto noticeCondRequestDto, Pageable pageable) {
+    public Page<Notice> findNoticeByCond(NoticeCondRequestDto noticeCondRequestDto, Pageable pageable) {
         QueryResults<Notice> result = query.select(notice)
                 .from(notice)
                 .where(subjectEq(noticeCondRequestDto.getSubject())

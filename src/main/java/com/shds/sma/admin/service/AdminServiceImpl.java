@@ -56,8 +56,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Page<NoticeResponseDto> findNoticeCond(NoticeCondRequestDto noticeCondRequestDto, Pageable pageable) {
-        Page<Notice> notices = noticeRepository.findNoticeCond(noticeCondRequestDto, pageable);
+    public Page<NoticeResponseDto> findNoticeByCond(NoticeCondRequestDto noticeCondRequestDto, Pageable pageable) {
+        Page<Notice> notices = noticeRepository.findNoticeByCond(noticeCondRequestDto, pageable);
         return notices.map(NoticeResponseDto::new);
     }
 

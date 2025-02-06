@@ -57,7 +57,7 @@ public class AdminController {
     @GetMapping("/notice")
     public String notice(NoticeCondRequestDto noticeCondRequestDto, Pageable pageable, Model model) {
         //Page<NoticeResponseDto> notices = adminService.findNoticeAll(pageable);
-        Page<NoticeResponseDto> notices = adminService.findNoticeCond(noticeCondRequestDto, pageable);
+        Page<NoticeResponseDto> notices = adminService.findNoticeByCond(noticeCondRequestDto, pageable);
         model.addAttribute("notices", notices);
         model.addAttribute("cond", noticeCondRequestDto);
         return "/admin/notice/noticeMain";

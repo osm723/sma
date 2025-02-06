@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>IP 인증서 관리 프로그램</title>
+</head>
+<link rel="stylesheet" href="/assets/dist/css/bootstrap.css">
+<script src="/assets/dist/js/color-modes.js"></script>
+<link href="/assets/dist/css/headers.css" rel="stylesheet">
+<link href="/assets/dist/css/bootstrap.css" rel="stylesheet">
+<script src="/assets/dist/js/bootstrap.bundle.min.js"></script>
+<link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="/assets/dist/css/layout.css" rel="stylesheet">
+<body>
+<div th:insert="~{freme/header/header :: copy}"></div>
+<script>
+    /**
+     * submit 호출 함수
+     * formSubmit
+     */
+    function formSubmit() {
+        const form = document.getElementById("certForm");
+        form.submit();
+    }
+
+    /**
+     * 팝업 함수
+     * openPopup
+     * @param certId
+     */
+    function openPopup(certId) {
+        window.open("/manage/ip/detail?certId="+certId, "PopupWindow", "width=480,height=640");
+    }
+
+</script>
+<div class="container">
+    <main>
+
+        <div class="py-1 text-center">
+            <h2>인증서 현황 화면</h2>
+            <p class="lead">인증서 조회 페이지</p>
+        </div>
+
+        <div class="row g-5">
+            <div class="col-md-7 col-lg-8">
+                <h4 class="mb-3">인증서 조회</h4>
+                <form class="needs-validation" novalidate action="#" id="certForm" th:action="@{/manage/cert}" method="get">
+                    <div class="row g-3">
+
+<!--                        &lt;!&ndash; 그룹사코드 조건 &ndash;&gt;-->
+<!--                        <div class="col-12">-->
+<!--                            <label class="form-label">그룹사코드 : </label>-->
+<!--                            <label>-->
+<!--                                <input type="text" name="clientCode"-->
+<!--                                    th:value="${cond.getClientCode()}"/>-->
+<!--                            </label>-->
+<!--                        </div>-->
+
+<!--                        &lt;!&ndash; 그룹사명 조건 &ndash;&gt;-->
+<!--                        <div class="col-12">-->
+<!--                            <label class="form-label">그룹사명 : </label>-->
+<!--                            <label>-->
+<!--                                <input type="text" name="clientName"-->
+<!--                                       th:value="${cond.getClientName()}"/>-->
+<!--                            </label>-->
+<!--                        </div>-->
+
+<!--                        <div class="col-12">-->
+<!--                            <button class="w-40 btn btn-primary btn-sm" type="submit">조회</button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+                </form>
+            </div>
+        </div>
+
+        <hr class="my-5">
+        <div class="table-responsive small">
+            <table class="table table-striped table-sm">
+                <thead>
+                <tr>
+                    <th scope="col">#인증서 타입</th>
+                    <th scope="col">#인증서명</th>
+                    <th scope="col">#시스템명</th>
+                    <th scope="col">#내용</th>
+                    <th scope="col">#사이트링크</th>
+                    <th scope="col">#시작일자</th>
+                    <th scope="col">#종료일자</th>
+                    <th scope="col">#담당자</th>
+                    <th scope="col">#등록.수정일자</th>
+                    <th scope="col">#사용유무</th>
+                    <th scope="col">#등록.수정자</th>
+                    <th scope="col">#결재보기</th>
+                </tr>
+                </thead>
+                <tbody id="certContainer">
+                <tr th:each="cert : ${certs}">
+                    <td name="certType" th:text="${cert.getCertType()}">인증서 타입</td>
+                    <td name="certName" th:text="${cert.getCertName()}">인증서명</td>
+                    <td name="system" th:text="${cert.getSystem().getSystemName()}">시스템명</td>
+                    <td name="content" th:text="${cert.getContent()}">내용</td>
+                    <td name="siteLink" th:text="${cert.getSiteLink()}">사이트링크</td>
+                    <td name="startDate" th:text="${cert.getStartDate()}">시작일자</td>
+                    <td name="endDate" th:text="${cert.getEndDate()()}">종료일자</td>
+                    <td name="member" th:text="${cert.getMember().getName()}">담당자</td>
+                    <td name="modDate" th:text="${cert.getModDate()}">등록.수정일자</td>
+                    <td name="validity" th:text="${cert.getValidity()}">사용유무</td>
+                    <td name="modMemberId" th:text="${cert.getModMemberId()}">등록.수정자</td>
+                    <td name="ipId">
+                        <button type="button" class="w-30 btn btn-primary btn-sm"
+                                th:attr="onclick=|openPopup('${cert.getCertId()}')|">결재보기
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+<div th:insert="~{freme/footer/footer :: copy}"></div>
+</body>
+</html>

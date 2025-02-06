@@ -1,16 +1,21 @@
 package com.shds.sma.common.entity;
 
-import com.shds.sma.common.entity.types.AlarmSendType;
-import com.shds.sma.common.entity.types.PreAlarmTarget;
-import com.shds.sma.common.entity.types.Sender;
+import com.shds.sma.common.types.AlarmSendType;
+import com.shds.sma.common.types.PreAlarmTarget;
+import com.shds.sma.common.types.Sender;
 import com.shds.sma.admin.entity.System;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "SMA_ALARM")
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Alarm {
 
     @Id
