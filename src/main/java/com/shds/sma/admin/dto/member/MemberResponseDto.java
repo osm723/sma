@@ -6,18 +6,23 @@ import com.shds.sma.admin.entity.System;
 import com.shds.sma.admin.entity.types.EmpAuth;
 import com.shds.sma.admin.entity.types.SystemRole;
 import com.shds.sma.admin.entity.types.EmpStatus;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberResponseDto {
 
     private Long memberId;
 
     private String name;
+
+    private Long clientId;
 
     private Client client;
 
@@ -37,19 +42,17 @@ public class MemberResponseDto {
 
     private EmpAuth empAuth;
 
+    private Long systemId;
+
     private System system;
 
     private SystemRole systemRole;
 
-    private LocalDateTime modDate;
-
-    private Long modMemberId;
-
-    private String validity;
 
     public MemberResponseDto(Member member) {
         this.memberId = member.getId();
         this.name = member.getName();
+        this.clientId = member.getClient().getId();
         this.client = member.getClient();
         this.deptCode = member.getDeptCode();
         this.deptName = member.getDeptName();
@@ -59,6 +62,7 @@ public class MemberResponseDto {
         this.roleName = member.getRoleName();
         this.empStatus = member.getEmpStatus();
         this.empAuth = member.getEmpAuth();
+        this.systemId = member.getSystem().getId();
         this.system = member.getSystem();
         this.systemRole = member.getSystemRole();
     }

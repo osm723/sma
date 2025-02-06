@@ -16,6 +16,8 @@ public class MemberModRequestDto {
 
     private String name;
 
+    private Long clientId;
+
     private Client client;
 
     private String deptCode;
@@ -33,6 +35,8 @@ public class MemberModRequestDto {
     private EmpStatus empStatus;
 
     private EmpAuth empAuth;
+
+    private Long systemId;
 
     private System system;
 

@@ -336,6 +336,8 @@ public class AdminController {
     public String memberDetail(Long memberId, Model model) {
         MemberResponseDto member = adminService.findMemberById(memberId);
         model.addAttribute("member", member);
+        setModel(model);
+
         return "/admin/member/memberDetail";
     }
 
@@ -347,15 +349,7 @@ public class AdminController {
     @GetMapping("/member/save")
     public String memberSaveForm(Model model) {
         model.addAttribute("member", new MemberSaveRequestDto());
-        model.addAttribute("empStatuses", List.of(EmpStatus.values()));
-        model.addAttribute("empAuths", List.of(EmpAuth.values()));
-        model.addAttribute("systemRoles", List.of(SystemRole.values()));
-
-        List<SystemResponseDto> systems = adminService.findSystemAll();
-        model.addAttribute("systems", systems);
-
-        List<ClientResponseDto> clients = adminService.findClientAll();
-        model.addAttribute("clients", clients);
+        setModel(model);
 
         return "/admin/member/memberSaveForm";
     }
@@ -395,6 +389,23 @@ public class AdminController {
     public ResponseEntity<String> memberChangeStatus(@RequestParam Long memberId, EmpStatus empStatus) {
         adminService.memberChangeStatus(memberId, empStatus);
         return ResponseEntity.ok("직원 재직정보를 변경 완료했습니다.");
+    }
+
+    /**
+     * 화면 model 설정
+     * setModel
+     * @param model
+     */
+    private void setModel(Model model) {
+        model.addAttribute("empStatuses", List.of(EmpStatus.values()));
+        model.addAttribute("empAuths", List.of(EmpAuth.values()));
+        model.addAttribute("systemRoles", List.of(SystemRole.values()));
+
+        List<SystemResponseDto> systems = adminService.findSystemAll();
+        model.addAttribute("systems", systems);
+
+        List<ClientResponseDto> clients = adminService.findClientAll();
+        model.addAttribute("clients", clients);
     }
 
 }
