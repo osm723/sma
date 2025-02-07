@@ -4,6 +4,7 @@ import com.shds.sma.admin.dto.member.MemberModRequestDto;
 import com.shds.sma.admin.types.EmpAuth;
 import com.shds.sma.admin.types.EmpStatus;
 import com.shds.sma.admin.types.SystemRole;
+import com.shds.sma.manage.entity.Cert;
 import com.shds.sma.manage.entity.Ip;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -72,6 +73,9 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<Ip> ip;
+
+    @OneToMany(mappedBy = "member")
+    private List<Cert> cert;
 
     public void memberModified(MemberModRequestDto memberModRequestDto) {
         this.name = memberModRequestDto.getName();

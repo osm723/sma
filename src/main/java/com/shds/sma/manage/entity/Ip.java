@@ -1,6 +1,6 @@
 package com.shds.sma.manage.entity;
 
-import com.shds.sma.admin.dto.ip.IpModRequestDto;
+import com.shds.sma.manage.dto.ip.IpModRequestDto;
 import com.shds.sma.common.entity.BaseEntity;
 import com.shds.sma.admin.entity.System;
 import com.shds.sma.manage.types.IpType;
@@ -13,11 +13,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Cascade;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "SMA_IP")
@@ -48,6 +45,7 @@ public class Ip extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "SYSTEM_ID")
     private System applySystem;
+
     @Column(length = 400, columnDefinition = "VARCHAR(400) COMMENT '내용'")
     @Size(max = 400)
     private String content;

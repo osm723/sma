@@ -1,25 +1,23 @@
-package com.shds.sma.admin.dto.ip;
+package com.shds.sma.manage.dto.cert;
 
 import com.shds.sma.admin.entity.Member;
 import com.shds.sma.admin.entity.System;
 import com.shds.sma.manage.entity.Approval;
-import com.shds.sma.manage.types.IpType;
+import com.shds.sma.manage.types.CertType;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
-public class IpModRequestDto {
+public class CertSaveRequestDto {
 
-    private Long ipId;
+    private CertType certType;
 
-    private IpType ipType;
-
-    private String startIpAddr;
-
-    private String endIpAddr;
+    private String certName;
 
     private Long applySystemId;
 

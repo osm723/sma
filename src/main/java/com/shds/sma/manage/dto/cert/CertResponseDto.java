@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class CertResponseDto {
 
     private Long certId;
@@ -24,7 +24,9 @@ public class CertResponseDto {
 
     private String certName;
 
-    private System system;
+    private Long applySystemId;
+
+    private System applySystem;
 
     private String content;
 
@@ -33,6 +35,8 @@ public class CertResponseDto {
     private LocalDate startDate;
 
     private LocalDate endDate;
+
+    private Long memberId;
 
     private Member member;
 
@@ -48,7 +52,7 @@ public class CertResponseDto {
         this.certId = cert.getId();
         this.certType = cert.getCertType();
         this.certName = cert.getCertName();
-        this.system = cert.getSystem();
+        this.applySystem = cert.getApplySystem();
         this.content = cert.getContent();
         this.siteLink = cert.getSiteLink();
         this.startDate = cert.getStartDate();

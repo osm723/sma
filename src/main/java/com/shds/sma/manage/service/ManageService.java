@@ -1,7 +1,7 @@
 package com.shds.sma.manage.service;
 
-import com.shds.sma.admin.dto.ip.IpModRequestDto;
-import com.shds.sma.admin.dto.ip.IpSaveRequestDto;
+import com.shds.sma.manage.dto.ip.IpModRequestDto;
+import com.shds.sma.manage.dto.ip.IpSaveRequestDto;
 import com.shds.sma.admin.dto.member.MemberResponseDto;
 import com.shds.sma.admin.dto.system.SystemResponseDto;
 import com.shds.sma.manage.dto.cert.CertRequestDto;
@@ -31,4 +31,6 @@ public interface ManageService {
     List<MemberResponseDto> findMemberAll();
 
     List<SystemResponseDto> findSystemAll();
+
+    CertResponseDto findCertById(Long certId);
 }

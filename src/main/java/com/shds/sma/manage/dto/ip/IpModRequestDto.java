@@ -1,4 +1,4 @@
-package com.shds.sma.admin.dto.ip;
+package com.shds.sma.manage.dto.ip;
 
 import com.shds.sma.admin.entity.Member;
 import com.shds.sma.admin.entity.System;
@@ -11,7 +11,9 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class IpSaveRequestDto {
+public class IpModRequestDto {
+
+    private Long ipId;
 
     private IpType ipType;
 

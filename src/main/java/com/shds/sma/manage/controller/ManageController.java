@@ -7,6 +7,7 @@ import com.shds.sma.manage.dto.cert.CertResponseDto;
 import com.shds.sma.manage.service.ManageService;
 import com.shds.sma.manage.dto.ip.IpRequestDto;
 import com.shds.sma.manage.dto.ip.IpResponseDto;
+import com.shds.sma.manage.types.CertType;
 import com.shds.sma.manage.types.IpType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -60,16 +61,45 @@ public class ManageController {
     public String certManage(CertRequestDto certRequestDto, Pageable pageable, Model model) {
         Page<CertResponseDto> certs = manageService.findCertByCond(certRequestDto, pageable);
         model.addAttribute("certs", certs);
+        model.addAttribute("cond", certRequestDto);
         return "/manage/certManage";
     }
 
     /**
-     * 직원 화면 model 설정
+     * 인증서관리 상세화면
+     * ipManageDetail
+     * @return String
+     */
+    @GetMapping("/certManage/detail")
+    public String certManageDetail(Long certId, Model model) {
+        CertResponseDto cert = manageService.findCertById(certId);
+        model.addAttribute("cert", cert);
+        setCertModel(model);
+        return "/manage/certManageDetail";
+    }
+
+    /**
+     * IP 화면 model 설정
      * setMemberModel
      * @param model
      */
     private void setIpModel(Model model) {
         model.addAttribute("ipTypes", List.of(IpType.values()));
+
+        List<MemberResponseDto> members = manageService.findMemberAll();
+        model.addAttribute("members", members);
+
+        List<SystemResponseDto> systems = manageService.findSystemAll();
+        model.addAttribute("systems", systems);
+    }
+
+    /**
+     * 인증서 화면 model 설정
+     * setMemberModel
+     * @param model
+     */
+    private void setCertModel(Model model) {
+        model.addAttribute("certTypes", List.of(CertType.values()));
 
         List<MemberResponseDto> members = manageService.findMemberAll();
         model.addAttribute("members", members);

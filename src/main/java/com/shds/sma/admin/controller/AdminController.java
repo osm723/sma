@@ -4,7 +4,9 @@ import com.shds.sma.admin.dto.client.ClientModRequestDto;
 import com.shds.sma.admin.dto.client.ClientRequestDto;
 import com.shds.sma.admin.dto.client.ClientResponseDto;
 import com.shds.sma.admin.dto.client.ClientSaveRequestDto;
-import com.shds.sma.admin.dto.ip.IpModRequestDto;
+import com.shds.sma.manage.dto.cert.CertModRequestDto;
+import com.shds.sma.manage.dto.cert.CertSaveRequestDto;
+import com.shds.sma.manage.dto.ip.IpModRequestDto;
 import com.shds.sma.admin.dto.member.MemberModRequestDto;
 import com.shds.sma.admin.dto.member.MemberRequestDto;
 import com.shds.sma.admin.dto.member.MemberResponseDto;
@@ -21,9 +23,12 @@ import com.shds.sma.admin.types.EmpAuth;
 import com.shds.sma.admin.types.SystemRole;
 import com.shds.sma.admin.types.EmpStatus;
 import com.shds.sma.admin.service.AdminService;
+import com.shds.sma.manage.dto.cert.CertRequestDto;
+import com.shds.sma.manage.dto.cert.CertResponseDto;
 import com.shds.sma.manage.dto.ip.IpRequestDto;
 import com.shds.sma.manage.dto.ip.IpResponseDto;
-import com.shds.sma.admin.dto.ip.IpSaveRequestDto;
+import com.shds.sma.manage.dto.ip.IpSaveRequestDto;
+import com.shds.sma.manage.types.CertType;
 import com.shds.sma.manage.types.IpType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -484,94 +489,95 @@ public class AdminController {
         return ResponseEntity.ok("IP를 사용처리 완료했습니다.");
     }
 
-//    /**
-//     * 인증서 조회화면 (조건)
-//     * cert
-//     * @param pageable
-//     * @param model
-//     * @return String
-//     */
-//    @GetMapping("/cert")
-//    public String cert(IpRequestDto ipRequestDto, Pageable pageable, Model model) {
-//        Page<IpResponseDto> ips = adminService.findIpByCond(ipRequestDto, pageable);
-//        model.addAttribute("ips", ips);
-//        model.addAttribute("cond", ipRequestDto);
-//        return "/admin/cert/certMain";
-//    }
-//
-//    /**
-//     * 인증서 상세화면
-//     * certDetail
-//     * @param certId
-//     * @param model
-//     * @return String
-//     */
-//    @GetMapping("/cert/detail")
-//    public String certDetail(Long certId, Model model) {
-//        ClientResponseDto client = adminService.findClientById(certId);
-//        model.addAttribute("client", client);
-//        return "/admin/cert/certDetail";
-//    }
-//
-//    /**
-//     * 인증서 등록화면 폼
-//     * certSaveForm
-//     * @return String
-//     */
-//    @GetMapping("/cert/save")
-//    public String certSaveForm(Model model) {
-//        model.addAttribute("ip", new IpSaveRequestDto());
-//        setIpModel(model);
-//        return "/admin/cert/certSaveForm";
-//    }
-//
-//    /**
-//     * 인증서 저장
-//     * certSave
-//     * @param clientSaveRequestDto
-//     * @return String
-//     */
-//    @PostMapping("/cert/save")
-//    public String certSave(ClientSaveRequestDto clientSaveRequestDto) {
-//        adminService.saveClient(clientSaveRequestDto);
-//        return "redirect:/admin/cert";
-//    }
-//
-//    /**
-//     * 인증서 수정
-//     * certModified
-//     * @param clientModRequestDto
-//     * @return String
-//     */
-//    @PostMapping("/cert/modified")
-//    public String certModified(ClientModRequestDto clientModRequestDto) {
-//        adminService.modifiedClient(clientModRequestDto);
-//        return "redirect:/admin/cert/detail?certId="+clientModRequestDto.getClientId();
-//    }
-//
-//    /**
-//     * 인증서 삭제
-//     * certRemove
-//     * @param certId
-//     * @return ResponseEntity<String>
-//     */
-//    @PostMapping("/cert/remove")
-//    public ResponseEntity<String> certRemove(@RequestParam Long certId) {
-//        adminService.removeClient(certId);
-//        return ResponseEntity.ok("인증서를 미사용처리 완료했습니다.");
-//    }
-//
-//    /**
-//     * 인증서 사용
-//     * certUse
-//     * @param certId
-//     * @return ResponseEntity<String>
-//     */
-//    @PostMapping("/cert/use")
-//    public ResponseEntity<String> certUse(@RequestParam Long certId) {
-//        adminService.useClient(certId);
-//        return ResponseEntity.ok("인증서를 사용처리 완료했습니다.");
-//    }
+    /**
+     * 인증서 조회화면 (조건)
+     * cert
+     * @param pageable
+     * @param model
+     * @return String
+     */
+    @GetMapping("/cert")
+    public String cert(CertRequestDto certRequestDto, Pageable pageable, Model model) {
+        Page<CertResponseDto> certs = adminService.findCertByCond(certRequestDto, pageable);
+        model.addAttribute("certs", certs);
+        model.addAttribute("cond", certRequestDto);
+        return "/admin/cert/certMain";
+    }
+
+    /**
+     * 인증서 상세화면
+     * certDetail
+     * @param certId
+     * @param model
+     * @return String
+     */
+    @GetMapping("/cert/detail")
+    public String certDetail(Long certId, Model model) {
+        CertResponseDto cert = adminService.findCertById(certId);
+        model.addAttribute("cert", cert);
+        setCertModel(model);
+        return "/admin/cert/certDetail";
+    }
+
+    /**
+     * 인증서 등록화면 폼
+     * certSaveForm
+     * @return String
+     */
+    @GetMapping("/cert/save")
+    public String certSaveForm(Model model) {
+        model.addAttribute("cert", new CertSaveRequestDto());
+        setCertModel(model);
+        return "/admin/cert/certSaveForm";
+    }
+
+    /**
+     * 인증서 저장
+     * certSave
+     * @param certSaveRequestDto
+     * @return String
+     */
+    @PostMapping("/cert/save")
+    public String certSave(CertSaveRequestDto certSaveRequestDto) {
+        adminService.saveCert(certSaveRequestDto);
+        return "redirect:/admin/cert";
+    }
+
+    /**
+     * 인증서 수정
+     * certModified
+     * @param certModRequestDto
+     * @return String
+     */
+    @PostMapping("/cert/modified")
+    public String certModified(CertModRequestDto certModRequestDto) {
+        adminService.modifiedCert(certModRequestDto);
+        return "redirect:/admin/cert/detail?certId="+certModRequestDto.getCertId();
+    }
+
+    /**
+     * 인증서 삭제
+     * certRemove
+     * @param certId
+     * @return ResponseEntity<String>
+     */
+    @PostMapping("/cert/remove")
+    public ResponseEntity<String> certRemove(@RequestParam Long certId) {
+        adminService.removeCert(certId);
+        return ResponseEntity.ok("인증서를 미사용처리 완료했습니다.");
+    }
+
+    /**
+     * 인증서 사용
+     * certUse
+     * @param certId
+     * @return ResponseEntity<String>
+     */
+    @PostMapping("/cert/use")
+    public ResponseEntity<String> certUse(@RequestParam Long certId) {
+        adminService.useCert(certId);
+        return ResponseEntity.ok("인증서를 사용처리 완료했습니다.");
+    }
 
     /**
      * 직원 화면 model 설정
@@ -591,13 +597,31 @@ public class AdminController {
     }
 
     /**
-     * 직원 화면 model 설정
+     * IP 화면 model 설정
      * setMemberModel
      * @param model
      */
     private void setIpModel(Model model) {
         model.addAttribute("ipTypes", List.of(IpType.values()));
+        setMemberAndSystemModel(model);
+    }
 
+    /**
+     * 인증서 화면 model 설정
+     * setMemberModel
+     * @param model
+     */
+    private void setCertModel(Model model) {
+        model.addAttribute("certTypes", List.of(CertType.values()));
+        setMemberAndSystemModel(model);
+    }
+
+    /**
+     * 직원,시스템 model 설정
+     * setMemberAndSystemModel
+     * @param model
+     */
+    private void setMemberAndSystemModel(Model model) {
         List<MemberResponseDto> members = adminService.findMemberAll();
         model.addAttribute("members", members);
 

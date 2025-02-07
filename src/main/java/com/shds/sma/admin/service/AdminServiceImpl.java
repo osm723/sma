@@ -4,8 +4,10 @@ import com.shds.sma.admin.dto.client.ClientModRequestDto;
 import com.shds.sma.admin.dto.client.ClientRequestDto;
 import com.shds.sma.admin.dto.client.ClientResponseDto;
 import com.shds.sma.admin.dto.client.ClientSaveRequestDto;
-import com.shds.sma.admin.dto.ip.IpModRequestDto;
-import com.shds.sma.admin.dto.ip.IpSaveRequestDto;
+import com.shds.sma.manage.dto.cert.CertModRequestDto;
+import com.shds.sma.manage.dto.cert.CertSaveRequestDto;
+import com.shds.sma.manage.dto.ip.IpModRequestDto;
+import com.shds.sma.manage.dto.ip.IpSaveRequestDto;
 import com.shds.sma.admin.dto.member.MemberModRequestDto;
 import com.shds.sma.admin.dto.member.MemberRequestDto;
 import com.shds.sma.admin.dto.member.MemberResponseDto;
@@ -24,11 +26,14 @@ import com.shds.sma.admin.repositroy.client.ClientRepository;
 import com.shds.sma.admin.repositroy.member.MemberRepository;
 import com.shds.sma.admin.repositroy.notice.NoticeRepository;
 import com.shds.sma.admin.repositroy.system.SystemRepository;
+import com.shds.sma.manage.dto.cert.CertRequestDto;
+import com.shds.sma.manage.dto.cert.CertResponseDto;
 import com.shds.sma.manage.dto.ip.IpRequestDto;
 import com.shds.sma.manage.dto.ip.IpResponseDto;
+import com.shds.sma.manage.entity.Cert;
 import com.shds.sma.manage.entity.Ip;
+import com.shds.sma.manage.repository.cert.CertRepository;
 import com.shds.sma.manage.repository.ip.IpRepository;
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -56,9 +61,9 @@ public class AdminServiceImpl implements AdminService {
 
     private final IpRepository ipRepository;
 
-    private final ModelMapper modelMapper;
+    private final CertRepository certRepository;
 
-    private final EntityManager em;
+    private final ModelMapper modelMapper;
 
     @Override
     public Page<NoticeResponseDto> findNoticeAll(Pageable pageable) {
@@ -315,5 +320,67 @@ public class AdminServiceImpl implements AdminService {
         Ip findIp = ipRepository.findById(ipId).get();
         findIp.setValidityY();
     }
+
+    @Override
+    public Page<CertResponseDto> findCertByCond(CertRequestDto certRequestDto, Pageable pageable) {
+        Page<Cert> findCert = certRepository.findCertByCond(certRequestDto, pageable);
+        return findCert.map(CertResponseDto::new);
+    }
+
+    @Override
+    public CertResponseDto findCertById(Long certId) {
+        Cert findCert = certRepository.findById(certId).get();
+        return modelMapper.map(findCert, CertResponseDto.class);
+    }
+
+    @Override
+    public void saveCert(CertSaveRequestDto certSaveRequestDto) {
+        Long systemId = certSaveRequestDto.getApplySystemId();
+        System findSystem = systemRepository.findById(systemId).get();
+
+        Long memberId = certSaveRequestDto.getMemberId();
+        Member findMember = memberRepository.findById(memberId).get();
+
+        Cert saveCert = Cert.builder()
+                .certType(certSaveRequestDto.getCertType())
+                .certName(certSaveRequestDto.getCertName())
+                .applySystem(findSystem)
+                .content(certSaveRequestDto.getContent())
+                .siteLink(certSaveRequestDto.getSiteLink())
+                .startDate(certSaveRequestDto.getStartDate())
+                .endDate(certSaveRequestDto.getEndDate())
+                .member(findMember)
+                .approval(certSaveRequestDto.getApproval()).build();
+
+        certRepository.save(saveCert);
+    }
+
+    @Override
+    public void modifiedCert(CertModRequestDto certModRequestDto) {
+        Cert findCert = certRepository.findById(certModRequestDto.getCertId()).get();
+
+        Long systemId = certModRequestDto.getApplySystemId();
+        System findSystem = systemRepository.findById(systemId).get();
+        certModRequestDto.setApplySystem(findSystem);
+
+        Long memberId = certModRequestDto.getMemberId();
+        Member findMember = memberRepository.findById(memberId).get();
+        certModRequestDto.setMember(findMember);
+
+        findCert.certModified(certModRequestDto);
+    }
+
+    @Override
+    public void removeCert(Long certId) {
+        Cert findCert = certRepository.findById(certId).get();
+        findCert.setValidityN();
+    }
+
+    @Override
+    public void useCert(Long certId) {
+        Cert findCert = certRepository.findById(certId).get();
+        findCert.setValidityY();
+    }
+
 
 }
