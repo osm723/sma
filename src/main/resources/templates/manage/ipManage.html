@@ -68,8 +68,7 @@
 <!--                        <div class="col-12">-->
 <!--                            <button class="w-40 btn btn-primary btn-sm" type="submit">조회</button>-->
 <!--                        </div>-->
-<!--                    </div>-->
-
+                    </div>
                 </form>
             </div>
         </div>
@@ -83,8 +82,8 @@
                     <th scope="col">#출발지 IP 주소</th>
                     <th scope="col">#도착지 IP 주소</th>
                     <th scope="col">#시스템명</th>
-                    <th scope="col">#내용</th>
-                    <th scope="col">#사이트링크</th>
+<!--                    <th scope="col">#내용</th>-->
+<!--                    <th scope="col">#사이트링크</th>-->
                     <th scope="col">#시작일자</th>
                     <th scope="col">#종료일자</th>
                     <th scope="col">#담당자</th>
@@ -100,8 +99,8 @@
                     <td name="startIpAddr" th:text="${ip.getStartIpAddr()}">출발지 IP 주소</td>
                     <td name="endIpAddr" th:text="${ip.getEndIpAddr()}">도착지 IP 주소</td>
                     <td name="system" th:text="${ip.getSystem().getSystemName()}">시스템명</td>
-                    <td name="content" th:text="${ip.getContent()}">내용</td>
-                    <td name="siteLink" th:text="${ip.getSiteLink()}">사이트링크</td>
+<!--                    <td name="content" th:text="${ip.getContent()}">내용</td>-->
+<!--                    <td name="siteLink" th:text="${ip.getSiteLink()}">사이트링크</td>-->
                     <td name="startDate" th:text="${ip.getStartDate()}">시작일자</td>
                     <td name="endDate" th:text="${ip.getEndDate()}">종료일자</td>
                     <td name="member" th:text="${ip.getMember().getName()}">담당자</td>
