@@ -2,6 +2,7 @@ package com.shds.sma.admin.entity;
 
 import com.shds.sma.admin.dto.system.SystemModRequestDto;
 import com.shds.sma.common.entity.BaseEntity;
+import com.shds.sma.manage.entity.Ip;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AccessLevel;
@@ -44,6 +45,9 @@ public class System extends BaseEntity {
     @Size(max = 400)
     @Column(length = 400, columnDefinition = "VARCHAR(400) COMMENT '시스템 정보'")
     private String systemInfo;
+
+    @OneToMany(mappedBy = "applySystem")
+    private List<Ip> ips = new ArrayList<>();
 
     public void systemModified(SystemModRequestDto systemModRequestDto) {
         this.systemName = systemModRequestDto.getSystemName();

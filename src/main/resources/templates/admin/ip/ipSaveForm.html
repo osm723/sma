@@ -77,7 +77,7 @@
                         <div class="col-12">
                             <label class="form-label">적용 시스템 : </label>
                             <label for="systemId">
-                                <select id="systemId" th:field="*{systemId}">
+                                <select id="systemId" th:field="*{applySystemId}">
                                     <option th:each="system : ${systems}"
                                             th:value="${system.getSystemId()}"
                                             th:text="${system.getSystemName()}">

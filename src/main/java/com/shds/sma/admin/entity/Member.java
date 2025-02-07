@@ -4,10 +4,13 @@ import com.shds.sma.admin.dto.member.MemberModRequestDto;
 import com.shds.sma.admin.types.EmpAuth;
 import com.shds.sma.admin.types.EmpStatus;
 import com.shds.sma.admin.types.SystemRole;
+import com.shds.sma.manage.entity.Ip;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "SMA_MEBER")
@@ -66,6 +69,9 @@ public class Member {
     @NotNull
     @Enumerated(EnumType.STRING)
     private SystemRole systemRole;
+
+    @OneToMany(mappedBy = "member")
+    private List<Ip> ip;
 
     public void memberModified(MemberModRequestDto memberModRequestDto) {
         this.name = memberModRequestDto.getName();

@@ -94,8 +94,8 @@
                         <div class="col-12">
                             <label class="form-label">시스템명 : </label>
                             <label>
-                                <input type="text" name="systemName"
-                                       th:value="${cond.getSystemName()}"/>
+                                <input type="text" name="applySystemName"
+                                       th:value="${cond.getApplySystemName()}"/>
                             </label>
                         </div>
 
@@ -141,7 +141,7 @@
                     <th scope="col">#IP 타입</th>
                     <th scope="col">#출발지 IP 주소</th>
                     <th scope="col">#도착지 IP 주소</th>
-<!--                    <th scope="col">#시스템명</th>-->
+                    <th scope="col">#시스템명</th>
 <!--                    <th scope="col">#내용</th>-->
 <!--                    <th scope="col">#사이트링크</th>-->
                     <th scope="col">#시작일자</th>
@@ -158,12 +158,12 @@
                     <td name="ipType" th:text="${ip.getIpType()}">IP 타입</td>
                     <td name="startIpAddr" th:text="${ip.getStartIpAddr()}">출발지 IP 주소</td>
                     <td name="endIpAddr" th:text="${ip.getEndIpAddr()}">도착지 IP 주소</td>
-<!--                    <td name="system" th:text="${ip.getSystem().getSystemName()}">시스템명</td>-->
+                    <td name="system" th:text="${ip.getApplySystem().getSystemName()}">시스템명</td>
 <!--                    <td name="content" th:text="${ip.getContent()}">내용</td>-->
 <!--                    <td name="siteLink" th:text="${ip.getSiteLink()}">사이트링크</td>-->
                     <td name="startDate" th:text="${ip.getStartDate()}">시작일자</td>
                     <td name="endDate" th:text="${ip.getEndDate()}">종료일자</td>
-                    <td name="member" th:text="${ip.getMember().getName()}">담당자</td>
+                    <td name="member" th:text="${ip.getMember().getName()}">적용자</td>
                     <td name="modDate" th:text="${ip.getModDate()}">등록.수정일자</td>
                     <td name="validity" th:text="${ip.getValidity()}">사용유무</td>
                     <td name="modMemberId" th:text="${ip.getModMemberId()}">등록.수정자</td>

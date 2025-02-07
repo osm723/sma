@@ -21,9 +21,9 @@ public class IpModRequestDto {
 
     private String endIpAddr;
 
-    private Long systemId;
+    private Long applySystemId;
 
-    private System system;
+    private System applySystem;
 
     private String content;
 

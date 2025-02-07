@@ -27,6 +27,7 @@ public class Cert extends BaseEntity {
 
     @Column(length = 20, columnDefinition = "VARCHAR(20) COMMENT '인증서 타입'", nullable = false)
     @NotNull
+    @Enumerated(EnumType.STRING)
     private CertType certType;
 
     @Column(length = 200, columnDefinition = "VARCHAR(200) COMMENT '인증서명'", nullable = false)

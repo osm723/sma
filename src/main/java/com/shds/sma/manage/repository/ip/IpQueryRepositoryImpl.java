@@ -34,7 +34,7 @@ public class IpQueryRepositoryImpl implements IpQueryRepository {
                 .where(
                         startIpAddrLike(ipRequestDto.getStartIpAddr())
                         ,endIpAddrLike(ipRequestDto.getEndIpAddr())
-                        //,systemNameLike(ipRequestDto.getSystemName())
+                        ,systemNameLike(ipRequestDto.getApplySystemName())
                         ,memberNameLike(ipRequestDto.getMemberName())
                         ,validityEq(ipRequestDto.getValidity())
                         ,dateBetween(ipRequestDto.getStartDate(), ipRequestDto.getEndDate())
@@ -56,16 +56,16 @@ public class IpQueryRepositoryImpl implements IpQueryRepository {
         return StringUtils.hasText(validity) ? ip.validity.eq(validity) : null;
     }
 
-    private BooleanExpression memberNameLike(String memberName) {
-        return StringUtils.hasText(memberName) ? ip.member.name.like(memberName) : null;
+    private BooleanExpression memberNameLike(String applyMemberName) {
+        return StringUtils.hasText(applyMemberName) ? ip.member.name.like("%"+applyMemberName+"%") : null;
     }
 
-//    private BooleanExpression systemNameLike(String systemName) {
-//        return StringUtils.hasText(systemName) ? ip.system.systemName.like(systemName) : null;
-//    }
+    private BooleanExpression systemNameLike(String applySystemName) {
+        return StringUtils.hasText(applySystemName) ? ip.applySystem.systemName.like("%"+applySystemName+"%") : null;
+    }
 
     private BooleanExpression startIpAddrLike(String startIpAddr) {
-        return StringUtils.hasText(startIpAddr) ? ip.startIpAddr.like(startIpAddr) : null;
+        return StringUtils.hasText(startIpAddr) ? ip.startIpAddr.like("%"+startIpAddr+"%") : null;
     }
 
     private BooleanExpression endIpAddrLike(String endIpAddr) {
