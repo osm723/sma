@@ -3,12 +3,15 @@ package com.shds.sma.manage.entity;
 import com.shds.sma.admin.entity.Member;
 import com.shds.sma.common.entity.BaseEntity;
 import com.shds.sma.admin.entity.System;
+import com.shds.sma.manage.dto.cert.CertModRequestDto;
+import com.shds.sma.manage.dto.cert.CertSaveRequestDto;
 import com.shds.sma.manage.types.CertType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -39,9 +42,9 @@ public class Cert extends BaseEntity {
 //    @JoinColumn(name = "ROLE_ID")
 //    private Role role;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "SYSTEM_ID")
-    private System system;
+    private System applySystem;
 
     @Column(length = 400, columnDefinition = "VARCHAR(400) COMMENT '내용'")
     @Size(max = 400)
@@ -57,7 +60,7 @@ public class Cert extends BaseEntity {
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDate endDate;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
@@ -65,4 +68,28 @@ public class Cert extends BaseEntity {
     @JoinColumn(name = "APPROVAL_ID")
     private Approval approval;
 
+    public void certModified(CertModRequestDto certModRequestDto) {
+        this.certType = certModRequestDto.getCertType();
+        this.certName = certModRequestDto.getCertName();
+        this.applySystem = certModRequestDto.getApplySystem();
+        this.content = certModRequestDto.getContent();
+        this.siteLink = certModRequestDto.getSiteLink();
+        this.startDate = certModRequestDto.getStartDate();
+        this.endDate = certModRequestDto.getEndDate();
+        this.member = certModRequestDto.getMember();
+        this.approval = certModRequestDto.getApproval();
+    }
+
+    @Builder
+    public Cert(CertType certType, String certName, System applySystem, String content, String siteLink, LocalDate startDate, LocalDate endDate, Member member, Approval approval) {
+        this.certType = certType;
+        this.certName = certName;
+        this.applySystem = applySystem;
+        this.content = content;
+        this.siteLink = siteLink;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.member = member;
+        this.approval = approval;
+    }
 }

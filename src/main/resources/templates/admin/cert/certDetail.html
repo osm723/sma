@@ -15,12 +15,12 @@
 <script>
 
     /**
-     * ip 사용 함수
-     * ipUse
+     * 인증서 사용 함수
+     * certUse
      */
-    function ipUse(ipId) {
-        if (confirm("IP를 사용 하시겠습니까?")) {
-            fetch('/admin/ip/use?ipId=' + ipId, {
+    function certUse(certId) {
+        if (confirm("인증서를 사용 하시겠습니까?")) {
+            fetch('/admin/cert/use?certId=' + certId, {
                 method: 'POST'
             })
                 .then(response => {
@@ -40,12 +40,12 @@
     }
 
     /**
-     * ip 삭제 함수
-     * ipDelete
+     * 인증서 삭제 함수
+     * certDelete
      */
-    function ipDelete(ipId) {
-        if (confirm("ip를 삭제 하시겠습니까?")) {
-            fetch('/admin/ip/remove?ipId=' + ipId, {
+    function certDelete(certId) {
+        if (confirm("인증서를 삭제 하시겠습니까?")) {
+            fetch('/admin/cert/remove?certId=' + certId, {
                 method: 'POST'
             })
                 .then(response => {
@@ -77,8 +77,8 @@
      * formSubmit
      */
     function formSubmit() {
-        if (confirm("ip를 수정 하시겠습니까?")) {
-            const form = document.getElementById("ipForm");
+        if (confirm("인증서를 수정 하시겠습니까?")) {
+            const form = document.getElementById("certForm");
             form.submit();
         }
     }
@@ -92,21 +92,21 @@
             <h4 class="mb-3">IP 상세 페이지</h4>
             <br>
             <div class="row g-3">
-                <form class="needs-validation" novalidate action="#" id="ipForm"
-                      th:action="@{/admin/ip/modified}" th:object="${ip}" method="post">
+                <form class="needs-validation" novalidate action="#" id="certForm"
+                      th:action="@{/admin/cert/modified}" th:object="${cert}" method="post">
                     <div class="col-12">
                         <label>
-                            <button class="w-40 btn btn-primary btn-sm" onclick="formSubmit()">IP수정</button>
+                            <button class="w-40 btn btn-primary btn-sm" onclick="formSubmit()">인증서수정</button>
                         </label>
                         <label>
-                            <button th:if="${ip.getValidity() == 'Y'}"
+                            <button th:if="${cert.getValidity() == 'Y'}"
                                     class="w-30 btn btn-primary btn-sm"
-                                    th:attr="onclick=|ipDelete('${ip.getIpId()}')|">IP삭제
+                                    th:attr="onclick=|certDelete('${cert.getCertId()}')|">인증서삭제
                             </button>
 
-                            <button th:if="${ip.getValidity() == 'N'}"
+                            <button th:if="${cert.getValidity() == 'N'}"
                                     class="w-30 btn btn-primary btn-sm"
-                                    th:attr="onclick=|ipUse('${ip.getIpId()}')|">IP사용
+                                    th:attr="onclick=|certUse('${cert.getCertId()}')|">인증서사용
                             </button>
                         </label>
                         <label>
@@ -116,37 +116,29 @@
 
                     <div class="col-12">
                         <label>
-                            <input type="hidden" name="ipId" th:field="*{ipId}" th:value="${ip.getIpId()}"/>
+                            <input type="hidden" name="certId" th:field="*{certId}" th:value="${cert.getCertId()}"/>
                         </label>
                     </div>
 
-                    <!-- IP타입 -->
+                    <!-- 인증서타입 -->
                     <div class="col-12">
-                        <label>IP타입 : </label>
-                        <label for="ipType">
-                            <select id="ipType" th:field="*{ipType}">
-                                <option th:each="type : ${ipTypes}"
+                        <label>인증서타입 : </label>
+                        <label for="certType">
+                            <select id="certType" th:field="*{certType}">
+                                <option th:each="type : ${certTypes}"
                                         th:value="${type.name()}"
                                         th:text="${type.getDescription()}"
-                                        th:selected="${type.name()} == ${ip.getIpType()}">
+                                        th:selected="${type.name()} == ${cert.getCertType()}">
                                 </option>
                             </select>
                         </label>
                     </div>
 
-                    <!-- IP 출발지 주소 -->
+                    <!-- 인증서명 -->
                     <div class="col-12">
-                        <label class="form-label">IP 출발지 주소  : </label>
+                        <label class="form-label">인증서명  : </label>
                         <label>
-                            <input type="text" name="startIpAddr" th:field="*{startIpAddr}" th:value="${ip.getStartIpAddr()}"/>
-                        </label>
-                    </div>
-
-                    <!-- IP 도착지 주소 -->
-                    <div class="col-12">
-                        <label class="form-label">IP 도착지 주소  : </label>
-                        <label>
-                            <input type="text" name="endIpAddr" th:field="*{endIpAddr}" th:value="${ip.getEndIpAddr()}"/>
+                            <input type="text" name="certName" th:field="*{certName}" th:value="${cert.getCertName()}"/>
                         </label>
                     </div>
 
@@ -157,7 +149,7 @@
                                 <option th:each="system : ${systems}"
                                         th:value="${system.getSystemId()}"
                                         th:text="${system.getSystemName()}"
-                                        th:selected="${system.getSystemId()} == ${ip.getApplySystem().getId()}">
+                                        th:selected="${system.getSystemId()} == ${cert.getApplySystem().getId()}">
                                 </option>
                             </select>
                         </label>
@@ -168,7 +160,7 @@
                         <label class="form-label">내용 : </label>
                         <label>
                             <input type="text" name="content" th:field="*{content}"
-                                   th:value="${ip.getContent()}"/>
+                                   th:value="${cert.getContent()}"/>
                         </label>
                     </div>
 
@@ -177,7 +169,7 @@
                         <label class="form-label">사이트링크 : </label>
                         <label>
                             <input type="text" name="siteLink" th:field="*{siteLink}"
-                                   th:value="${ip.getSiteLink()}"/>
+                                   th:value="${cert.getSiteLink()}"/>
                         </label>
                     </div>
 
@@ -185,7 +177,7 @@
                     <div class="col-12">
                         <label class="form-label">시작일자 : </label>
                         <label>
-                            <input type="date" name="startDate"  th:value="${ip.getStartDate()}"/>
+                            <input type="date" name="startDate"  th:value="${cert.getStartDate()}"/>
                         </label>
                     </div>
 
@@ -193,7 +185,7 @@
                     <div class="col-12">
                         <label class="form-label">종료일자 : </label>
                         <label>
-                            <input type="date" name="endDate"  th:value="${ip.getEndDate()}"/>
+                            <input type="date" name="endDate"  th:value="${cert.getEndDate()}"/>
                         </label>
                     </div>
 
@@ -205,7 +197,7 @@
                                 <option th:each="member : ${members}"
                                         th:value="${member.getMemberId()}"
                                         th:text="${member.getDeptName()} + ' ' + ${member.getName()} + ' ' + ${member.getGradeName()}"
-                                        th:selected="${member.getMemberId()} == ${ip.getMember().getId()}">
+                                        th:selected="${member.getMemberId()} == ${cert.getMember().getId()}">
                                 </option>
                             </select>
                         </label>
@@ -215,7 +207,7 @@
                     <div class="col-12">
                         <label class="form-label">등록.수정일자 : </label>
                         <label>
-                            <input type="text" readonly disabled name="modDate" th:value="${ip.getModDate()}"/>
+                            <input type="text" readonly disabled name="modDate" th:value="${cert.getModDate()}"/>
                         </label>
                     </div>
 
@@ -223,7 +215,7 @@
                     <div class="col-12">
                         <label class="form-label">등록.수정자 : </label>
                         <label>
-                            <input type="text" readonly disabled name="modMemberId" th:value="${ip.getModMemberId()}"/>
+                            <input type="text" readonly disabled name="modMemberId" th:value="${cert.getModMemberId()}"/>
                         </label>
                     </div>
 
@@ -231,7 +223,7 @@
                     <div class="col-12">
                         <label class="form-label">사용유무 : </label>
                         <label>
-                            <input type="text" readonly disabled name="validity" th:value="${ip.getValidity()}"/>
+                            <input type="text" readonly disabled name="validity" th:value="${cert.getValidity()}"/>
                         </label>
                     </div>
 

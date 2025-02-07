@@ -2,6 +2,7 @@ package com.shds.sma.admin.entity;
 
 import com.shds.sma.admin.dto.system.SystemModRequestDto;
 import com.shds.sma.common.entity.BaseEntity;
+import com.shds.sma.manage.entity.Cert;
 import com.shds.sma.manage.entity.Ip;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -48,6 +49,9 @@ public class System extends BaseEntity {
 
     @OneToMany(mappedBy = "applySystem")
     private List<Ip> ips = new ArrayList<>();
+
+    @OneToMany(mappedBy = "applySystem")
+    private List<Cert> certs = new ArrayList<>();
 
     public void systemModified(SystemModRequestDto systemModRequestDto) {
         this.systemName = systemModRequestDto.getSystemName();

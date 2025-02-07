@@ -1,7 +1,7 @@
 package com.shds.sma.manage.service;
 
-import com.shds.sma.admin.dto.ip.IpModRequestDto;
-import com.shds.sma.admin.dto.ip.IpSaveRequestDto;
+import com.shds.sma.manage.dto.ip.IpModRequestDto;
+import com.shds.sma.manage.dto.ip.IpSaveRequestDto;
 import com.shds.sma.admin.dto.member.MemberResponseDto;
 import com.shds.sma.admin.dto.system.SystemResponseDto;
 import com.shds.sma.admin.entity.Member;
@@ -114,6 +114,12 @@ public class ManageServiceImpl implements ManageService {
     }
 
     @Override
+    public CertResponseDto findCertById(Long certId) {
+        Cert findCert = certRepository.findById(certId).get();
+        return modelMapper.map(findCert, CertResponseDto.class);
+    }
+
+    @Override
     public List<MemberResponseDto> findMemberAll() {
         return adminService.findMemberAll();
     }
@@ -122,6 +128,8 @@ public class ManageServiceImpl implements ManageService {
     public List<SystemResponseDto> findSystemAll() {
         return adminService.findSystemAll();
     }
+
+
 
 
 }

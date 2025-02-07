@@ -4,8 +4,10 @@ import com.shds.sma.admin.dto.client.ClientModRequestDto;
 import com.shds.sma.admin.dto.client.ClientRequestDto;
 import com.shds.sma.admin.dto.client.ClientResponseDto;
 import com.shds.sma.admin.dto.client.ClientSaveRequestDto;
-import com.shds.sma.admin.dto.ip.IpModRequestDto;
-import com.shds.sma.admin.dto.ip.IpSaveRequestDto;
+import com.shds.sma.manage.dto.cert.CertModRequestDto;
+import com.shds.sma.manage.dto.cert.CertSaveRequestDto;
+import com.shds.sma.manage.dto.ip.IpModRequestDto;
+import com.shds.sma.manage.dto.ip.IpSaveRequestDto;
 import com.shds.sma.admin.dto.member.MemberModRequestDto;
 import com.shds.sma.admin.dto.member.MemberRequestDto;
 import com.shds.sma.admin.dto.member.MemberResponseDto;
@@ -16,6 +18,8 @@ import com.shds.sma.admin.dto.system.SystemRequestDto;
 import com.shds.sma.admin.dto.system.SystemResponseDto;
 import com.shds.sma.admin.dto.system.SystemSaveRequestDto;
 import com.shds.sma.admin.types.EmpStatus;
+import com.shds.sma.manage.dto.cert.CertRequestDto;
+import com.shds.sma.manage.dto.cert.CertResponseDto;
 import com.shds.sma.manage.dto.ip.IpRequestDto;
 import com.shds.sma.manage.dto.ip.IpResponseDto;
 import org.springframework.data.domain.Page;
@@ -92,4 +96,16 @@ public interface AdminService {
     void removeIp(Long ipId);
 
     void useIp(Long ipId);
+
+    Page<CertResponseDto> findCertByCond(CertRequestDto certRequestDto, Pageable pageable);
+
+    CertResponseDto findCertById(Long certId);
+
+    void saveCert(CertSaveRequestDto certSaveRequestDto);
+
+    void modifiedCert(CertModRequestDto certModRequestDto);
+
+    void removeCert(Long certId);
+
+    void useCert(Long certId);
 }
