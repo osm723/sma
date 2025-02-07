@@ -44,30 +44,84 @@
         <div class="row g-5">
             <div class="col-md-7 col-lg-8">
                 <h4 class="mb-3">Ip 조회</h4>
-                <form class="needs-validation" novalidate action="#" id="ipForm" th:action="@{/manage/ip}" method="get">
+                <form class="needs-validation" novalidate action="#" id="ipForm" th:object="${cond}" th:action="@{/manage/ipManage}" method="get">
                     <div class="row g-3">
 
-<!--                        &lt;!&ndash; 그룹사코드 조건 &ndash;&gt;-->
-<!--                        <div class="col-12">-->
-<!--                            <label class="form-label">그룹사코드 : </label>-->
-<!--                            <label>-->
-<!--                                <input type="text" name="clientCode"-->
-<!--                                    th:value="${cond.getClientCode()}"/>-->
-<!--                            </label>-->
-<!--                        </div>-->
+                        <!-- 일자 조건 -->
+                        <div class="col-sm-6">
+                            <label class="form-label">일자 : </label>
+                            <label>
+                                <input type="date" name="startDate"
+                                       th:value="${cond.getStartDate()}"/>
+                            </label>
+                            <label>
+                                <b>부터 </b>
+                            </label>
+                            <label>
+                                <input type="date" name="endDate"
+                                       th:value="${cond.getEndDate()}"/>
+                            </label>
+                            <label>
+                                <b>까지</b>
+                            </label>
+                        </div>
 
-<!--                        &lt;!&ndash; 그룹사명 조건 &ndash;&gt;-->
-<!--                        <div class="col-12">-->
-<!--                            <label class="form-label">그룹사명 : </label>-->
-<!--                            <label>-->
-<!--                                <input type="text" name="clientName"-->
-<!--                                       th:value="${cond.getClientName()}"/>-->
-<!--                            </label>-->
-<!--                        </div>-->
+                        <!-- 출발지 IP 주소 조건 -->
+                        <div class="col-12">
+                            <label class="form-label">출발지 IP 주소 : </label>
+                            <label>
+                                <input type="text" name="startIpAddr"
+                                       th:value="${cond.getStartIpAddr()}"/>
+                            </label>
+                        </div>
 
-<!--                        <div class="col-12">-->
-<!--                            <button class="w-40 btn btn-primary btn-sm" type="submit">조회</button>-->
-<!--                        </div>-->
+                        <!-- 도착지 IP 주소 조건 -->
+                        <div class="col-12">
+                            <label class="form-label">도착지 IP 주소 : </label>
+                            <label>
+                                <input type="text" name="endIpAddr"
+                                       th:value="${cond.getEndIpAddr()}"/>
+                            </label>
+                        </div>
+
+                        <!-- 시스템명 조건 -->
+                        <div class="col-12">
+                            <label class="form-label">시스템명 : </label>
+                            <label>
+                                <input type="text" name="applySystemName"
+                                       th:value="${cond.getApplySystemName()}"/>
+                            </label>
+                        </div>
+
+                        <!-- 담당자명 조건 -->
+                        <div class="col-12">
+                            <label class="form-label">담당자명 : </label>
+                            <label>
+                                <input type="text" name="memberName"
+                                       th:value="${cond.getMemberName()}"/>
+                            </label>
+                        </div>
+
+                        <!-- 사용유무 조건 -->
+                        <div class="col-12">
+                            <label class="form-label">사용유무 : </label>
+                            <label>
+                                <input type="radio" name="validity" value=""
+                                       th:checked="${cond.getValidity() == '' || cond.getValidity() == null}"> 전체
+                            </label>
+                            <label>
+                                <input type="radio" name="validity" value="Y"
+                                       th:checked="${cond.getValidity() == 'Y'}"> 사용
+                            </label>
+                            <label>
+                                <input type="radio" name="validity" value="N"
+                                       th:checked="${cond.getValidity() == 'N'}"> 미사용
+                            </label>
+                        </div>
+
+                        <div class="col-12">
+                            <button class="w-40 btn btn-primary btn-sm" type="submit">조회</button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -98,7 +152,7 @@
                     <td name="ipType" th:text="${ip.getIpType()}">IP 타입</td>
                     <td name="startIpAddr" th:text="${ip.getStartIpAddr()}">출발지 IP 주소</td>
                     <td name="endIpAddr" th:text="${ip.getEndIpAddr()}">도착지 IP 주소</td>
-                    <td name="system" th:text="${ip.getSystem().getSystemName()}">시스템명</td>
+                    <td name="system" th:text="${ip.getApplySystem().getSystemName()}">시스템명</td>
 <!--                    <td name="content" th:text="${ip.getContent()}">내용</td>-->
 <!--                    <td name="siteLink" th:text="${ip.getSiteLink()}">사이트링크</td>-->
                     <td name="startDate" th:text="${ip.getStartDate()}">시작일자</td>

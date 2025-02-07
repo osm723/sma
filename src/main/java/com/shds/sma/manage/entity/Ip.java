@@ -13,8 +13,11 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "SMA_IP")
@@ -29,6 +32,7 @@ public class Ip extends BaseEntity {
 
     @Column(length = 20, columnDefinition = "VARCHAR(20) COMMENT 'IP 타입'", nullable = false)
     @NotNull
+    //@Enumerated(EnumType.STRING)
     private IpType ipType;
 
     @Column(length = 200, columnDefinition = "VARCHAR(200) COMMENT '출발지 IP 주소'", nullable = false)
@@ -41,10 +45,9 @@ public class Ip extends BaseEntity {
     @NotBlank
     private String endIpAddr;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "SYSTEM_ID")
-    private System system;
-
+    private System applySystem;
     @Column(length = 400, columnDefinition = "VARCHAR(400) COMMENT '내용'")
     @Size(max = 400)
     private String content;
@@ -59,7 +62,7 @@ public class Ip extends BaseEntity {
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDate endDate;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
@@ -68,11 +71,11 @@ public class Ip extends BaseEntity {
     private Approval approval;
 
     @Builder
-    public Ip(IpType ipType, String startIpAddr, String endIpAddr, System system, String content, String siteLink, LocalDate startDate, LocalDate endDate, Member member, Approval approval) {
+    public Ip(IpType ipType, String startIpAddr, String endIpAddr, System applySystem, String content, String siteLink, LocalDate startDate, LocalDate endDate, Member member, Approval approval) {
         this.ipType = ipType;
         this.startIpAddr = startIpAddr;
         this.endIpAddr = endIpAddr;
-        this.system = system;
+        this.applySystem = applySystem;
         this.content = content;
         this.siteLink = siteLink;
         this.startDate = startDate;
@@ -85,7 +88,7 @@ public class Ip extends BaseEntity {
         this.ipType = ipModRequestDto.getIpType();
         this.startIpAddr = ipModRequestDto.getStartIpAddr();
         this.endIpAddr = ipModRequestDto.getEndIpAddr();
-        this.system = ipModRequestDto.getSystem();
+        this.applySystem = ipModRequestDto.getApplySystem();
         this.content = ipModRequestDto.getContent();
         this.siteLink = ipModRequestDto.getSiteLink();
         this.startDate = ipModRequestDto.getStartDate();

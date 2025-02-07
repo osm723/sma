@@ -342,7 +342,6 @@ public class AdminController {
         MemberResponseDto member = adminService.findMemberById(memberId);
         model.addAttribute("member", member);
         setMemberModel(model);
-
         return "/admin/member/memberDetail";
     }
 
@@ -355,7 +354,6 @@ public class AdminController {
     public String memberSaveForm(Model model) {
         model.addAttribute("member", new MemberSaveRequestDto());
         setMemberModel(model);
-
         return "/admin/member/memberSaveForm";
     }
 
@@ -423,7 +421,6 @@ public class AdminController {
         IpResponseDto ip = adminService.findIpById(ipId);
         model.addAttribute("ip", ip);
         setIpModel(model);
-
         return "/admin/ip/ipDetail";
     }
 

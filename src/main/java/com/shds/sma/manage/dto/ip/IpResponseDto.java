@@ -26,9 +26,9 @@ public class IpResponseDto {
 
     private String endIpAddr;
 
-    private Long systemId;
+    private Long applySystemId;
 
-    private System system;
+    private System applySystem;
 
     private String content;
 
@@ -55,7 +55,7 @@ public class IpResponseDto {
         this.ipType = ip.getIpType();
         this.startIpAddr = ip.getStartIpAddr();
         this.endIpAddr = ip.getEndIpAddr();
-        this.system = ip.getSystem();
+        this.applySystem = ip.getApplySystem();
         this.content = ip.getContent();
         this.siteLink = ip.getSiteLink();
         this.startDate = ip.getStartDate();

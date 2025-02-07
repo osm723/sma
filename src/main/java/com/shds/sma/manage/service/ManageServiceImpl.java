@@ -18,6 +18,7 @@ import com.shds.sma.manage.entity.Ip;
 import com.shds.sma.manage.repository.cert.CertRepository;
 import com.shds.sma.manage.repository.ip.IpRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +30,7 @@ import java.util.List;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class ManageServiceImpl implements ManageService {
 
     private final IpRepository ipRepository;
@@ -57,19 +59,17 @@ public class ManageServiceImpl implements ManageService {
 
     @Override
     public void saveIp(IpSaveRequestDto ipSaveRequestDto) {
-        Long systemId = ipSaveRequestDto.getSystemId();
+        Long systemId = ipSaveRequestDto.getApplySystemId();
         System findSystem = systemRepository.findById(systemId).get();
-        ipSaveRequestDto.setSystem(findSystem);
 
         Long memberId = ipSaveRequestDto.getMemberId();
         Member findMember = memberRepository.findById(memberId).get();
-        ipSaveRequestDto.setMember(findMember);
 
         Ip saveIp = Ip.builder()
                 .ipType(ipSaveRequestDto.getIpType())
                 .startIpAddr(ipSaveRequestDto.getStartIpAddr())
                 .endIpAddr(ipSaveRequestDto.getEndIpAddr())
-                .system(findSystem)
+                .applySystem(findSystem)
                 .content(ipSaveRequestDto.getContent())
                 .siteLink(ipSaveRequestDto.getSiteLink())
                 .startDate(ipSaveRequestDto.getStartDate())
@@ -84,9 +84,9 @@ public class ManageServiceImpl implements ManageService {
     public void modifiedIp(IpModRequestDto ipModRequestDto) {
         Ip findIp = ipRepository.findById(ipModRequestDto.getIpId()).get();
 
-        Long systemId = ipModRequestDto.getSystemId();
+        Long systemId = ipModRequestDto.getApplySystemId();
         System findSystem = systemRepository.findById(systemId).get();
-        ipModRequestDto.setSystem(findSystem);
+        ipModRequestDto.setApplySystem(findSystem);
 
         Long memberId = ipModRequestDto.getMemberId();
         Member findMember = memberRepository.findById(memberId).get();

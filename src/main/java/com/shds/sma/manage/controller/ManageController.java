@@ -34,6 +34,7 @@ public class ManageController {
     public String ipManage(IpRequestDto ipRequestDto, Pageable pageable, Model model) {
         Page<IpResponseDto> ips =  manageService.findIpByCond(ipRequestDto, pageable);
         model.addAttribute("ips", ips);
+        model.addAttribute("cond", ipRequestDto);
         return "/manage/ipManage";
     }
 
@@ -47,7 +48,6 @@ public class ManageController {
         IpResponseDto ip = manageService.findIpById(ipId);
         model.addAttribute("ip", ip);
         setIpModel(model);
-
         return "/manage/ipManageDetail";
     }
 

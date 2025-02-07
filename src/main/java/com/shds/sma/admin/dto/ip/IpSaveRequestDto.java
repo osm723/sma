@@ -4,9 +4,7 @@ import com.shds.sma.admin.entity.Member;
 import com.shds.sma.admin.entity.System;
 import com.shds.sma.manage.entity.Approval;
 import com.shds.sma.manage.types.IpType;
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -21,9 +19,9 @@ public class IpSaveRequestDto {
 
     private String endIpAddr;
 
-    private Long systemId;
+    private Long applySystemId;
 
-    private System system;
+    private System applySystem;
 
     private String content;
 
