@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,8 +29,7 @@ public class System extends BaseEntity {
     private String systemName;
 
     @OneToMany(mappedBy = "system")
-    //@NotBlank
-    private List<Member> systemManagers;
+    private List<Member> systemManagers = new ArrayList<>();
 
     @Column(length = 2, columnDefinition = "INT COMMENT 'IP 만료 전 알림 일자'")
     @Min(1)
