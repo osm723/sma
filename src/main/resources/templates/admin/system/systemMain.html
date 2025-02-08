@@ -99,7 +99,12 @@
                 <tbody id="systemContainer">
                 <tr th:each="system : ${systems}">
                     <td name="systemName" th:text="${system.getSystemName()}">시스템명</td>
-                    <td name="systemManager" th:text="${system.getSystemManagers()}">시스템 담당자</td>
+                    <td name="systemManager">
+                        <ul>
+                            <li th:each="manager : ${system.getSystemManagers()}"
+                                th:text="${manager.getName()}"></li>
+                        </ul>
+                    </td>
                     <td name="systemInfo" th:text="${system.getSystemInfo()}">시스템 정보</td>
                     <td name="preIpAlarm" th:text="${system.getPreIpAlarm()}">IP 만료전 알림 일자</td>
                     <td name="preCertAlarm" th:text="${system.getPreCertAlarm()}">인증서 만료전 알림 일자</td>

@@ -131,9 +131,18 @@
                     <!-- 시스템 담당자 -->
                     <div class="col-12">
                         <label class="form-label">시스템 담당자 : </label>
-                        <label>
-                            <input type="text" name="systemManagers" th:value="${system.getSystemManagers()}"/>
+                        <label for="systemManagers">
+                            <select id="systemManagers">
+                                <option th:each="manager : ${system.getSystemManagers()}"
+                                        th:value="${manager.getId()}"
+                                        th:text="${manager.getDeptName()} + ' ' + ${manager.getName()} + ' ' + ${manager.getGradeName()} ">
+                                </option>
+                            </select>
                         </label>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">* 시스템 담당자는 직원화면에서 수정 가능합니다.</label>
                     </div>
 
                     <!-- 시스템 정보 -->

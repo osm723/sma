@@ -180,7 +180,11 @@ public class AdminController {
      * @return String
      */
     @GetMapping("/system/save")
-    public String systemSaveForm() {
+    public String systemSaveForm(Model model) {
+        List<MemberResponseDto> members = adminService.findMemberAll();
+        model.addAttribute("system", new SystemSaveRequestDto());
+        model.addAttribute("members", members);
+
         return "/admin/system/systemSaveForm";
     }
 

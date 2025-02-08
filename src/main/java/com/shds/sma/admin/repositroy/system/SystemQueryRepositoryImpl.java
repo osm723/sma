@@ -30,9 +30,9 @@ public class SystemQueryRepositoryImpl implements SystemQueryRepository {
     public Page<System> findSystemByCond(SystemRequestDto systemRequestDto, Pageable pageable) {
         QueryResults<System> result = query.select(system)
                 .from(system)
-                .leftJoin(system.systemManagers)
+                .leftJoin(system.systemManagers).fetchJoin()
                 .where(systemNameEq(systemRequestDto.getSystemName())
-                        , (validityEq(systemRequestDto.getValidity()))
+                        ,(validityEq(systemRequestDto.getValidity()))
                 )
                 .limit(pageable.getPageSize())
                 .offset(pageable.getOffset())
