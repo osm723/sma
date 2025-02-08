@@ -1,6 +1,5 @@
 package com.shds.sma.ip.repository;
 
-import com.shds.sma.ip.dto.IpDistinctResponseDto;
 import com.shds.sma.ip.dto.IpRequestDto;
 import com.shds.sma.ip.entity.Ip;
 import com.shds.sma.system.dto.SystemIpRequestDto;

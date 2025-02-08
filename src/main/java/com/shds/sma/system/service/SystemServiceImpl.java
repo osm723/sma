@@ -5,8 +5,6 @@ import com.shds.sma.admin.entity.Member;
 import com.shds.sma.admin.entity.System;
 import com.shds.sma.admin.repositroy.member.MemberRepository;
 import com.shds.sma.admin.repositroy.system.SystemRepository;
-import com.shds.sma.cert.entity.Cert;
-import com.shds.sma.ip.dto.IpDistinctResponseDto;
 import com.shds.sma.cert.repository.CertRepository;
 import com.shds.sma.ip.repository.IpRepository;
 import com.shds.sma.system.dto.*;
