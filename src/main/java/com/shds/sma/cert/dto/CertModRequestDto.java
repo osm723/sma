@@ -1,7 +1,8 @@
-package com.shds.sma.system.dto;
+package com.shds.sma.cert.dto;
 
+import com.shds.sma.admin.entity.Member;
 import com.shds.sma.admin.entity.System;
-import com.shds.sma.cert.dto.CertRequestDto;
+import com.shds.sma.manage.entity.Approval;
 import com.shds.sma.cert.types.CertType;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -13,24 +14,29 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class SystemCertRequestDto extends CertRequestDto {
+public class CertModRequestDto {
+
+    private Long certId;
 
     private CertType certType;
 
     private String certName;
 
-    private String applySystemName;
+    private Long applySystemId;
 
-    private String memberName;
+    private System applySystem;
 
-    private String validity;
+    private String content;
+
+    private String siteLink;
 
     private LocalDate startDate;
 
     private LocalDate endDate;
 
-    private Long systemId;
+    private Long memberId;
 
-    private System system;
+    private Member member;
 
+    private Approval approval;
 }

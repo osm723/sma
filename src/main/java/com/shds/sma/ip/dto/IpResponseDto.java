@@ -1,4 +1,4 @@
-package com.shds.sma.system.dto;
+package com.shds.sma.ip.dto;
 
 import com.shds.sma.admin.entity.Member;
 import com.shds.sma.admin.entity.System;
@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class SystemIpResponseDto {
+public class IpResponseDto {
 
     private Long ipId;
 
@@ -50,7 +50,7 @@ public class SystemIpResponseDto {
 
     private String validity;
 
-    public SystemIpResponseDto(Ip ip) {
+    public IpResponseDto(Ip ip) {
         this.ipId = ip.getId();
         this.ipType = ip.getIpType();
         this.startIpAddr = ip.getStartIpAddr();

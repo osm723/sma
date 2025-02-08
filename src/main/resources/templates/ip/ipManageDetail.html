@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>IP 인증서 관리 프로그램</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="/assets/dist/css/bootstrap.css">
+<script src="/assets/dist/js/color-modes.js"></script>
+<link href="/assets/dist/css/headers.css" rel="stylesheet">
+<link href="/assets/dist/css/bootstrap.css" rel="stylesheet">
+<script src="/assets/dist/js/bootstrap.bundle.min.js"></script>
+<link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="/assets/dist/css/layout.css" rel="stylesheet">
+<script>
+
+    /**
+     * 팝업 종료 함수
+     * closePopup
+     */
+    function closePopup() {
+        window.close();
+    }
+
+</script>
+<body>
+<div class="container">
+
+    <div class="row g-5">
+        <div class="col g-5">
+            <h4 class="mb-3">IP 상세 페이지</h4>
+            <br>
+            <div class="row g-3">
+                <form class="needs-validation" novalidate action="#" id="ipForm"
+                      th:action="@{/manage/ip/modified}" th:object="${ip}" method="post">
+                    <div class="col-12">
+                        <label>
+                            <button class="w-30 btn btn-primary btn-sm" onclick="closePopup()">팝업닫기</button>
+                        </label>
+                    </div>
+
+                    <div class="col-12">
+                        <label>
+                            <input type="hidden" readonly disabled name="ipId" th:field="*{ipId}" th:value="${ip.getIpId()}"/>
+                        </label>
+                    </div>
+
+                    <!-- IP타입 -->
+                    <div class="col-12">
+                        <label>IP타입 : </label>
+                        <label for="ipType">
+                            <select id="ipType" readonly disabled th:field="*{ipType}">
+                                <option th:each="type : ${ipTypes}"
+                                        th:value="${type.name()}"
+                                        th:text="${type.getDescription()}"
+                                        th:selected="${type.name()} == ${ip.getIpType()}">
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <!-- IP 출발지 주소 -->
+                    <div class="col-12">
+                        <label class="form-label">IP 출발지 주소  : </label>
+                        <label>
+                            <input type="text" readonly disabled name="startIpAddr" th:field="*{startIpAddr}" th:value="${ip.getStartIpAddr()}"/>
+                        </label>
+                    </div>
+
+                    <!-- IP 도착지 주소 -->
+                    <div class="col-12">
+                        <label class="form-label">IP 도착지 주소  : </label>
+                        <label>
+                            <input type="text" readonly disabled name="endIpAddr" th:field="*{endIpAddr}" th:value="${ip.getEndIpAddr()}"/>
+                        </label>
+                    </div>
+
+                    <!-- 적용 시스템 -->
+                    <div class="col-12">
+                        <label class="form-label">적용 시스템 : </label>
+                        <label for="systemId">
+                            <select id="systemId" readonly disabled th:field="*{applySystemId}">
+                                <option th:each="system : ${systems}"
+                                        th:value="${system.getSystemId()}"
+                                        th:text="${system.getSystemName()}"
+                                        th:selected="${system.getSystemId()} == ${ip.getApplySystem().getId()}">
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <!-- 내용 -->
+                    <div class="col-12">
+                        <label class="form-label">내용 : </label>
+                        <label>
+                            <input type="text" readonly disabled name="content" th:field="*{content}"
+                                   th:value="${ip.getContent()}"/>
+                        </label>
+                    </div>
+
+                    <!-- 사이트링크 -->
+                    <div class="col-12">
+                        <label class="form-label">사이트링크 : </label>
+                        <label>
+                            <input type="text" readonly disabled name="siteLink" th:field="*{siteLink}"
+                                   th:value="${ip.getSiteLink()}"/>
+                        </label>
+                    </div>
+
+                    <!-- 시작일자 -->
+                    <div class="col-12">
+                        <label class="form-label">시작일자 : </label>
+                        <label>
+                            <input type="date" readonly disabled name="startDate"
+                                   th:value="${ip.getStartDate()}"/>
+                        </label>
+                    </div>
+
+                    <!-- 종료일자 -->
+                    <div class="col-12">
+                        <label class="form-label">종료일자 : </label>
+                        <label>
+                            <input type="date" readonly disabled name="endDate"
+                                   th:value="${ip.getEndDate()}"/>
+                        </label>
+                    </div>
+
+                    <!-- 적용대상자 -->
+                    <div class="col-12">
+                        <label class="form-label">적용대상자 : </label>
+                        <label for="memberId">
+                            <select id="memberId" readonly disabled th:field="*{memberId}">
+                                <option th:each="member : ${members}"
+                                        th:value="${member.getMemberId()}"
+                                        th:text="${member.getDeptName()} + ' ' + ${member.getName()} + ' ' + ${member.getGradeName()} ">
+                                        th:selected="${member.getMemberId()} == ${ip.getMember().getId()}">
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <!-- 등록.수정일자 -->
+                    <div class="col-12">
+                        <label class="form-label">등록.수정일자 : </label>
+                        <label>
+                            <input type="text" readonly disabled name="modDate" th:value="${ip.getModDate()}"/>
+                        </label>
+                    </div>
+
+                    <!-- 등록.수정자 -->
+                    <div class="col-12">
+                        <label class="form-label">등록.수정자 : </label>
+                        <label>
+                            <input type="text" readonly disabled name="modMemberId" th:value="${ip.getModMemberId()}"/>
+                        </label>
+                    </div>
+
+                    <!-- 사용유무 -->
+                    <div class="col-12">
+                        <label class="form-label">사용유무 : </label>
+                        <label>
+                            <input type="text" readonly disabled name="validity" th:value="${ip.getValidity()}"/>
+                        </label>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -12,9 +12,9 @@
         <ul class="nav nav-pills">
             <li class="nav-item"><a class="nav-link" th:href="@{/}"
                                     th:classappend="${currentUrl == '/'} ? 'active'">Home</a></li>
-            <li class="nav-item"><a class="nav-link" th:href="@{/manage/ipManage}"
+            <li class="nav-item"><a class="nav-link" th:href="@{/ip/manage}"
                                     th:classappend="${currentUrl == '/manage/ipManage'} ? 'active'">Ip-Manage</a></li>
-            <li class="nav-item"><a class="nav-link" th:href="@{/manage/certManage}"
+            <li class="nav-item"><a class="nav-link" th:href="@{/cert/manage}"
                                     th:classappend="${currentUrl == '/manage/certManage'} ? 'active'">Cert-Manage</a></li>
             <li class="nav-item"><a class="nav-link" th:href="@{/system/main}"
                                     th:classappend="${currentUrl == '/system'} ? 'active'">Systems</a></li>
