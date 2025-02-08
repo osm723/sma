@@ -1,7 +1,5 @@
-package com.shds.sma.system.dto;
+package com.shds.sma.ip.dto;
 
-import com.shds.sma.admin.entity.System;
-import com.shds.sma.ip.dto.IpRequestDto;
 import com.shds.sma.ip.types.IpType;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -13,7 +11,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class SystemIpRequestDto extends IpRequestDto {
+public class IpRequestDto {
 
     private IpType ipType;
 
@@ -30,9 +28,5 @@ public class SystemIpRequestDto extends IpRequestDto {
     private LocalDate startDate;
 
     private LocalDate endDate;
-
-    private Long systemId;
-
-    private System system;
 
 }

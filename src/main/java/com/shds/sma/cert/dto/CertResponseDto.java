@@ -1,4 +1,4 @@
-package com.shds.sma.system.dto;
+package com.shds.sma.cert.dto;
 
 import com.shds.sma.admin.entity.Member;
 import com.shds.sma.admin.entity.System;
@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class SystemCertResponseDto {
+public class CertResponseDto {
 
     private Long certId;
 
@@ -47,7 +47,7 @@ public class SystemCertResponseDto {
 
     private String validity;
 
-    public SystemCertResponseDto(Cert cert) {
+    public CertResponseDto(Cert cert) {
         this.certId = cert.getId();
         this.certType = cert.getCertType();
         this.certName = cert.getCertName();

@@ -1,8 +1,6 @@
-package com.shds.sma.system.dto;
+package com.shds.sma.cert.dto;
 
-import com.shds.sma.admin.entity.System;
-import com.shds.sma.ip.dto.IpRequestDto;
-import com.shds.sma.ip.types.IpType;
+import com.shds.sma.cert.types.CertType;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,13 +11,11 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class SystemIpRequestDto extends IpRequestDto {
+public class CertRequestDto {
 
-    private IpType ipType;
+    private CertType certType;
 
-    private String startIpAddr;
-
-    private String endIpAddr;
+    private String certName;
 
     private String applySystemName;
 
@@ -30,9 +26,4 @@ public class SystemIpRequestDto extends IpRequestDto {
     private LocalDate startDate;
 
     private LocalDate endDate;
-
-    private Long systemId;
-
-    private System system;
-
 }
