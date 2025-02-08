@@ -6,10 +6,7 @@ import com.shds.sma.manage.entity.Cert;
 import com.shds.sma.manage.entity.Ip;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;

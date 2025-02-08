@@ -41,7 +41,7 @@
         <div class="row g-5">
             <div class="col-md-7 col-lg-8">
                 <h4 class="mb-3">시스템 등록</h4>
-                <form class="needs-validation" novalidate action="#" id="systemForm" th:action="@{/admin/system/save}"
+                <form class="needs-validation" novalidate action="#" th:object="${system}" id="systemForm" th:action="@{/admin/system/save}"
                       method="post">
                     <div class="row g-3">
 
@@ -49,23 +49,28 @@
                         <div class="col-12">
                             <label class="form-label">시스템 명 : </label>
                             <label>
-                                <input type="text" name="systemName" maxlength="100"/>
+                                <input type="text" name="systemName" th:field="*{systemName}" maxlength="100"/>
                             </label>
                         </div>
 
-                        <!-- 담당자 명 -->
-                        <div class="col-12">
-                            <label class="form-label">담당자 명 : </label>
-                            <label>
-                                <input type="text" name="systemManager" maxlength="100"/>
-                            </label>
-                        </div>
+                        <!-- 담당자 -->
+<!--                        <div class="col-12">-->
+<!--                            <label class="form-label">담당자 : </label>-->
+<!--                            <label for="systemManagerId">-->
+<!--                                <select id="systemManagerId" th:field="*{systemManagerId}">-->
+<!--                                    <option th:each="member : ${members}"-->
+<!--                                            th:value="${member.getMemberId()}"-->
+<!--                                            th:text="${member.getDeptName()} + ' ' + ${member.getName()} + ' ' + ${member.getGradeName()} ">-->
+<!--                                    </option>-->
+<!--                                </select>-->
+<!--                            </label>-->
+<!--                        </div>-->
 
                         <!-- 시스템 정보 -->
                         <div class="col-12">
                             <label class="form-label">시스템 정보 : </label>
                             <label>
-                                <input type="text" name="systemInfo" maxlength="400"/>
+                                <input type="text" name="systemInfo" th:field="*{systemInfo}" maxlength="400"/>
                             </label>
                         </div>
 
@@ -73,7 +78,7 @@
                         <div class="col-12">
                             <label class="form-label">IP 만료전 알림 일자 : </label>
                             <label>
-                                <input type="text" name="preIpAlarm" maxlength="2"/>
+                                <input type="text" name="preIpAlarm" th:field="*{preIpAlarm}" maxlength="2"/>
                             </label>
                         </div>
 
@@ -81,7 +86,7 @@
                         <div class="col-12">
                             <label class="form-label">인증서 만료전 알림 일자 : </label>
                             <label>
-                                <input type="text" name="preCertAlarm" maxlength="2"/>
+                                <input type="text" name="preCertAlarm" th:field="*{preCertAlarm}" maxlength="2"/>
                             </label>
                         </div>
 
