@@ -20,12 +20,12 @@ public class SystemController {
 
     private final SystemService systemService;
 
-    @GetMapping("/main")
+    @GetMapping("/manage")
     public String systemMain() {
-        return "/system/systemMain";
+        return "/system/systemManage";
     }
 
-    @GetMapping("/ip")
+    @GetMapping("/manage/ip")
     public String systemIP(SystemIpRequestDto systemIpRequestDto, Model model, Pageable pageable) {
         Page<SystemIpResponseDto> systemIps =  systemService.findSystemIpByCond(systemIpRequestDto, pageable);
         model.addAttribute("systemIps", systemIps);
@@ -34,7 +34,7 @@ public class SystemController {
         return "/system/systemIp";
     }
 
-    @GetMapping("/cert")
+    @GetMapping("/manage/cert")
     public String systemCert(SystemCertRequestDto systemCertRequestDto, Model model, Pageable pageable) {
         Page<SystemCertResponseDto> systemCerts =  systemService.findSystemCertByCond(systemCertRequestDto, pageable);
         model.addAttribute("systemCerts", systemCerts);
@@ -43,7 +43,7 @@ public class SystemController {
         return "/system/systemCert";
     }
 
-    @GetMapping("/manager")
+    @GetMapping("/manage/manager")
     public String systemManager(SystemManagerRequestDto systemManagerRequestDto, Model model, Pageable pageable) {
         Page<SystemManagerResponseDto> systemManagers = systemService.findMemberByCond(systemManagerRequestDto, pageable);
         model.addAttribute("systemManagers", systemManagers);
