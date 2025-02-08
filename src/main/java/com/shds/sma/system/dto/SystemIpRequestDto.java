@@ -13,17 +13,11 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class SystemIpRequestDto extends IpRequestDto {
-
-    private IpType ipType;
+public class SystemIpRequestDto {
 
     private String startIpAddr;
 
     private String endIpAddr;
-
-    private String applySystemName;
-
-    private String memberName;
 
     private String validity;
 
@@ -32,7 +26,5 @@ public class SystemIpRequestDto extends IpRequestDto {
     private LocalDate endDate;
 
     private Long systemId;
-
-    private System system;
 
 }

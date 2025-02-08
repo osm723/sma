@@ -50,7 +50,7 @@
         <div class="row g-5">
             <div class="col-md-7 col-lg-8">
                 <h4 class="mb-3">시스템별 인증서 조회</h4>
-                <form class="needs-validation" novalidate action="#" id="systemCertForm" th:object="${cond}" th:action="@{/system/cert}" method="get">
+                <form class="needs-validation" novalidate action="#" id="systemCertForm" th:object="${cond}" th:action="@{/system/manage/cert}" method="get">
                     <div class="row g-3">
 
                         <!-- 시스템명 조건 -->
@@ -58,11 +58,21 @@
                             <label class="form-label">시스템명 : </label>
                             <label for="systemId">
                                 <select id="systemId" th:field="*{systemId}">
+                                    <option value="">전체</option>
                                     <option th:each="system : ${systems}"
                                             th:value="${system.getSystemId()}"
                                             th:text="${system.getSystemName()}">
                                     </option>
                                 </select>
+                            </label>
+                        </div>
+
+                        <!-- 인증서명 -->
+                        <div class="col-12">
+                            <label class="form-label">인증서명 : </label>
+                            <label>
+                                <input type="text" name="certName" th:field="*{certName}"
+                                       th:value="${cond.getCertName()}"/>
                             </label>
                         </div>
 
@@ -85,37 +95,19 @@
                             </label>
                         </div>
 
-                        <!-- 인증서명 -->
-                        <div class="col-12">
-                            <label class="form-label">인증서명 : </label>
-                            <label>
-                                <input type="text" name="certName" th:field="*{certName}"
-                                       th:value="${cond.getCertName()}"/>
-                            </label>
-                        </div>
-
-                        <!-- 적용대상자 조건 -->
-                        <div class="col-12">
-                            <label class="form-label">적용대상자 : </label>
-                            <label>
-                                <input type="text" name="memberName" th:field="*{memberName}"
-                                       th:value="${cond.getMemberName()}"/>
-                            </label>
-                        </div>
-
                         <!-- 사용유무 조건 -->
                         <div class="col-12">
                             <label class="form-label">사용유무 : </label>
                             <label>
-                                <input type="radio" name="validity" value="" th:field="*{validity}"
+                                <input type="radio" name="validity" value=""
                                        th:checked="${cond.getValidity() == '' || cond.getValidity() == null}"> 전체
                             </label>
                             <label>
-                                <input type="radio" name="validity" value="Y" th:field="*{validity}"
+                                <input type="radio" name="validity" value="Y"
                                        th:checked="${cond.getValidity() == 'Y'}"> 사용
                             </label>
                             <label>
-                                <input type="radio" name="validity" value="N" th:field="*{validity}"
+                                <input type="radio" name="validity" value="N"
                                        th:checked="${cond.getValidity() == 'N'}"> 미사용
                             </label>
                         </div>
@@ -134,33 +126,13 @@
                 <thead>
                 <tr>
                     <th scope="col">#시스템명</th>
-                    <th scope="col">#인증서 타입</th>
                     <th scope="col">#인증서명</th>
-                    <th scope="col">#시작일자</th>
-                    <th scope="col">#종료일자</th>
-                    <th scope="col">#적용대상자</th>
-                    <th scope="col">#등록.수정일자</th>
-                    <th scope="col">#사용유무</th>
-                    <th scope="col">#등록.수정자</th>
-                    <th scope="col">#결재보기</th>
                 </tr>
                 </thead>
                 <tbody id="certContainer">
                 <tr th:each="cert : ${systemCerts}">
-                    <td name="system" th:text="${cert.getApplySystem().getSystemName()}">시스템명</td>
-                    <td name="ipType" th:text="${cert.getCertType()}">인증서 타입</td>
+                    <td name="system" th:text="${cert.getApplySystemName()}">시스템명</td>
                     <td name="startIpAddr" th:text="${cert.getCertName()}">인증서명</td>
-                    <td name="startDate" th:text="${cert.getStartDate()}">시작일자</td>
-                    <td name="endDate" th:text="${cert.getEndDate()}">종료일자</td>
-                    <td name="member" th:text="${cert.getMember().getName()}">적용대상자</td>
-                    <td name="modDate" th:text="${cert.getModDate()}">등록.수정일자</td>
-                    <td name="validity" th:text="${cert.getValidity()}">사용유무</td>
-                    <td name="modMemberId" th:text="${cert.getModMemberId()}">등록.수정자</td>
-                    <td name="certId">
-                        <button type="button" class="w-30 btn btn-primary btn-sm"
-                                th:attr="onclick=|openPopup('${cert.getCertId()}')|">상세보기
-                        </button>
-                    </td>
                 </tr>
                 </tbody>
             </table>
