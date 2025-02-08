@@ -4,7 +4,7 @@ import com.shds.sma.admin.entity.Member;
 import com.shds.sma.common.entity.BaseEntity;
 import com.shds.sma.admin.entity.System;
 import com.shds.sma.cert.dto.CertModRequestDto;
-import com.shds.sma.manage.entity.Approval;
+import com.shds.sma.common.entity.Approval;
 import com.shds.sma.cert.types.CertType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

@@ -3,7 +3,7 @@ package com.shds.sma.ip.entity;
 import com.shds.sma.ip.dto.IpModRequestDto;
 import com.shds.sma.common.entity.BaseEntity;
 import com.shds.sma.admin.entity.System;
-import com.shds.sma.manage.entity.Approval;
+import com.shds.sma.common.entity.Approval;
 import com.shds.sma.ip.types.IpType;
 import com.shds.sma.admin.entity.Member;
 import jakarta.persistence.*;
