@@ -10,11 +10,16 @@
 <div class="container" th:fragment="copy">
     <header class="d-flex justify-content-center py-3">
         <ul class="nav nav-pills">
-            <li class="nav-item"><a th:href="@{/}" class="nav-link">Home</a></li>
-            <li class="nav-item"><a th:href="@{/manage/ipManage}" class="nav-link">Ip-Manage</a></li>
-            <li class="nav-item"><a th:href="@{/manage/certManage}" class="nav-link">Cert-Manage</a></li>
-            <li class="nav-item"><a th:href="@{/system/main}" class="nav-link">Systems</a></li>
-            <li class="nav-item"><a th:href="@{/admin/main}" class="nav-link">Admin</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/}"
+                                    th:classappend="${currentUrl == '/'} ? 'active'">Home</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/manage/ipManage}"
+                                    th:classappend="${currentUrl == '/manage/ipManage'} ? 'active'">Ip-Manage</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/manage/certManage}"
+                                    th:classappend="${currentUrl == '/manage/certManage'} ? 'active'">Cert-Manage</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/system/main}"
+                                    th:classappend="${currentUrl == '/system'} ? 'active'">Systems</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/admin/main}"
+                                    th:classappend="${currentUrl == '/admin'} ? 'active'">Admin</a></li>
         </ul>
         <!--        <ul class="nav nav-pills">-->
         <!--            <li class="nav-item"><a th:href="@{/static}" class="nav-link"-->

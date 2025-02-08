@@ -38,7 +38,7 @@
 
         <div class="py-1 text-center">
             <h2>Ip 현황 화면</h2>
-            <p class="lead">Ip 조회 페이지</p>
+            <p class="lead">Ip 정보를 조회합니다.</p>
         </div>
 
         <div class="row g-5">
@@ -93,9 +93,9 @@
                             </label>
                         </div>
 
-                        <!-- 담당자명 조건 -->
+                        <!-- 적용대상자 조건 -->
                         <div class="col-12">
-                            <label class="form-label">담당자명 : </label>
+                            <label class="form-label">적용대상자 : </label>
                             <label>
                                 <input type="text" name="memberName"
                                        th:value="${cond.getMemberName()}"/>
@@ -140,7 +140,7 @@
 <!--                    <th scope="col">#사이트링크</th>-->
                     <th scope="col">#시작일자</th>
                     <th scope="col">#종료일자</th>
-                    <th scope="col">#담당자</th>
+                    <th scope="col">#적용대상자</th>
                     <th scope="col">#등록.수정일자</th>
                     <th scope="col">#사용유무</th>
                     <th scope="col">#등록.수정자</th>
@@ -157,7 +157,7 @@
 <!--                    <td name="siteLink" th:text="${ip.getSiteLink()}">사이트링크</td>-->
                     <td name="startDate" th:text="${ip.getStartDate()}">시작일자</td>
                     <td name="endDate" th:text="${ip.getEndDate()}">종료일자</td>
-                    <td name="member" th:text="${ip.getMember().getName()}">담당자</td>
+                    <td name="member" th:text="${ip.getMember().getName()}">적용대상자</td>
                     <td name="modDate" th:text="${ip.getModDate()}">등록.수정일자</td>
                     <td name="validity" th:text="${ip.getValidity()}">사용유무</td>
                     <td name="modMemberId" th:text="${ip.getModMemberId()}">등록.수정자</td>
