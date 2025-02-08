@@ -13,15 +13,9 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class SystemCertRequestDto extends CertRequestDto {
-
-    private CertType certType;
+public class SystemCertRequestDto {
 
     private String certName;
-
-    private String applySystemName;
-
-    private String memberName;
 
     private String validity;
 
@@ -30,7 +24,5 @@ public class SystemCertRequestDto extends CertRequestDto {
     private LocalDate endDate;
 
     private Long systemId;
-
-    private System system;
 
 }

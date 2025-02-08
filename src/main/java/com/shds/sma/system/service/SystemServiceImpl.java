@@ -6,7 +6,7 @@ import com.shds.sma.admin.entity.System;
 import com.shds.sma.admin.repositroy.member.MemberRepository;
 import com.shds.sma.admin.repositroy.system.SystemRepository;
 import com.shds.sma.cert.entity.Cert;
-import com.shds.sma.ip.entity.Ip;
+import com.shds.sma.ip.dto.IpDistinctResponseDto;
 import com.shds.sma.cert.repository.CertRepository;
 import com.shds.sma.ip.repository.IpRepository;
 import com.shds.sma.system.dto.*;
@@ -40,19 +40,21 @@ public class SystemServiceImpl implements SystemService {
 
     @Override
     public Page<SystemIpResponseDto> findSystemIpByCond(SystemIpRequestDto systemIpRequestDto, Pageable pageable) {
-        Page<Ip> findIp = ipRepository.findIpByCond(systemIpRequestDto, pageable);
-        return findIp.map(SystemIpResponseDto::new);
+        //Page<Ip> findIp = ipRepository.findIpByCond(systemIpRequestDto, pageable);
+        //return findIp.map(SystemIpResponseDto::new);
+        return ipRepository.findSystemIpByCond(systemIpRequestDto, pageable);
     }
 
     @Override
     public Page<SystemCertResponseDto> findSystemCertByCond(SystemCertRequestDto systemCertRequestDto, Pageable pageable) {
-        Page<Cert> findCert = certRepository.findCertByCond(systemCertRequestDto, pageable);
-        return findCert.map(SystemCertResponseDto::new);
+        //Page<Cert> findCert = certRepository.findCertByCond(systemCertRequestDto, pageable);
+        //return findCert.map(SystemCertResponseDto::new);
+        return certRepository.findSystemCertByCond(systemCertRequestDto, pageable);
     }
 
     @Override
-    public Page<SystemManagerResponseDto> findMemberByCond(SystemManagerRequestDto systemManagerRequestDto, Pageable pageable) {
-        Page<Member> findMember = memberRepository.findMemberByCond(systemManagerRequestDto, pageable);
+    public Page<SystemManagerResponseDto> findSystemMemberByCond(SystemManagerRequestDto systemManagerRequestDto, Pageable pageable) {
+        Page<Member> findMember = memberRepository.findSystemMemberByCond(systemManagerRequestDto, pageable);
         return findMember.map(SystemManagerResponseDto::new);
     }
 }

@@ -1,6 +1,7 @@
 package com.shds.sma.admin.repositroy.member;
 
 import com.querydsl.core.QueryResults;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.shds.sma.admin.dto.member.MemberRequestDto;
@@ -8,6 +9,8 @@ import com.shds.sma.admin.entity.Member;
 import com.shds.sma.admin.entity.QClient;
 import com.shds.sma.admin.entity.QMember;
 import com.shds.sma.admin.entity.QSystem;
+import com.shds.sma.system.dto.SystemManagerRequestDto;
+import com.shds.sma.system.dto.SystemManagerResponseDto;
 import jakarta.persistence.EntityManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -51,6 +54,33 @@ public class MemberQueryRepositoryImpl implements MemberQueryRepository {
         long total = result.getTotal();
 
         return new PageImpl<>(content, pageable, total);
+    }
+
+    @Override
+    public Page<Member> findSystemMemberByCond(SystemManagerRequestDto systemManagerRequestDto, Pageable pageable) {
+        QueryResults<Member> result = query.select(member)
+                .from(member)
+                .join(member.client, client).fetchJoin()
+                .join(member.system, system).fetchJoin()
+                .where(nameEq(systemManagerRequestDto.getName())
+//                        ,clientNameEq(memberRequestDto.getClient().getClientName())
+                        ,deptNameNameEq(systemManagerRequestDto.getDeptName())
+                        ,gradeNameEq(systemManagerRequestDto.getGradeName())
+                        ,roleNameEq(systemManagerRequestDto.getRoleName())
+                        ,systemIdEq(systemManagerRequestDto.getSystemId())
+                )
+                .limit(pageable.getPageSize())
+                .offset(pageable.getOffset())
+                .fetchResults();
+
+        List<Member> content = result.getResults();
+        long total = result.getTotal();
+
+        return new PageImpl<>(content, pageable, total);
+    }
+
+    private static BooleanExpression systemIdEq(Long systemId) {
+        return systemId != null ? member.system.id.eq(systemId) : null;
     }
 
     private static BooleanExpression nameEq(String name) {

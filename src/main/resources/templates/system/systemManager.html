@@ -50,7 +50,7 @@
         <div class="row g-5">
             <div class="col-md-7 col-lg-8">
                 <h4 class="mb-3">시스템별 담당자 조회</h4>
-                <form class="needs-validation" novalidate action="#" id="systemManagerForm" th:object="${cond}" th:action="@{/system/manager}" method="get">
+                <form class="needs-validation" novalidate action="#" id="systemManagerForm" th:object="${cond}" th:action="@{/system/manage/manager}" method="get">
                     <div class="row g-3">
 
                         <!-- 시스템명 조건 -->
@@ -58,6 +58,7 @@
                             <label class="form-label">시스템명 : </label>
                             <label for="systemId">
                                 <select id="systemId" th:field="*{systemId}">
+                                    <option value="">전체</option>
                                     <option th:each="system : ${systems}"
                                             th:value="${system.getSystemId()}"
                                             th:text="${system.getSystemName()}">
@@ -128,7 +129,6 @@
                     <th scope="col">#직책명</th>
                     <th scope="col">#재직상태</th>
                     <th scope="col">#시스템권한</th>
-                    <th scope="col">#상세보기</th>
                 </tr>
                 </thead>
                 <tbody id="memberContainer">
@@ -145,11 +145,6 @@
                     <td name="roleName" th:text="${member.getRoleName()}">직책명</td>
                     <td name="empStatus" th:text="${member.getEmpStatus().getDescription()}">재직상태</td>
                     <td name="empStatus" th:text="${member.getEmpAuth().getDescription()}">시스템권한</td>
-                    <td name="memberId">
-                        <button type="button" class="w-30 btn btn-primary btn-sm"
-                                th:attr="onclick=|openPopup('${member.getMemberId()}')|">상세보기
-                        </button>
-                    </td>
                 </tr>
                 </tbody>
             </table>

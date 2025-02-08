@@ -3,8 +3,13 @@ package com.shds.sma.ip.repository;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.shds.sma.ip.dto.IpDistinctResponseDto;
 import com.shds.sma.ip.dto.IpRequestDto;
+import com.shds.sma.ip.dto.QIpDistinctResponseDto;
 import com.shds.sma.ip.entity.Ip;
+import com.shds.sma.system.dto.QSystemIpResponseDto;
+import com.shds.sma.system.dto.SystemIpRequestDto;
+import com.shds.sma.system.dto.SystemIpResponseDto;
 import jakarta.persistence.EntityManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -44,6 +49,28 @@ public class IpQueryRepositoryImpl implements IpQueryRepository {
         return new PageImpl<>(result.getResults(), pageable, result.getTotal());
     }
 
+    @Override
+    public Page<SystemIpResponseDto> findSystemIpByCond(SystemIpRequestDto systemIpRequestDto, Pageable pageable) {
+        QueryResults<SystemIpResponseDto> result = query.select(new QSystemIpResponseDto(
+                        ip.startIpAddr,
+                        ip.endIpAddr,
+                        ip.applySystem.systemName))
+                .from(ip)
+                .where(
+                        startIpAddrLike(systemIpRequestDto.getStartIpAddr())
+                        , endIpAddrLike(systemIpRequestDto.getEndIpAddr())
+                        , systemIdEq(systemIpRequestDto.getSystemId())
+                        , validityEq(systemIpRequestDto.getValidity())
+                        , dateBetween(systemIpRequestDto.getStartDate(), systemIpRequestDto.getEndDate())
+                )
+                .limit(pageable.getPageSize())
+                .offset(pageable.getOffset())
+                .groupBy(ip.startIpAddr, ip.endIpAddr, ip.applySystem)
+                .fetchResults();
+
+        return new PageImpl<>(result.getResults(), pageable, result.getTotal());
+    }
+
     private BooleanExpression dateBetween(LocalDate startDate, LocalDate endDate) {
         return startDate != null && endDate != null ?
                 ip.startDate.between(startDate, endDate)
@@ -58,8 +85,12 @@ public class IpQueryRepositoryImpl implements IpQueryRepository {
         return StringUtils.hasText(applyMemberName) ? ip.member.name.like("%"+applyMemberName+"%") : null;
     }
 
-    private BooleanExpression systemNameLike(String applySystemName) {
-        return StringUtils.hasText(applySystemName) ? ip.applySystem.systemName.like("%"+applySystemName+"%") : null;
+    private BooleanExpression systemNameLike(String applySystem) {
+        return StringUtils.hasText(applySystem) ? ip.applySystem.systemName.like("%"+applySystem+"%") : null;
+    }
+
+    private BooleanExpression systemIdEq(Long applySystemId) {
+        return applySystemId != null ? ip.applySystem.id.eq(applySystemId) : null;
     }
 
     private BooleanExpression startIpAddrLike(String startIpAddr) {

@@ -14,5 +14,5 @@ public interface SystemService {
 
     Page<SystemCertResponseDto> findSystemCertByCond(SystemCertRequestDto systemCertRequestDto, Pageable pageable);
 
-    Page<SystemManagerResponseDto> findMemberByCond(SystemManagerRequestDto systemManagerRequestDto, Pageable pageable);
+    Page<SystemManagerResponseDto> findSystemMemberByCond(SystemManagerRequestDto systemManagerRequestDto, Pageable pageable);
 }
