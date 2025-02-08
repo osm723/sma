@@ -13,13 +13,13 @@
             <li class="nav-item"><a class="nav-link" th:href="@{/}"
                                     th:classappend="${currentUrl == '/'} ? 'active'">Home</a></li>
             <li class="nav-item"><a class="nav-link" th:href="@{/ip/manage}"
-                                    th:classappend="${currentUrl == '/manage/ipManage'} ? 'active'">Ip-Manage</a></li>
+                                    th:classappend="${currentUrl == '/ip/manage'} ? 'active'">Ip-Manage</a></li>
             <li class="nav-item"><a class="nav-link" th:href="@{/cert/manage}"
-                                    th:classappend="${currentUrl == '/manage/certManage'} ? 'active'">Cert-Manage</a></li>
-            <li class="nav-item"><a class="nav-link" th:href="@{/system/main}"
-                                    th:classappend="${currentUrl == '/system'} ? 'active'">Systems</a></li>
+                                    th:classappend="${currentUrl == '/cert/manage'} ? 'active'">Cert-Manage</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/system/manage}"
+                                    th:classappend="${#strings.contains(currentUrl, '/system/manage')} ? 'active'">Systems</a></li>
             <li class="nav-item"><a class="nav-link" th:href="@{/admin/main}"
-                                    th:classappend="${currentUrl == '/admin'} ? 'active'">Admin</a></li>
+                                    th:classappend="${#strings.contains(currentUrl, '/admin')} ? 'active'">Admin</a></li>
         </ul>
         <!--        <ul class="nav nav-pills">-->
         <!--            <li class="nav-item"><a th:href="@{/static}" class="nav-link"-->
