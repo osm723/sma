@@ -33,7 +33,7 @@ public class CertController {
         Page<CertResponseDto> certs = certService.findCertByCond(certRequestDto, pageable);
         model.addAttribute("certs", certs);
         model.addAttribute("cond", certRequestDto);
-        return "/manage/certManage";
+        return "/cert/certManage";
     }
 
     /**
@@ -46,7 +46,7 @@ public class CertController {
         CertResponseDto cert = certService.findCertById(certId);
         model.addAttribute("cert", cert);
         setCertModel(model);
-        return "/manage/certManageDetail";
+        return "/cert/certManageDetail";
     }
 
     /**

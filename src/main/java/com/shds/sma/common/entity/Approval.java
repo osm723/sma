@@ -1,11 +1,10 @@
-package com.shds.sma.manage.entity;
+package com.shds.sma.common.entity;
 
-import com.shds.sma.manage.types.ApprovalStatus;
-import com.shds.sma.manage.types.Degree;
+import com.shds.sma.common.types.ApprovalStatus;
+import com.shds.sma.common.types.Degree;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

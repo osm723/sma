@@ -2,7 +2,7 @@ package com.shds.sma.system.dto;
 
 import com.shds.sma.admin.entity.Member;
 import com.shds.sma.admin.entity.System;
-import com.shds.sma.manage.entity.Approval;
+import com.shds.sma.common.entity.Approval;
 import com.shds.sma.ip.entity.Ip;
 import com.shds.sma.ip.types.IpType;
 import lombok.AccessLevel;
