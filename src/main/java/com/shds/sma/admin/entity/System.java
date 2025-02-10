@@ -1,5 +1,6 @@
 package com.shds.sma.admin.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.shds.sma.admin.dto.system.SystemModRequestDto;
 import com.shds.sma.common.entity.BaseEntity;
 import com.shds.sma.cert.entity.Cert;
@@ -28,6 +29,7 @@ public class System extends BaseEntity {
     private String systemName;
 
     @OneToMany(mappedBy = "system")
+    @JsonIgnore
     private List<Member> systemManagers = new ArrayList<>();
 
     @Column(length = 2, columnDefinition = "INT COMMENT 'IP 만료 전 알림 일자'")
@@ -45,9 +47,11 @@ public class System extends BaseEntity {
     private String systemInfo;
 
     @OneToMany(mappedBy = "applySystem")
+    @JsonIgnore
     private List<Ip> ips = new ArrayList<>();
 
     @OneToMany(mappedBy = "applySystem")
+    @JsonIgnore
     private List<Cert> certs = new ArrayList<>();
 
     public void systemModified(SystemModRequestDto systemModRequestDto) {

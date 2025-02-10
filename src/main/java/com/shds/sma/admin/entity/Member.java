@@ -1,5 +1,6 @@
 package com.shds.sma.admin.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.shds.sma.admin.dto.member.MemberModRequestDto;
 import com.shds.sma.admin.types.EmpAuth;
 import com.shds.sma.admin.types.EmpStatus;
@@ -72,9 +73,11 @@ public class Member {
     private SystemRole systemRole;
 
     @OneToMany(mappedBy = "member")
+    @JsonIgnore
     private List<Ip> ip;
 
     @OneToMany(mappedBy = "member")
+    @JsonIgnore
     private List<Cert> cert;
 
     public void memberModified(MemberModRequestDto memberModRequestDto) {
