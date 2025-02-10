@@ -118,7 +118,7 @@ public class AdminController {
     @PostMapping("/notice/modified")
     public String noticeModified(NoticeModRequestDto noticeModRequestDto) {
         adminService.modifiedNotice(noticeModRequestDto);
-        return "redirect:/admin/noticeDetail?noticeId="+noticeModRequestDto.getNoticeId();
+        return "redirect:/admin/notice/detail?noticeId="+noticeModRequestDto.getNoticeId();
     }
 
     /**
