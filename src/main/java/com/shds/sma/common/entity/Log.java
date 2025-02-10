@@ -7,12 +7,14 @@ import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "SMA_LOG")
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Log {
 
@@ -26,6 +28,10 @@ public class Log {
     @Enumerated(EnumType.STRING)
     private LogType logType;
 
+    @Column(length = 200, columnDefinition = "VARCHAR(200) COMMENT '로그 주내용'")
+    @Size(max = 200)
+    private String logCode;
+
     @Column(length = 1000, columnDefinition = "VARCHAR(1000) COMMENT '로그내용'")
     @Size(max = 1000)
     private String content;
@@ -36,6 +42,4 @@ public class Log {
     @Column(columnDefinition = "TIMESTAMP", nullable = false)
     @NotNull
     private LocalDateTime logDate;
-
-
 }
