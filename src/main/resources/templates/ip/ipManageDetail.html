@@ -30,9 +30,9 @@
         <div class="col g-5">
             <h4 class="mb-3">IP 상세 페이지</h4>
             <br>
-            <div class="row g-3">
-                <form class="needs-validation" novalidate action="#" id="ipForm"
-                      th:action="@{/manage/ip/modified}" th:object="${ip}" method="post">
+            <form class="needs-validation" novalidate action="#" id="ipForm"
+                  th:action="@{/manage/ip/modified}" th:object="${ip}" method="post">
+                <div class="row g-3">
                     <div class="col-12">
                         <label>
                             <button class="w-30 btn btn-primary btn-sm" onclick="closePopup()">팝업닫기</button>
@@ -162,9 +162,98 @@
                             <input type="text" readonly disabled name="validity" th:value="${ip.getValidity()}"/>
                         </label>
                     </div>
+                </div>
 
-                </form>
-            </div>
+                <!-- 결재 -->
+                <div th:if="${ip.getApproval() != null}" class="row g-3">
+
+                    <div class="col-12">
+                        <label class="form-label">==============================================</label>
+                        <input type="hidden" name="approvalId"  th:value="${ip.getApproval().getId()}"/>
+                    </div>
+
+                    <!-- 결재번호 -->
+                    <div class="col-12">
+                        <label class="form-label">결재번호 : </label>
+                        <label>
+                            <input type="text" readonly disabled name="approvalNo" th:value="${ip.getApproval().getApprovalNo()}"/>
+                        </label>
+                    </div>
+
+                    <!-- 기안자 -->
+                    <div class="col-12">
+                        <label class="form-label">기안자 : </label>
+                        <label for="drafterId">
+                            <select id="drafterId" readonly disabled th:field="*{drafterId}">
+                                <option th:each="member : ${members}"
+                                        th:value="${member.getMemberId()}"
+                                        th:text="${member.getDeptName()} + ' ' + ${member.getName()} + ' ' + ${member.getGradeName()} "
+                                        th:selected="${member.getMemberId() == ip.getDrafterId()}">
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <!-- 결재차수 -->
+                    <div class="col-12">
+                        <label>결재차수 : </label>
+                        <label for="degree">
+                            <select id="degree" readonly disabled th:field="*{degree}">
+                                <option th:each="degree : ${degrees}"
+                                        th:value="${degree.name()}"
+                                        th:text="${degree.getDescription()}"
+                                        th:selected="${degree.name()} == ${ip.getApproval().getDegree()}">
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <!-- 결재자 -->
+                    <div class="col-12">
+                        <label class="form-label">결재자 : </label>
+                        <label for="approverId">
+                            <select id="approverId" readonly disabled th:field="*{approverId}">
+                                <option th:each="member : ${members}"
+                                        th:value="${member.memberId}"
+                                        th:text="${member.deptName} + ' ' + ${member.name} + ' ' + ${member.gradeName}"
+                                        th:selected="${member.memberId == ip.approverId}">
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <!-- 결재상태 -->
+                    <div class="col-12">
+                        <label>결재상태 : </label>
+                        <label for="approvalStatus">
+                            <select id="approvalStatus" readonly disabled th:field="*{approvalStatus}">
+                                <option th:each="status : ${approvalStatuses}"
+                                        th:value="${status.name()}"
+                                        th:text="${status.getDescription()}"
+                                        th:selected="${status.name()} == ${ip.getApproval().getApprovalStatus()}">
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <!-- 승인일자 -->
+                    <div class="col-12">
+                        <label class="form-label">승인일자 : </label>
+                        <label>
+                            <input type="datetime-local" readonly disabled name="approveDate" th:value="${ip.getApproval().getApproveDate()}"/>
+                        </label>
+                    </div>
+
+                    <!-- 취소일자 -->
+                    <div class="col-12">
+                        <label class="form-label">취소일자 : </label>
+                        <label>
+                            <input type="datetime-local" readonly disabled name="cancelDate" th:value="${ip.getApproval().getCancelDate()}"/>
+                        </label>
+                    </div>
+                </div>
+
+            </form>
         </div>
     </div>
 </div>

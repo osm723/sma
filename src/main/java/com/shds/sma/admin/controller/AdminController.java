@@ -6,6 +6,8 @@ import com.shds.sma.admin.dto.client.ClientResponseDto;
 import com.shds.sma.admin.dto.client.ClientSaveRequestDto;
 import com.shds.sma.cert.dto.CertModRequestDto;
 import com.shds.sma.cert.dto.CertSaveRequestDto;
+import com.shds.sma.common.types.ApprovalStatus;
+import com.shds.sma.common.types.Degree;
 import com.shds.sma.ip.dto.IpModRequestDto;
 import com.shds.sma.admin.dto.member.MemberModRequestDto;
 import com.shds.sma.admin.dto.member.MemberRequestDto;
@@ -31,6 +33,7 @@ import com.shds.sma.ip.dto.IpSaveRequestDto;
 import com.shds.sma.cert.types.CertType;
 import com.shds.sma.ip.types.IpType;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +46,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin")
 @RequiredArgsConstructor
+@Slf4j
 public class AdminController {
 
     private final AdminService adminService;
@@ -428,6 +432,10 @@ public class AdminController {
     @GetMapping("/ip/detail")
     public String ipDetail(Long ipId, Model model) {
         IpResponseDto ip = adminService.findIpById(ipId);
+        if (ip.getApproval() != null) {
+            ip.setDrafterId(ip.getApproval().getDrafterId());
+            ip.setApproverId(ip.getApproval().getApproverId());
+        }
         model.addAttribute("ip", ip);
         setIpModel(model);
         return "/admin/ip/ipDetail";
@@ -607,6 +615,8 @@ public class AdminController {
      */
     private void setIpModel(Model model) {
         model.addAttribute("ipTypes", List.of(IpType.values()));
+        model.addAttribute("degrees", List.of(Degree.values()));
+        model.addAttribute("approvalStatuses", List.of(ApprovalStatus.values()));
         setMemberAndSystemModel(model);
     }
 

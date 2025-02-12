@@ -4,8 +4,10 @@ import com.shds.sma.admin.dto.client.ClientModRequestDto;
 import com.shds.sma.admin.dto.client.ClientRequestDto;
 import com.shds.sma.admin.dto.client.ClientResponseDto;
 import com.shds.sma.admin.dto.client.ClientSaveRequestDto;
+import com.shds.sma.admin.repositroy.approval.ApprovalRepository;
 import com.shds.sma.cert.dto.CertModRequestDto;
 import com.shds.sma.cert.dto.CertSaveRequestDto;
+import com.shds.sma.common.entity.Approval;
 import com.shds.sma.ip.dto.IpModRequestDto;
 import com.shds.sma.ip.dto.IpSaveRequestDto;
 import com.shds.sma.admin.dto.member.MemberModRequestDto;
@@ -62,6 +64,8 @@ public class AdminServiceImpl implements AdminService {
     private final IpRepository ipRepository;
 
     private final CertRepository certRepository;
+
+    private final ApprovalRepository approvalRepository;
 
     private final ModelMapper modelMapper;
 
@@ -273,6 +277,11 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void saveIp(IpSaveRequestDto ipSaveRequestDto) {
+        Approval savedApproval = new Approval();
+        if (ipSaveRequestDto.useApproval()) {
+            savedApproval = saveApproval(ipSaveRequestDto);
+        }
+
         Long systemId = ipSaveRequestDto.getApplySystemId();
         System findSystem = systemRepository.findById(systemId).get();
 
@@ -289,13 +298,40 @@ public class AdminServiceImpl implements AdminService {
                 .startDate(ipSaveRequestDto.getStartDate())
                 .endDate(ipSaveRequestDto.getEndDate())
                 .member(findMember)
-                .approval(ipSaveRequestDto.getApproval()).build();
+                .approval(savedApproval).build();
 
         ipRepository.save(saveIp);
     }
 
+    private Approval saveApproval(IpSaveRequestDto ipSaveRequestDto) {
+        Approval saveApproval = Approval.builder()
+                .approvalNo(ipSaveRequestDto.getApprovalNo())
+                .drafterId(ipSaveRequestDto.getDrafterId())
+                .degree(ipSaveRequestDto.getDegree())
+                .approverId(ipSaveRequestDto.getApproverId())
+                .approvalStatus(ipSaveRequestDto.getApprovalStatus())
+                .approveDate(ipSaveRequestDto.getApproveDate())
+                .cancelDate(ipSaveRequestDto.getCancelDate()).build();
+
+        return approvalRepository.save(saveApproval);
+    }
+
     @Override
     public void modifiedIp(IpModRequestDto ipModRequestDto) {
+        log.info("getApprovalNo ={}", ipModRequestDto.getApprovalNo());
+        log.info("getDegree ={}", ipModRequestDto.getDegree());
+        log.info("getApprovalStatus ={}", ipModRequestDto.getApprovalStatus());
+        log.info("getApproveDate ={}", ipModRequestDto.getApproveDate());
+        log.info("getCancelDate ={}", ipModRequestDto.getCancelDate());
+        log.info("getDrafterId ={}", ipModRequestDto.getDrafterId());
+        log.info("getApproverId ={}", ipModRequestDto.getApproverId());
+        log.info("getApprovalId ={}", ipModRequestDto.getApprovalId());
+        if (ipModRequestDto.getApprovalId() != null) {
+            Approval findApproval = approvalRepository.findById(ipModRequestDto.getApprovalId()).get();
+            findApproval.approvalModified(ipModRequestDto);
+            ipModRequestDto.setApproval(findApproval);
+        }
+
         Ip findIp = ipRepository.findById(ipModRequestDto.getIpId()).get();
 
         Long systemId = ipModRequestDto.getApplySystemId();
