@@ -2,6 +2,7 @@ package com.shds.sma.api.dto.ip;
 
 import com.shds.sma.admin.entity.Member;
 import com.shds.sma.admin.entity.System;
+import com.shds.sma.api.dto.common.ApiApproval;
 import com.shds.sma.common.entity.Approval;
 import com.shds.sma.ip.types.IpType;
 import lombok.Getter;
@@ -19,9 +20,7 @@ public class ApiIpSaveRequestDto {
 
     private String endIpAddr;
 
-    private Long applySystemId;
-
-    private System applySystem;
+    private String systemName;
 
     private String content;
 
@@ -33,7 +32,5 @@ public class ApiIpSaveRequestDto {
 
     private Long memberId;
 
-    private Member member;
-
-    private Approval approval;
+    private ApiApproval approval;
 }

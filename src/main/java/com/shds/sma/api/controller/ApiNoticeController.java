@@ -25,25 +25,25 @@ public class ApiNoticeController {
     }
 
     @GetMapping("/notice/{noticeId}")
-    public ResponseEntity<ApiNoticeResponseDto> getMember(@PathVariable Long noticeId) {
+    public ResponseEntity<ApiNoticeResponseDto> getNotice(@PathVariable Long noticeId) {
         ApiNoticeResponseDto notice = apiNoticeService.getNotice(noticeId);
         return new ResponseEntity<>(notice, HttpStatus.OK);
     }
 
     @PostMapping("/notice")
-    public  ResponseEntity<ApiNoticeResponseDto> createMember(ApiNoticeSaveRequestDto apiNoticeSaveRequestDto) {
+    public  ResponseEntity<ApiNoticeResponseDto> createNotice(@RequestBody ApiNoticeSaveRequestDto apiNoticeSaveRequestDto) {
         ApiNoticeResponseDto createdNotice = apiNoticeService.createNotice(apiNoticeSaveRequestDto);
         return new ResponseEntity<>(createdNotice, HttpStatus.OK);
     }
 
     @PutMapping("/notice")
-    public ResponseEntity<ApiNoticeResponseDto> updateMember(ApiNoticeModRequestDto apiNoticeModRequestDto) {
+    public ResponseEntity<ApiNoticeResponseDto> updateNotice(@RequestBody ApiNoticeModRequestDto apiNoticeModRequestDto) {
         ApiNoticeResponseDto updatedNotice = apiNoticeService.updateNotice(apiNoticeModRequestDto);
         return new ResponseEntity<>(updatedNotice, HttpStatus.OK);
     }
 
     @DeleteMapping("/notice/{noticeId}")
-    public ResponseEntity<Void> deleteMember(@PathVariable Long noticeId) {
+    public ResponseEntity<Void> deleteNotice(@PathVariable Long noticeId) {
         apiNoticeService.deleteNotice(noticeId);
         return new ResponseEntity<>(HttpStatus.OK);
     }

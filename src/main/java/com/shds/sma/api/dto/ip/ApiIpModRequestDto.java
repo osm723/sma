@@ -2,7 +2,9 @@ package com.shds.sma.api.dto.ip;
 
 import com.shds.sma.admin.entity.Member;
 import com.shds.sma.admin.entity.System;
+import com.shds.sma.api.dto.common.ApiApproval;
 import com.shds.sma.common.entity.Approval;
+import com.shds.sma.ip.dto.IpModRequestDto;
 import com.shds.sma.ip.types.IpType;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +13,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class ApiIpModRequestDto {
+public class ApiIpModRequestDto extends IpModRequestDto {
 
     private Long ipId;
 
@@ -21,9 +23,9 @@ public class ApiIpModRequestDto {
 
     private String endIpAddr;
 
-    private Long applySystemId;
+    private String systemName;
 
-    private System applySystem;
+    private System system;
 
     private String content;
 
@@ -37,5 +39,5 @@ public class ApiIpModRequestDto {
 
     private Member member;
 
-    private Approval approval;
+    private ApiApproval approval;
 }

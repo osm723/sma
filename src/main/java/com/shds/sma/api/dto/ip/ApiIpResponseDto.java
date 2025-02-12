@@ -2,6 +2,9 @@ package com.shds.sma.api.dto.ip;
 
 import com.shds.sma.admin.entity.Member;
 import com.shds.sma.admin.entity.System;
+import com.shds.sma.api.dto.common.ApiApproval;
+import com.shds.sma.api.dto.common.ApiMember;
+import com.shds.sma.api.dto.common.ApiSystem;
 import com.shds.sma.common.entity.Approval;
 import com.shds.sma.ip.entity.Ip;
 import com.shds.sma.ip.types.IpType;
@@ -26,9 +29,7 @@ public class ApiIpResponseDto {
 
     private String endIpAddr;
 
-    private Long applySystemId;
-
-    private System applySystem;
+    private ApiSystem applySystem;
 
     private String content;
 
@@ -38,15 +39,9 @@ public class ApiIpResponseDto {
 
     private LocalDate endDate;
 
-    private Long memberId;
+    private ApiMember member;
 
-    private Member member;
-
-    private Approval approval;
-
-    private LocalDateTime modDate;
-
-    private Long modMemberId;
+    private ApiApproval approval;
 
     private String validity;
 
@@ -55,15 +50,13 @@ public class ApiIpResponseDto {
         this.ipType = ip.getIpType();
         this.startIpAddr = ip.getStartIpAddr();
         this.endIpAddr = ip.getEndIpAddr();
-        this.applySystem = ip.getApplySystem();
+        this.applySystem = new ApiSystem(ip.getApplySystem());
         this.content = ip.getContent();
         this.siteLink = ip.getSiteLink();
         this.startDate = ip.getStartDate();
         this.endDate = ip.getEndDate();
-        this.member = ip.getMember();
-        this.approval = ip.getApproval();
-        this.modDate = ip.getModDate();
-        this.modMemberId = ip.getModMemberId();
+        this.member = new ApiMember(ip.getMember());
+        this.approval = new ApiApproval(ip.getApproval());
         this.validity = ip.getValidity();
     }
 }

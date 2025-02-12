@@ -88,6 +88,7 @@ public class ApiCertServiceImpl implements ApiCertService {
         Approval updateApproval = new Approval();
         if (apiCertModRequestDto.getApproval() != null) {
             updateApproval = approvalRepository.findById(apiCertModRequestDto.getApproval().getId()).orElseThrow(() -> new BizException("존재하지 않는 결재 입니다."));
+            updateApproval.approvalCertModified(apiCertModRequestDto);
             apiCertModRequestDto.setApproval(new ApiApproval(updateApproval));
         }
 
