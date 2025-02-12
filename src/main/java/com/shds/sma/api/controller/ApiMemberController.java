@@ -5,6 +5,7 @@ import com.shds.sma.api.dto.member.ApiMemberSaveRequestDto;
 import com.shds.sma.api.dto.member.ApiMemberResponseDto;
 import com.shds.sma.api.servie.ApiMemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
+@Slf4j
 public class ApiMemberController {
 
     private final ApiMemberService apiMemberService;
@@ -31,13 +33,13 @@ public class ApiMemberController {
     }
 
     @PostMapping("/member")
-    public  ResponseEntity<ApiMemberResponseDto> createMember(ApiMemberSaveRequestDto apiMemberSaveRequestDto) {
+    public  ResponseEntity<ApiMemberResponseDto> createMember(@RequestBody ApiMemberSaveRequestDto apiMemberSaveRequestDto) {
         ApiMemberResponseDto createdMember = apiMemberService.createMember(apiMemberSaveRequestDto);
         return new ResponseEntity<>(createdMember, HttpStatus.OK);
     }
 
     @PutMapping("/member")
-    public ResponseEntity<ApiMemberResponseDto> updateMember(ApiMemberModRequestDto apiMemberModRequestDto) {
+    public ResponseEntity<ApiMemberResponseDto> updateMember(@RequestBody ApiMemberModRequestDto apiMemberModRequestDto) {
         ApiMemberResponseDto updatedMember = apiMemberService.updateMember(apiMemberModRequestDto);
         return new ResponseEntity<>(updatedMember, HttpStatus.OK);
     }
