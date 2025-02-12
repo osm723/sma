@@ -279,7 +279,7 @@ public class AdminServiceImpl implements AdminService {
     public void saveIp(IpSaveRequestDto ipSaveRequestDto) {
         Approval savedApproval = new Approval();
         if (ipSaveRequestDto.useApproval()) {
-            savedApproval = saveApproval(ipSaveRequestDto);
+            savedApproval = saveIpApproval(ipSaveRequestDto);
         }
 
         Long systemId = ipSaveRequestDto.getApplySystemId();
@@ -303,7 +303,7 @@ public class AdminServiceImpl implements AdminService {
         ipRepository.save(saveIp);
     }
 
-    private Approval saveApproval(IpSaveRequestDto ipSaveRequestDto) {
+    private Approval saveIpApproval(IpSaveRequestDto ipSaveRequestDto) {
         Approval saveApproval = Approval.builder()
                 .approvalNo(ipSaveRequestDto.getApprovalNo())
                 .drafterId(ipSaveRequestDto.getDrafterId())
@@ -316,19 +316,24 @@ public class AdminServiceImpl implements AdminService {
         return approvalRepository.save(saveApproval);
     }
 
+    private Approval saveCertApproval(CertSaveRequestDto certSaveRequestDto) {
+        Approval saveApproval = Approval.builder()
+                .approvalNo(certSaveRequestDto.getApprovalNo())
+                .drafterId(certSaveRequestDto.getDrafterId())
+                .degree(certSaveRequestDto.getDegree())
+                .approverId(certSaveRequestDto.getApproverId())
+                .approvalStatus(certSaveRequestDto.getApprovalStatus())
+                .approveDate(certSaveRequestDto.getApproveDate())
+                .cancelDate(certSaveRequestDto.getCancelDate()).build();
+
+        return approvalRepository.save(saveApproval);
+    }
+
     @Override
     public void modifiedIp(IpModRequestDto ipModRequestDto) {
-        log.info("getApprovalNo ={}", ipModRequestDto.getApprovalNo());
-        log.info("getDegree ={}", ipModRequestDto.getDegree());
-        log.info("getApprovalStatus ={}", ipModRequestDto.getApprovalStatus());
-        log.info("getApproveDate ={}", ipModRequestDto.getApproveDate());
-        log.info("getCancelDate ={}", ipModRequestDto.getCancelDate());
-        log.info("getDrafterId ={}", ipModRequestDto.getDrafterId());
-        log.info("getApproverId ={}", ipModRequestDto.getApproverId());
-        log.info("getApprovalId ={}", ipModRequestDto.getApprovalId());
         if (ipModRequestDto.getApprovalId() != null) {
             Approval findApproval = approvalRepository.findById(ipModRequestDto.getApprovalId()).get();
-            findApproval.approvalModified(ipModRequestDto);
+            findApproval.approvalIpModified(ipModRequestDto);
             ipModRequestDto.setApproval(findApproval);
         }
 
@@ -371,6 +376,11 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void saveCert(CertSaveRequestDto certSaveRequestDto) {
+        Approval savedApproval = new Approval();
+        if (certSaveRequestDto.useApproval()) {
+            savedApproval = saveCertApproval(certSaveRequestDto);
+        }
+
         Long systemId = certSaveRequestDto.getApplySystemId();
         System findSystem = systemRepository.findById(systemId).get();
 
@@ -386,13 +396,19 @@ public class AdminServiceImpl implements AdminService {
                 .startDate(certSaveRequestDto.getStartDate())
                 .endDate(certSaveRequestDto.getEndDate())
                 .member(findMember)
-                .approval(certSaveRequestDto.getApproval()).build();
+                .approval(savedApproval).build();
 
         certRepository.save(saveCert);
     }
 
     @Override
     public void modifiedCert(CertModRequestDto certModRequestDto) {
+        if (certModRequestDto.getApprovalId() != null) {
+            Approval findApproval = approvalRepository.findById(certModRequestDto.getApprovalId()).get();
+            findApproval.approvalCertModified(certModRequestDto);
+            certModRequestDto.setApproval(findApproval);
+        }
+
         Cert findCert = certRepository.findById(certModRequestDto.getCertId()).get();
 
         Long systemId = certModRequestDto.getApplySystemId();
