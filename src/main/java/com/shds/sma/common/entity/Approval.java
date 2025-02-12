@@ -1,5 +1,6 @@
 package com.shds.sma.common.entity;
 
+import com.shds.sma.cert.dto.CertModRequestDto;
 import com.shds.sma.common.types.ApprovalStatus;
 import com.shds.sma.common.types.Degree;
 import com.shds.sma.ip.dto.IpModRequestDto;
@@ -62,7 +63,7 @@ public class Approval {
         this.cancelDate = cancelDate;
     }
 
-    public void approvalModified(IpModRequestDto ipModRequestDto) {
+    public void approvalIpModified(IpModRequestDto ipModRequestDto) {
         this.approvalNo = ipModRequestDto.getApprovalNo();
         this.drafterId = ipModRequestDto.getDrafterId();
         this.degree = ipModRequestDto.getDegree();
@@ -70,5 +71,15 @@ public class Approval {
         this.approvalStatus = ipModRequestDto.getApprovalStatus();
         this.approveDate = ipModRequestDto.getApproveDate();
         this.cancelDate = ipModRequestDto.getCancelDate();
+    }
+
+    public void approvalCertModified(CertModRequestDto certModRequestDto) {
+        this.approvalNo = certModRequestDto.getApprovalNo();
+        this.drafterId = certModRequestDto.getDrafterId();
+        this.degree = certModRequestDto.getDegree();
+        this.approverId = certModRequestDto.getApproverId();
+        this.approvalStatus = certModRequestDto.getApprovalStatus();
+        this.approveDate = certModRequestDto.getApproveDate();
+        this.cancelDate = certModRequestDto.getCancelDate();
     }
 }

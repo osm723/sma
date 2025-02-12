@@ -6,6 +6,8 @@ import com.shds.sma.cert.service.CertService;
 import com.shds.sma.cert.dto.CertRequestDto;
 import com.shds.sma.cert.dto.CertResponseDto;
 import com.shds.sma.cert.types.CertType;
+import com.shds.sma.common.types.ApprovalStatus;
+import com.shds.sma.common.types.Degree;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -45,6 +47,10 @@ public class CertController {
     public String certDetail(Long certId, Model model) {
         CertResponseDto cert = certService.findCertById(certId);
         model.addAttribute("cert", cert);
+        if (cert.getApproval() != null) {
+            cert.setDrafterId(cert.getApproval().getDrafterId());
+            cert.setApproverId(cert.getApproval().getApproverId());
+        }
         setCertModel(model);
         return "/cert/certManageDetail";
     }
@@ -56,6 +62,8 @@ public class CertController {
      */
     private void setCertModel(Model model) {
         model.addAttribute("certTypes", List.of(CertType.values()));
+        model.addAttribute("degrees", List.of(Degree.values()));
+        model.addAttribute("approvalStatuses", List.of(ApprovalStatus.values()));
 
         List<MemberResponseDto> members = certService.findMemberAll();
         model.addAttribute("members", members);

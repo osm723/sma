@@ -527,6 +527,10 @@ public class AdminController {
     public String certDetail(Long certId, Model model) {
         CertResponseDto cert = adminService.findCertById(certId);
         model.addAttribute("cert", cert);
+        if (cert.getApproval() != null) {
+            cert.setDrafterId(cert.getApproval().getDrafterId());
+            cert.setApproverId(cert.getApproval().getApproverId());
+        }
         setCertModel(model);
         return "/admin/cert/certDetail";
     }
@@ -627,6 +631,8 @@ public class AdminController {
      */
     private void setCertModel(Model model) {
         model.addAttribute("certTypes", List.of(CertType.values()));
+        model.addAttribute("degrees", List.of(Degree.values()));
+        model.addAttribute("approvalStatuses", List.of(ApprovalStatus.values()));
         setMemberAndSystemModel(model);
     }
 
