@@ -2,9 +2,11 @@ package com.shds.sma.common.entity;
 
 import com.shds.sma.common.types.ApprovalStatus;
 import com.shds.sma.common.types.Degree;
+import com.shds.sma.ip.dto.IpModRequestDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -41,7 +43,7 @@ public class Approval {
     @Column(length = 20, columnDefinition = "VARCHAR(20) COMMENT '결재상태'", nullable = false)
     @NotNull
     @Enumerated(EnumType.STRING)
-    private ApprovalStatus status;
+    private ApprovalStatus approvalStatus;
 
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime approveDate;
@@ -49,4 +51,24 @@ public class Approval {
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime cancelDate;
 
+    @Builder
+    public Approval(String approvalNo, Long drafterId, Degree degree, Long approverId, ApprovalStatus approvalStatus, LocalDateTime approveDate, LocalDateTime cancelDate) {
+        this.approvalNo = approvalNo;
+        this.drafterId = drafterId;
+        this.degree = degree;
+        this.approverId = approverId;
+        this.approvalStatus = approvalStatus;
+        this.approveDate = approveDate;
+        this.cancelDate = cancelDate;
+    }
+
+    public void approvalModified(IpModRequestDto ipModRequestDto) {
+        this.approvalNo = ipModRequestDto.getApprovalNo();
+        this.drafterId = ipModRequestDto.getDrafterId();
+        this.degree = ipModRequestDto.getDegree();
+        this.approverId = ipModRequestDto.getApproverId();
+        this.approvalStatus = ipModRequestDto.getApprovalStatus();
+        this.approveDate = ipModRequestDto.getApproveDate();
+        this.cancelDate = ipModRequestDto.getCancelDate();
+    }
 }

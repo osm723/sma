@@ -118,9 +118,9 @@
                             </label>
                         </div>
 
-                        <!-- 담당자 -->
+                        <!-- 적용대상자 -->
                         <div class="col-12">
-                            <label class="form-label">담당자 : </label>
+                            <label class="form-label">적용대상자 : </label>
                             <label for="memberId">
                                 <select id="memberId" th:field="*{memberId}">
                                     <option th:each="member : ${members}"
@@ -131,7 +131,94 @@
                             </label>
                         </div>
 
-                        <!-- 결재 추가 예정 -->
+                        <!-- 결재 -->
+                        <div class="col-12">
+                            <label class="form-label">==============================================</label>
+                        </div>
+
+                        <!-- 결재정보 사용유무 -->
+                        <div class="col-12">
+                            <label class="form-label">결재정보 사용유무: </label>
+                            <label>
+                                <input type="checkbox" id="useApproval" name="useApproval" th:field="*{useApproval}" value="true">사용
+                            </label>
+                        </div>
+
+                        <!-- 결재번호 -->
+                        <div class="col-12">
+                            <label class="form-label">결재번호 : </label>
+                            <label>
+                                <input type="text" th:field="*{approvalNo}" name="approvalNo"/>
+                            </label>
+                        </div>
+
+                        <!-- 기안자 -->
+                        <div class="col-12">
+                            <label class="form-label">기안자 : </label>
+                            <label for="drafterId">
+                                <select id="drafterId" th:field="*{drafterId}">
+                                    <option th:each="member : ${members}"
+                                            th:value="${member.getMemberId()}"
+                                            th:text="${member.getDeptName()} + ' ' + ${member.getName()} + ' ' + ${member.getGradeName()} ">
+                                    </option>
+                                </select>
+                            </label>
+                        </div>
+
+                        <!-- 결재차수 -->
+                        <div class="col-12">
+                            <label>결재차수 : </label>
+                            <label for="degree">
+                                <select id="degree" th:field="*{degree}">
+                                    <option th:each="degree : ${degrees}"
+                                            th:value="${degree.name()}"
+                                            th:text="${degree.getDescription()}">
+                                    </option>
+                                </select>
+                            </label>
+                        </div>
+
+                        <!-- 결재자 -->
+                        <div class="col-12">
+                            <label class="form-label">결재자 : </label>
+                            <label for="approverId">
+                                <select id="approverId" th:field="*{approverId}">
+                                    <option th:each="member : ${members}"
+                                            th:value="${member.getMemberId()}"
+                                            th:text="${member.getDeptName()} + ' ' + ${member.getName()} + ' ' + ${member.getGradeName()} ">
+                                    </option>
+                                </select>
+                            </label>
+                        </div>
+
+                        <!-- 결재상태 -->
+                        <div class="col-12">
+                            <label>결재상태 : </label>
+                            <label for="approvalStatus">
+                                <select id="approvalStatus" th:field="*{approvalStatus}">
+                                    <option th:each="status : ${approvalStatuses}"
+                                            th:value="${status.name()}"
+                                            th:text="${status.getDescription()}">
+                                    </option>
+                                </select>
+                            </label>
+                        </div>
+
+                        <!-- 승인일자 -->
+                        <div class="col-12">
+                            <label class="form-label">승인일자 : </label>
+                            <label>
+                                <input type="datetime-local" name="approveDate"/>
+                            </label>
+                        </div>
+
+                        <!-- 취소일자 -->
+                        <div class="col-12">
+                            <label class="form-label">취소일자 : </label>
+                            <label>
+                                <input type="datetime-local" name="cancelDate"/>
+                            </label>
+                        </div>
 
 
                         <div class="col-12">

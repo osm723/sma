@@ -3,6 +3,8 @@ package com.shds.sma.ip.dto;
 import com.shds.sma.admin.entity.Member;
 import com.shds.sma.admin.entity.System;
 import com.shds.sma.common.entity.Approval;
+import com.shds.sma.common.types.ApprovalStatus;
+import com.shds.sma.common.types.Degree;
 import com.shds.sma.ip.entity.Ip;
 import com.shds.sma.ip.types.IpType;
 import lombok.AccessLevel;
@@ -42,13 +44,31 @@ public class IpResponseDto {
 
     private Member member;
 
-    private Approval approval;
-
     private LocalDateTime modDate;
 
     private Long modMemberId;
 
     private String validity;
+
+    // 결재
+
+    private Approval approval;
+
+    private Long approvalId;
+
+    private String approvalNo;
+
+    private Long drafterId;
+
+    private Degree degree;
+
+    private Long approverId;
+
+    private ApprovalStatus approvalStatus;
+
+    private LocalDateTime approveDate;
+
+    private LocalDateTime cancelDate;
 
     public IpResponseDto(Ip ip) {
         this.ipId = ip.getId();
