@@ -32,13 +32,13 @@ public class ApiIpController {
     }
 
     @PostMapping("/ip")
-    public  ResponseEntity<ApiIpResponseDto> createIp(ApiIpSaveRequestDto apiIpSaveRequestDto) {
+    public  ResponseEntity<ApiIpResponseDto> createIp(@RequestBody ApiIpSaveRequestDto apiIpSaveRequestDto) {
         ApiIpResponseDto createdIp = apiIpService.createIp(apiIpSaveRequestDto);
         return new ResponseEntity<>(createdIp, HttpStatus.OK);
     }
 
     @PutMapping("/ip")
-    public ResponseEntity<ApiIpResponseDto> updateIp(ApiIpModRequestDto apiIpModRequestDto) {
+    public ResponseEntity<ApiIpResponseDto> updateIp(@RequestBody ApiIpModRequestDto apiIpModRequestDto) {
         ApiIpResponseDto updatedIp = apiIpService.updateIp(apiIpModRequestDto);
         return new ResponseEntity<>(updatedIp, HttpStatus.OK);
     }
