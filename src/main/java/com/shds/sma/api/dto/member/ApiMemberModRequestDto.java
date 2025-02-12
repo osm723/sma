@@ -5,6 +5,8 @@ import com.shds.sma.admin.entity.Client;
 import com.shds.sma.admin.types.EmpAuth;
 import com.shds.sma.admin.types.EmpStatus;
 import com.shds.sma.admin.types.SystemRole;
+import com.shds.sma.api.dto.common.ApiClient;
+import com.shds.sma.api.dto.common.ApiSystem;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,7 +18,7 @@ public class ApiMemberModRequestDto extends MemberModRequestDto {
 
     private String name;
 
-    private Client client;
+    private String clientCode;
 
     private String deptCode;
 
@@ -33,6 +35,8 @@ public class ApiMemberModRequestDto extends MemberModRequestDto {
     private EmpStatus empStatus;
 
     private EmpAuth empAuth;
+
+    private String systemName;
 
     private SystemRole systemRole;
 

@@ -14,7 +14,7 @@ public class ApiMemberSaveRequestDto {
 
     private String name;
 
-    private Client client;
+    private String clientCode;
 
     private String deptCode;
 
@@ -34,7 +34,7 @@ public class ApiMemberSaveRequestDto {
 
     private SystemRole systemRole;
 
-    private System system;
+    private String systemName;
 
     private String validity;
 
