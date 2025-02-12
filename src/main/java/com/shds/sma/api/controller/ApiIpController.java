@@ -20,31 +20,31 @@ public class ApiIpController {
     private final ApiIpService apiIpService;
 
     @GetMapping("/ips")
-    public ResponseEntity<Page<ApiIpResponseDto>> getAllNotices(Pageable pageable) {
+    public ResponseEntity<Page<ApiIpResponseDto>> getAllIps(Pageable pageable) {
         Page<ApiIpResponseDto> ips = apiIpService.getAllIps(pageable);
         return new ResponseEntity<>(ips, HttpStatus.OK);
     }
 
     @GetMapping("/ip/{ipId}")
-    public ResponseEntity<ApiIpResponseDto> getMember(@PathVariable Long ipId) {
+    public ResponseEntity<ApiIpResponseDto> getIp(@PathVariable Long ipId) {
         ApiIpResponseDto ip = apiIpService.getIp(ipId);
         return new ResponseEntity<>(ip, HttpStatus.OK);
     }
 
     @PostMapping("/ip")
-    public  ResponseEntity<ApiIpResponseDto> createMember(ApiIpSaveRequestDto apiIpSaveRequestDto) {
+    public  ResponseEntity<ApiIpResponseDto> createIp(ApiIpSaveRequestDto apiIpSaveRequestDto) {
         ApiIpResponseDto createdIp = apiIpService.createIp(apiIpSaveRequestDto);
         return new ResponseEntity<>(createdIp, HttpStatus.OK);
     }
 
     @PutMapping("/ip")
-    public ResponseEntity<ApiIpResponseDto> updateMember(ApiIpModRequestDto apiIpModRequestDto) {
+    public ResponseEntity<ApiIpResponseDto> updateIp(ApiIpModRequestDto apiIpModRequestDto) {
         ApiIpResponseDto updatedIp = apiIpService.updateIp(apiIpModRequestDto);
         return new ResponseEntity<>(updatedIp, HttpStatus.OK);
     }
 
     @DeleteMapping("/ip/{ipId}")
-    public ResponseEntity<Void> deleteMember(@PathVariable Long ipId) {
+    public ResponseEntity<Void> deleteIp(@PathVariable Long ipId) {
         apiIpService.deleteIp(ipId);
         return new ResponseEntity<>(HttpStatus.OK);
     }

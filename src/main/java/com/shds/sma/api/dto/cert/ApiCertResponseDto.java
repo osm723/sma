@@ -2,6 +2,9 @@ package com.shds.sma.api.dto.cert;
 
 import com.shds.sma.admin.entity.Member;
 import com.shds.sma.admin.entity.System;
+import com.shds.sma.api.dto.common.ApiApproval;
+import com.shds.sma.api.dto.common.ApiMember;
+import com.shds.sma.api.dto.common.ApiSystem;
 import com.shds.sma.cert.entity.Cert;
 import com.shds.sma.cert.types.CertType;
 import com.shds.sma.common.entity.Approval;
@@ -23,9 +26,7 @@ public class ApiCertResponseDto {
 
     private String certName;
 
-    private Long applySystemId;
-
-    private System applySystem;
+    private ApiSystem applySystem;
 
     private String content;
 
@@ -35,15 +36,9 @@ public class ApiCertResponseDto {
 
     private LocalDate endDate;
 
-    private Long memberId;
+    private ApiMember member;
 
-    private Member member;
-
-    private Approval approval;
-
-    private LocalDateTime modDate;
-
-    private Long modMemberId;
+    private ApiApproval approval;
 
     private String validity;
 
@@ -51,15 +46,13 @@ public class ApiCertResponseDto {
         this.certId = cert.getId();
         this.certType = cert.getCertType();
         this.certName = cert.getCertName();
-        this.applySystem = cert.getApplySystem();
+        this.applySystem = new ApiSystem(cert.getApplySystem());
         this.content = cert.getContent();
         this.siteLink = cert.getSiteLink();
         this.startDate = cert.getStartDate();
         this.endDate = cert.getEndDate();
-        this.member = cert.getMember();
-        this.approval = cert.getApproval();
-        this.modDate = cert.getModDate();
-        this.modMemberId = cert.getModMemberId();
+        this.member = new ApiMember(cert.getMember());
+        this.approval = new ApiApproval(cert.getApproval());
         this.validity = cert.getValidity();
     }
 }

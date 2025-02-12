@@ -19,31 +19,31 @@ public class ApiCertController {
     private final ApiCertService apiCertService;
 
     @GetMapping("/certs")
-    public ResponseEntity<Page<ApiCertResponseDto>> getAllNotices(Pageable pageable) {
+    public ResponseEntity<Page<ApiCertResponseDto>> getAllCerts(Pageable pageable) {
         Page<ApiCertResponseDto> certs = apiCertService.getAllCerts(pageable);
         return new ResponseEntity<>(certs, HttpStatus.OK);
     }
 
     @GetMapping("/cert/{certId}")
-    public ResponseEntity<ApiCertResponseDto> getMember(@PathVariable Long certId) {
+    public ResponseEntity<ApiCertResponseDto> getCert(@PathVariable Long certId) {
         ApiCertResponseDto cert = apiCertService.getCert(certId);
         return new ResponseEntity<>(cert, HttpStatus.OK);
     }
 
     @PostMapping("/cert")
-    public  ResponseEntity<ApiCertResponseDto> createMember(ApiCertSaveRequestDto apiCertSaveRequestDto) {
+    public  ResponseEntity<ApiCertResponseDto> createCert(@RequestBody ApiCertSaveRequestDto apiCertSaveRequestDto) {
         ApiCertResponseDto createdCert = apiCertService.createCert(apiCertSaveRequestDto);
         return new ResponseEntity<>(createdCert, HttpStatus.OK);
     }
 
     @PutMapping("/cert")
-    public ResponseEntity<ApiCertResponseDto> updateMember(ApiCertModRequestDto apiCertModRequestDto) {
+    public ResponseEntity<ApiCertResponseDto> updateCert(@RequestBody ApiCertModRequestDto apiCertModRequestDto) {
         ApiCertResponseDto updatedCert = apiCertService.updateCert(apiCertModRequestDto);
         return new ResponseEntity<>(updatedCert, HttpStatus.OK);
     }
 
     @DeleteMapping("/cert/{certId}")
-    public ResponseEntity<Void> deleteMember(@PathVariable Long certId) {
+    public ResponseEntity<Void> deleteCert(@PathVariable Long certId) {
         apiCertService.deleteCert(certId);
         return new ResponseEntity<>(HttpStatus.OK);
     }

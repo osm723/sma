@@ -19,9 +19,11 @@ public class ApiSystem {
     private String systemInfo;
 
     public ApiSystem(System system) {
-        this.systemName = system.getSystemName();
-        this.preIpAlarm = system.getPreIpAlarm();
-        this.preCertAlarm = system.getPreCertAlarm();
-        this.systemInfo = system.getSystemInfo();
+        if (system != null) {
+            this.systemName = system.getSystemName();
+            this.preIpAlarm = system.getPreIpAlarm();
+            this.preCertAlarm = system.getPreCertAlarm();
+            this.systemInfo = system.getSystemInfo();
+        }
     }
 }

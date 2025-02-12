@@ -2,6 +2,7 @@ package com.shds.sma.api.dto.cert;
 
 import com.shds.sma.admin.entity.Member;
 import com.shds.sma.admin.entity.System;
+import com.shds.sma.api.dto.common.ApiApproval;
 import com.shds.sma.cert.dto.CertModRequestDto;
 import com.shds.sma.cert.types.CertType;
 import com.shds.sma.common.entity.Approval;
@@ -23,9 +24,9 @@ public class ApiCertModRequestDto extends CertModRequestDto {
 
     private String certName;
 
-    private Long applySystemId;
+    private String systemName;
 
-    private System applySystem;
+    private System system;
 
     private String content;
 
@@ -39,5 +40,5 @@ public class ApiCertModRequestDto extends CertModRequestDto {
 
     private Member member;
 
-    private Approval approval;
+    private ApiApproval approval;
 }
