@@ -2,6 +2,7 @@ package com.shds.sma.api.dto.cert;
 
 import com.shds.sma.admin.entity.Member;
 import com.shds.sma.admin.entity.System;
+import com.shds.sma.api.dto.common.ApiApproval;
 import com.shds.sma.cert.types.CertType;
 import com.shds.sma.common.entity.Approval;
 import lombok.Getter;
@@ -17,9 +18,7 @@ public class ApiCertSaveRequestDto {
 
     private String certName;
 
-    private Long applySystemId;
-
-    private System applySystem;
+    private String systemName;
 
     private String content;
 
@@ -31,7 +30,6 @@ public class ApiCertSaveRequestDto {
 
     private Long memberId;
 
-    private Member member;
+    private ApiApproval approval;
 
-    private Approval approval;
 }

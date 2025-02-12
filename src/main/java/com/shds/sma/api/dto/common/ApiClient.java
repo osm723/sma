@@ -16,7 +16,9 @@ public class ApiClient {
     private String clientName;
 
     public ApiClient(Client client) {
-        this.clientCode = client.getClientCode();
-        this.clientName = client.getClientName();
+        if (client != null) {
+            this.clientCode = client.getClientCode();
+            this.clientName = client.getClientName();
+        }
     }
 }
