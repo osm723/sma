@@ -92,8 +92,8 @@ public class ApiIpServiceImpl implements ApiIpService {
     public ApiIpResponseDto updateIp(ApiIpModRequestDto apiIpModRequestDto) {
         Approval updateApproval = new Approval();
         if (apiIpModRequestDto.getApproval() != null) {
-            updateApproval = approvalRepository.findById(apiIpModRequestDto.getApproval().getId()).orElseThrow(() -> new BizException("존재하지 않는 결재 입니다."));
-            updateApproval.approvalIpModified(apiIpModRequestDto);
+            //updateApproval = approvalRepository.findById(apiIpModRequestDto.getApproval().getId()).orElseThrow(() -> new BizException("존재하지 않는 결재 입니다."));
+            //updateApproval.approvalIpModified(apiIpModRequestDto);
             apiIpModRequestDto.setApproval(new ApiApproval(updateApproval));
         }
 
@@ -106,7 +106,7 @@ public class ApiIpServiceImpl implements ApiIpService {
         apiIpModRequestDto.setMember(updateMember);
 
         Ip updatedIp = ipRepository.findById(apiIpModRequestDto.getIpId()).orElseThrow(() -> new BizException("존재하지 않는 IP 입니다."));
-        updatedIp.ipModified(apiIpModRequestDto);
+        //updatedIp.ipModified(apiIpModRequestDto);
         return modelMapper.map(updatedIp, ApiIpResponseDto.class);
     }
 
