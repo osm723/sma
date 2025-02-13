@@ -2,6 +2,7 @@ package com.shds.sma.common.entity;
 
 import com.shds.sma.api.dto.cert.ApiCertModRequestDto;
 import com.shds.sma.api.dto.common.ApiApproval;
+import com.shds.sma.api.dto.ip.ApiIpModRequestDto;
 import com.shds.sma.cert.dto.CertModRequestDto;
 import com.shds.sma.common.types.ApprovalStatus;
 import com.shds.sma.common.types.Degree;
@@ -96,6 +97,16 @@ public class Approval {
     }
 
     public void approvalApiCertModified(ApiApproval apiApproval) {
+        this.approvalNo = apiApproval.getApprovalNo();
+        this.drafterId = apiApproval.getDrafterId();
+        this.degree = apiApproval.getDegree();
+        this.approverId = apiApproval.getApproverId();
+        this.approvalStatus = apiApproval.getApprovalStatus();
+        this.approveDate = apiApproval.getApproveDate();
+        this.cancelDate = apiApproval.getCancelDate();
+    }
+
+    public void approvalApiIpModified(ApiApproval apiApproval) {
         this.approvalNo = apiApproval.getApprovalNo();
         this.drafterId = apiApproval.getDrafterId();
         this.degree = apiApproval.getDegree();

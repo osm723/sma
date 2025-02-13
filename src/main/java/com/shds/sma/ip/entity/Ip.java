@@ -1,5 +1,6 @@
 package com.shds.sma.ip.entity;
 
+import com.shds.sma.api.dto.ip.ApiIpModRequestDto;
 import com.shds.sma.ip.dto.IpModRequestDto;
 import com.shds.sma.common.entity.BaseEntity;
 import com.shds.sma.admin.entity.System;
@@ -65,7 +66,7 @@ public class Ip extends BaseEntity {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "APPROVAL_ID")
     private Approval approval;
 
@@ -81,6 +82,19 @@ public class Ip extends BaseEntity {
         this.endDate = endDate;
         this.member = member;
         this.approval = approval;
+    }
+
+    public void apiIpModified(ApiIpModRequestDto apiIpModRequestDto) {
+        this.ipType = apiIpModRequestDto.getIpType();
+        this.startIpAddr = apiIpModRequestDto.getStartIpAddr();
+        this.endIpAddr = apiIpModRequestDto.getEndIpAddr();
+        this.applySystem = apiIpModRequestDto.getSystem();
+        this.content = apiIpModRequestDto.getContent();
+        this.siteLink = apiIpModRequestDto.getSiteLink();
+        this.startDate = apiIpModRequestDto.getStartDate();
+        this.endDate = apiIpModRequestDto.getEndDate();
+        this.member = apiIpModRequestDto.getMember();
+        this.approval = new Approval(apiIpModRequestDto.getApproval());
     }
 
     public void ipModified(IpModRequestDto ipModRequestDto) {
