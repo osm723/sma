@@ -91,7 +91,7 @@ public class ApiCertServiceImpl implements ApiCertService {
     }
     @Override
     public ApiCertResponseDto updateCert(ApiCertModRequestDto apiCertModRequestDto) {
-        Approval updateApproval = new Approval();
+        Approval updateApproval;
         if (apiCertModRequestDto.getApproval() != null) {
             updateApproval = approvalRepository.findById(apiCertModRequestDto.getApproval().getApprovalId()).orElseThrow(() -> new BizException("존재하지 않는 결재 입니다."));
             updateApproval.approvalApiCertModified(apiCertModRequestDto.getApproval());
@@ -108,6 +108,7 @@ public class ApiCertServiceImpl implements ApiCertService {
 
         Cert updatedCert = certRepository.findById(apiCertModRequestDto.getCertId()).orElseThrow(() -> new BizException("존재하지 않는 인증서 입니다."));
         updatedCert.apiCertModified(apiCertModRequestDto);
+
         return modelMapper.map(updatedCert, ApiCertResponseDto.class);
     }
     @Override
