@@ -30,7 +30,7 @@ public class Ip extends BaseEntity {
 
     @Column(length = 20, columnDefinition = "VARCHAR(20) COMMENT 'IP 타입'", nullable = false)
     @NotNull
-    //@Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private IpType ipType;
 
     @Column(length = 200, columnDefinition = "VARCHAR(200) COMMENT '출발지 IP 주소'", nullable = false)

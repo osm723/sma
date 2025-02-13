@@ -6,10 +6,7 @@ import com.shds.sma.common.entity.Approval;
 import com.shds.sma.cert.types.CertType;
 import com.shds.sma.common.types.ApprovalStatus;
 import com.shds.sma.common.types.Degree;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -60,6 +57,4 @@ public class CertModRequestDto {
     private LocalDateTime approveDate;
 
     private LocalDateTime cancelDate;
-
-
 }

@@ -13,7 +13,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class ApiIpModRequestDto extends IpModRequestDto {
+public class ApiIpModRequestDto  {
 
     private Long ipId;
 

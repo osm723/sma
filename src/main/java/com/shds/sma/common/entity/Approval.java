@@ -1,5 +1,7 @@
 package com.shds.sma.common.entity;
 
+import com.shds.sma.api.dto.cert.ApiCertModRequestDto;
+import com.shds.sma.api.dto.common.ApiApproval;
 import com.shds.sma.cert.dto.CertModRequestDto;
 import com.shds.sma.common.types.ApprovalStatus;
 import com.shds.sma.common.types.Degree;
@@ -63,6 +65,16 @@ public class Approval {
         this.cancelDate = cancelDate;
     }
 
+    public Approval(ApiApproval apiApproval) {
+        this.approvalNo = apiApproval.getApprovalNo();
+        this.drafterId = apiApproval.getDrafterId();
+        this.degree = apiApproval.getDegree();
+        this.approverId = apiApproval.getApproverId();
+        this.approvalStatus = apiApproval.getApprovalStatus();
+        this.approveDate = apiApproval.getApproveDate();
+        this.cancelDate = apiApproval.getCancelDate();
+    }
+
     public void approvalIpModified(IpModRequestDto ipModRequestDto) {
         this.approvalNo = ipModRequestDto.getApprovalNo();
         this.drafterId = ipModRequestDto.getDrafterId();
@@ -82,4 +94,16 @@ public class Approval {
         this.approveDate = certModRequestDto.getApproveDate();
         this.cancelDate = certModRequestDto.getCancelDate();
     }
+
+    public void approvalApiCertModified(ApiApproval apiApproval) {
+        this.approvalNo = apiApproval.getApprovalNo();
+        this.drafterId = apiApproval.getDrafterId();
+        this.degree = apiApproval.getDegree();
+        this.approverId = apiApproval.getApproverId();
+        this.approvalStatus = apiApproval.getApprovalStatus();
+        this.approveDate = apiApproval.getApproveDate();
+        this.cancelDate = apiApproval.getCancelDate();
+    }
+
+
 }

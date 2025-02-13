@@ -1,6 +1,8 @@
 package com.shds.sma.cert.entity;
 
 import com.shds.sma.admin.entity.Member;
+import com.shds.sma.api.dto.cert.ApiCertModRequestDto;
+import com.shds.sma.api.dto.common.ApiApproval;
 import com.shds.sma.common.entity.BaseEntity;
 import com.shds.sma.admin.entity.System;
 import com.shds.sma.cert.dto.CertModRequestDto;
@@ -38,10 +40,6 @@ public class Cert extends BaseEntity {
     @NotBlank
     private String certName;
 
-//    @OneToOne
-//    @JoinColumn(name = "ROLE_ID")
-//    private Role role;
-
     @ManyToOne
     @JoinColumn(name = "SYSTEM_ID")
     private System applySystem;
@@ -64,7 +62,7 @@ public class Cert extends BaseEntity {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "APPROVAL_ID")
     private Approval approval;
 
@@ -78,6 +76,18 @@ public class Cert extends BaseEntity {
         this.endDate = certModRequestDto.getEndDate();
         this.member = certModRequestDto.getMember();
         this.approval = certModRequestDto.getApproval();
+    }
+
+    public void apiCertModified(ApiCertModRequestDto apiCertModRequestDto) {
+        this.certType = apiCertModRequestDto.getCertType();
+        this.certName = apiCertModRequestDto.getCertName();
+        this.applySystem = apiCertModRequestDto.getSystem();
+        this.content = apiCertModRequestDto.getContent();
+        this.siteLink = apiCertModRequestDto.getSiteLink();
+        this.startDate = apiCertModRequestDto.getStartDate();
+        this.endDate = apiCertModRequestDto.getEndDate();
+        this.member = apiCertModRequestDto.getMember();
+        this.approval = new Approval(apiCertModRequestDto.getApproval());
     }
 
     @Builder

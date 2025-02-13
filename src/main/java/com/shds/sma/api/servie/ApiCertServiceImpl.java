@@ -9,11 +9,14 @@ import com.shds.sma.api.dto.cert.ApiCertModRequestDto;
 import com.shds.sma.api.dto.cert.ApiCertResponseDto;
 import com.shds.sma.api.dto.cert.ApiCertSaveRequestDto;
 import com.shds.sma.api.dto.common.ApiApproval;
+import com.shds.sma.cert.dto.CertModRequestDto;
 import com.shds.sma.cert.entity.Cert;
 import com.shds.sma.cert.repository.CertRepository;
 import com.shds.sma.common.entity.Approval;
 import com.shds.sma.common.exception.BizException;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class ApiCertServiceImpl implements ApiCertService {
 
     private final CertRepository certRepository;
@@ -32,6 +36,8 @@ public class ApiCertServiceImpl implements ApiCertService {
     private final MemberRepository memberRepository;
 
     private final ApprovalRepository approvalRepository;
+
+    private final EntityManager em;
 
     private final ModelMapper modelMapper;
 
@@ -87,8 +93,8 @@ public class ApiCertServiceImpl implements ApiCertService {
     public ApiCertResponseDto updateCert(ApiCertModRequestDto apiCertModRequestDto) {
         Approval updateApproval = new Approval();
         if (apiCertModRequestDto.getApproval() != null) {
-            updateApproval = approvalRepository.findById(apiCertModRequestDto.getApproval().getId()).orElseThrow(() -> new BizException("존재하지 않는 결재 입니다."));
-            updateApproval.approvalCertModified(apiCertModRequestDto);
+            updateApproval = approvalRepository.findById(apiCertModRequestDto.getApproval().getApprovalId()).orElseThrow(() -> new BizException("존재하지 않는 결재 입니다."));
+            updateApproval.approvalApiCertModified(apiCertModRequestDto.getApproval());
             apiCertModRequestDto.setApproval(new ApiApproval(updateApproval));
         }
 
@@ -101,7 +107,7 @@ public class ApiCertServiceImpl implements ApiCertService {
         apiCertModRequestDto.setMember(updateMember);
 
         Cert updatedCert = certRepository.findById(apiCertModRequestDto.getCertId()).orElseThrow(() -> new BizException("존재하지 않는 인증서 입니다."));
-        updatedCert.certModified(apiCertModRequestDto);
+        updatedCert.apiCertModified(apiCertModRequestDto);
         return modelMapper.map(updatedCert, ApiCertResponseDto.class);
     }
     @Override
