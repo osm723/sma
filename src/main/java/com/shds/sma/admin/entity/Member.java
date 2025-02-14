@@ -53,6 +53,9 @@ public class Member {
     @Column(length = 60, columnDefinition = "VARCHAR(60) COMMENT '직책명'")
     private String roleName;
 
+    @Column(length = 200, columnDefinition = "VARCHAR(200) COMMENT '메일주소'")
+    private String mail;
+
     @Column(length = 20, columnDefinition = "VARCHAR(20) COMMENT '재직상태'", nullable = false)
     @NotNull
     @Enumerated(EnumType.STRING)

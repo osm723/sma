@@ -71,7 +71,7 @@ public class IpQueryRepositoryImpl implements IpQueryRepository {
     }
 
     @Override
-    public List<Ip> findPreExpirationIp() {
+    public List<Ip> findIpPreExpiration() {
         return query.select(ip)
                 .from(ip)
                 .where(ip.endDate.goe(LocalDate.now().minusDays(Long.parseLong(ip.applySystem.preIpAlarm.toString()))))
