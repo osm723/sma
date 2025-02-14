@@ -1,5 +1,6 @@
 package com.shds.sma.alarm.service.mail;
 
+import com.shds.sma.admin.entity.Member;
 import com.shds.sma.cert.dto.CertAlarmRequestDto;
 import com.shds.sma.common.exception.MessagingBizException;
 import com.shds.sma.ip.dto.IpAlarmRequestDto;
@@ -27,11 +28,13 @@ public class MailServiceImpl implements MailService {
 
     private final static String MAIL_FROM = "spcoff@naver.com";
 
-    private final static String MAIL_LOG_TO = "spcoff@naver.com";
+    private final static String LOG_MAIL_TO = "spcoff@naver.com";
 
     private final static String MAIL_LOG_SUBJECT = "에러로그 알림 메일 입니다.";
 
-    private final static String MAIL_IP_SUBJECT = "IP만료 전 알림 메일 입니다.";
+    private final static String MAIL_IP_SUBJECT = "IP 만료 전 알림 메일 입니다.";
+
+    private final static String MAIL_CERT_SUBJECT = "인증서 만료 전 알림 메일 입니다.";
 
     /**
      * 에러로그 메일 발송
@@ -40,24 +43,13 @@ public class MailServiceImpl implements MailService {
      */
     @Override
     public void sendLogMail(List<LogAlarmRequestDto> logs) {
-        try {
-            String subject = MAIL_LOG_SUBJECT + "_" + LocalDateTime.now();
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-            StringBuilder emailContent = new StringBuilder();
-            setLogMessage(logs, emailContent);
+        // 메일 발송
+        StringBuilder emailContent = new StringBuilder();
+        setLogMessage(logs, emailContent);
+        sendMail(MAIL_LOG_SUBJECT, emailContent.toString(), LOG_MAIL_TO, MAIL_FROM);
 
-            helper.setTo(MAIL_LOG_TO);
-            helper.setSubject(subject);
-            helper.setText(emailContent.toString());
-            helper.setFrom(MAIL_FROM);  // 보낸 사람 이메일 설정
-            mailSender.send(message);
+        // 알림 로그
 
-            // 알림 로그
-
-        } catch (MessagingException e) {
-            throw new MessagingBizException(e);
-        }
     }
 
     /**
@@ -68,24 +60,13 @@ public class MailServiceImpl implements MailService {
     @Override
     public void sendIpMail(List<IpAlarmRequestDto> ips) {
         for (IpAlarmRequestDto ip : ips) {
-            try {
-                String subject = MAIL_IP_SUBJECT + "_" + LocalDateTime.now();
-                MimeMessage message = mailSender.createMimeMessage();
-                MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-                StringBuilder emailContent = new StringBuilder();
-                setIpMessage(ip, emailContent);
+            // 메일 발송
+            StringBuilder emailContent = new StringBuilder();
+            setIpMessage(ip, emailContent);
+            sendMail(MAIL_IP_SUBJECT, emailContent.toString(), ip.getMember().getMail(), MAIL_FROM);
 
-                helper.setTo(ip.getMember().getMail());
-                helper.setSubject(subject);
-                helper.setText(emailContent.toString());
-                helper.setFrom(MAIL_FROM);  // 보낸 사람 이메일 설정
-                mailSender.send(message);
+            // 알림 로그
 
-                // 알림 로그
-
-            } catch (MessagingException e) {
-                throw new MessagingBizException(e);
-            }
         }
     }
 
@@ -97,53 +78,71 @@ public class MailServiceImpl implements MailService {
     @Override
     public void sendCertMail(List<CertAlarmRequestDto> certs) {
         for (CertAlarmRequestDto cert : certs) {
-            try {
-                String subject = MAIL_IP_SUBJECT + "_" + LocalDateTime.now();
-                MimeMessage message = mailSender.createMimeMessage();
-                MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-                StringBuilder emailContent = new StringBuilder();
-                setCertMessage(cert, emailContent);
+            // 메일 발송
+            StringBuilder emailContent = new StringBuilder();
+            setCertMessage(cert, emailContent);
+            sendMail(MAIL_CERT_SUBJECT, emailContent.toString(), cert.getMember().getMail(), MAIL_FROM);
 
-                helper.setTo(cert.getMember().getMail());
-                helper.setSubject(subject);
-                helper.setText(emailContent.toString());
-                helper.setFrom(MAIL_FROM);  // 보낸 사람 이메일 설정
-                mailSender.send(message);
+            // 알림 로그
+
+        }
+    }
+
+    @Override
+    public void sendIpToManagerMail(List<IpAlarmRequestDto> ips) {
+        for (IpAlarmRequestDto ip : ips) {
+            List<Member> systemManagers = ip.getApplySystem().getSystemManagers();
+            for (Member systemManager : systemManagers) {
+                // 메일 발송
+                StringBuilder emailContent = new StringBuilder();
+                setIpMessage(ip, emailContent);
+                sendMail(MAIL_IP_SUBJECT, emailContent.toString(), systemManager.getMail(), MAIL_FROM);
 
                 // 알림 로그
 
-            } catch (MessagingException e) {
-                throw new MessagingBizException(e);
             }
         }
     }
 
+    @Override
+    public void sendCertToManagerMail(List<CertAlarmRequestDto> certs) {
+        for (CertAlarmRequestDto cert : certs) {
+            List<Member> systemManagers = cert.getApplySystem().getSystemManagers();
+            for (Member systemManager : systemManagers) {
+                // 메일 발송
+                StringBuilder emailContent = new StringBuilder();
+                setCertMessage(cert, emailContent);
+                sendMail(MAIL_CERT_SUBJECT, emailContent.toString(), systemManager.getMail(), MAIL_FROM);
 
-//    public void sendIpMail(Member systemManager, IpResponseDto ipExpiration) {
-////        List<Member> systemManagers = ipExpiration.getApplySystem().getSystemManagers();
-////        for (Member systemManager : systemManagers) {
-////            sendIpMail(systemManager, ipExpiration);
-////        }
-//
-//        try {
-//            String subject = MAIL_IP_SUBJECT + "_" + LocalDateTime.now();
-//            MimeMessage message = mailSender.createMimeMessage();
-//            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-//            StringBuilder emailContent = new StringBuilder();
-//            setIpMessage(ipExpiration, emailContent);
-//
-//            helper.setTo(systemManager.getMail());
-//            helper.setSubject(subject);
-//            helper.setText(emailContent.toString());
-//            helper.setFrom(MAIL_FROM);  // 보낸 사람 이메일 설정
-//            mailSender.send(message);
-//
-//            // 알림 로그
-//
-//        } catch (MessagingException e) {
-//            throw new MessagingBizException(e);
-//        }
-//    }
+                // 알림 로그
+
+            }
+        }
+    }
+
+    /**
+     * 메일 발송 처리
+     * sendMail
+     * @param mailSubject
+     * @param text
+     * @param toMail
+     * @param fromMail
+     */
+    private void sendMail(String mailSubject, String text, String toMail, String fromMail) {
+        try {
+            String subject = mailSubject + "_" + LocalDateTime.now();
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+            helper.setTo(toMail);
+            helper.setSubject(subject);
+            helper.setText(text);
+            helper.setFrom(fromMail);
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            throw new MessagingBizException(e);
+        }
+    }
 
     /**
      * 인증서 메시지 본문 값 세팅
@@ -153,7 +152,8 @@ public class MailServiceImpl implements MailService {
      */
     private static void setCertMessage(CertAlarmRequestDto cert, StringBuilder emailContent) {
         emailContent.append("인증서 만료전 알림 정보: \n\n");
-        emailContent.append("▶ [인증서 타입]: ").append(cert.getCertType()).append("\n")
+        emailContent.append("▶ [적용 대상자]: ").append(cert.getMember().getName()).append("\n")
+                .append("▶ [인증서 타입]: ").append(cert.getCertType()).append("\n")
                 .append("▶ [인증서 명]: ").append(cert.getCertName()).append("\n")
                 .append("▶ [시작일자]: ").append(cert.getStartDate()).append("\n\n")
                 .append("▶ [종료일자]: ").append(cert.getEndDate()).append("\n\n")
@@ -170,7 +170,8 @@ public class MailServiceImpl implements MailService {
      */
     private static void setIpMessage(IpAlarmRequestDto ip, StringBuilder emailContent) {
         emailContent.append("IP 만료전 알림 정보: \n\n");
-        emailContent.append("▶ [IP 타입]: ").append(ip.getIpType()).append("\n")
+        emailContent.append("▶ [적용대상자]: ").append(ip.getMember().getName()).append("\n")
+                .append("▶ [IP 타입]: ").append(ip.getIpType()).append("\n")
                 .append("▶ [출발지 IP]: ").append(ip.getStartIpAddr()).append("\n")
                 .append("▶ [도착지 IP]: ").append(ip.getEndIpAddr()).append("\n")
                 .append("▶ [시작일자]: ").append(ip.getStartDate()).append("\n\n")

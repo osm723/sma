@@ -67,7 +67,7 @@ public class BatchController {
      */
     @Scheduled(cron = "0 0 8,12,16,18 * * *")
     public void alarmIpPreExpirationToManager() {
-        //ipService.getIpPreExpiration();
+        ipService.getIpPreExpirationToManager();
     }
 
     /**
@@ -77,7 +77,7 @@ public class BatchController {
      */
     @Scheduled(cron = "0 0 8,12,16,18 * * *")
     public void alarmCertExpirationToManager() {
-        //certService.getCertPreExpiration();
+        certService.getCertPreExpirationToManager();
     }
 
 

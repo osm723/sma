@@ -67,12 +67,23 @@ public class IpServiceImpl implements IpService {
         }
     }
 
+    @Override
+    public void getIpPreExpirationToManager() {
+        Long preDay = 1L;
+        List<Ip> preIpExpiration = ipRepository.findIpPreDayExpiration(preDay);
+        for (Ip ip : preIpExpiration) {
+            if(isNotIpReApply(ip)) {
+                sendAlarmToManager(preIpExpiration, List.of(AlarmSendType.KAKAO, AlarmSendType.MAIL, AlarmSendType.SMS));
+            }
+        }
+    }
+
     private boolean isNotIpReApply(Ip ip) {
         return !ipRepository.isIpReApply(ip);
     }
 
     /**
-     * 알림 발송
+     * 적용대상자에게 알림 발송
      * sendAlarm
      * @param preIpExpiration
      * @param alarmSendTypes
@@ -85,6 +96,24 @@ public class IpServiceImpl implements IpService {
                 case SMS -> alarmService.sendIpBySms(ips);
                 case MAIL -> alarmService.sendIpByMail(ips);
                 case KAKAO -> alarmService.sendIpByKakaoApp(ips);
+            }
+        }
+    }
+
+    /**
+     * 담당자들에게 알림 발송
+     * sendAlarmToManager
+     * @param preIpExpiration
+     * @param alarmSendTypes
+     */
+    private void sendAlarmToManager(List<Ip> preIpExpiration, List<AlarmSendType> alarmSendTypes) {
+        List<IpAlarmRequestDto> ips = preIpExpiration.stream().map(IpAlarmRequestDto::new).collect(Collectors.toList());
+
+        for (AlarmSendType alarmSendType : alarmSendTypes) {
+            switch (alarmSendType) {
+                case SMS -> alarmService.sendIpToManagerBySms(ips);
+                case MAIL -> alarmService.sendIpToManagerByMail(ips);
+                case KAKAO -> alarmService.sendIpToManagerByKakaoApp(ips);
             }
         }
     }

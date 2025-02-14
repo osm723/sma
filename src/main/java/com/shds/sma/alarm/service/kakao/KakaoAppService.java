@@ -13,4 +13,8 @@ public interface KakaoAppService {
     void sendIpKakaoApp(List<IpAlarmRequestDto> ips);
 
     void sendCertKakaoApp(List<CertAlarmRequestDto> certs);
+
+    void sendIpToManagerKakaoApp(List<IpAlarmRequestDto> ips);
+
+    void sendCertToManagerKakaoApp(List<CertAlarmRequestDto> certs);
 }

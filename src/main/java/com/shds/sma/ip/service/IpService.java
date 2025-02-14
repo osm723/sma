@@ -19,4 +19,6 @@ public interface IpService {
     List<SystemResponseDto> findSystemAll();
 
     void getIpPreExpiration();
+
+    void getIpPreExpirationToManager();
 }

@@ -91,6 +91,14 @@ public class CertQueryRepositoryImpl implements CertQueryRepository {
         return Boolean.TRUE.equals(query.select(existsExpr).fetchOne());
     }
 
+    @Override
+    public List<Cert> findCertPreDayExpiration(Long preDay) {
+        return query.select(cert)
+                .from(cert)
+                .where(cert.endDate.goe(LocalDate.now().minusDays(preDay)))
+                .fetch();
+    }
+
     private BooleanExpression dateBetween(LocalDate startDate, LocalDate endDate) {
         return startDate != null && endDate != null ?
                 cert.startDate.between(startDate, endDate)

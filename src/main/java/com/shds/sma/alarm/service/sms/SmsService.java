@@ -13,4 +13,8 @@ public interface SmsService {
     void sendIpSms(List<IpAlarmRequestDto> ips);
 
     void sendCertSms(List<CertAlarmRequestDto> certs);
+
+    void sendIpToManagerSms(List<IpAlarmRequestDto> ips);
+
+    void sendCertToManagerSms(List<CertAlarmRequestDto> certs);
 }

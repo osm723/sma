@@ -10,6 +10,7 @@ import com.shds.sma.cert.dto.CertRequestDto;
 import com.shds.sma.cert.dto.CertResponseDto;
 import com.shds.sma.cert.entity.Cert;
 import com.shds.sma.cert.repository.CertRepository;
+import com.shds.sma.ip.entity.Ip;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -67,6 +68,17 @@ public class CertServiceImpl implements CertService {
         }
     }
 
+    @Override
+    public void getCertPreExpirationToManager() {
+        Long preDay = 1L;
+        List<Cert> preIpExpiration = certRepository.findCertPreDayExpiration(preDay);
+        for (Cert cert : preIpExpiration) {
+            if(isNotCertReApply(cert)) {
+                sendAlarmToManager(preIpExpiration, List.of(AlarmSendType.KAKAO, AlarmSendType.MAIL, AlarmSendType.SMS));
+            }
+        }
+    }
+
     private boolean isNotCertReApply(Cert cert) {
         return !certRepository.isCertReApply(cert);
     }
@@ -85,6 +97,24 @@ public class CertServiceImpl implements CertService {
                 case SMS -> alarmService.sendCertBySms(certs);
                 case MAIL -> alarmService.sendCertByMail(certs);
                 case KAKAO -> alarmService.sendCertByKakaoApp(certs);
+            }
+        }
+    }
+
+    /**
+     * 알림 발송
+     * sendAlarm
+     * @param preCertExpiration
+     * @param alarmSendTypes
+     */
+    private void sendAlarmToManager(List<Cert> preCertExpiration, List<AlarmSendType> alarmSendTypes) {
+        List<CertAlarmRequestDto> certs = preCertExpiration.stream().map(CertAlarmRequestDto::new).collect(Collectors.toList());
+
+        for (AlarmSendType alarmSendType : alarmSendTypes) {
+            switch (alarmSendType) {
+                case SMS -> alarmService.sendCertToManagerBySms(certs);
+                case MAIL -> alarmService.sendCertToManagerByMail(certs);
+                case KAKAO -> alarmService.sendCertToManagerByKakaoApp(certs);
             }
         }
     }
