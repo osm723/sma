@@ -15,4 +15,6 @@ public interface IpQueryRepository {
     Page<SystemIpResponseDto> findSystemIpByCond(SystemIpRequestDto systemIpRequestDto, Pageable pageable);
 
     List<Ip> findIpPreExpiration();
+
+    boolean isIpReApply(Ip ip);
 }

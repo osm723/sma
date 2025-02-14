@@ -78,6 +78,23 @@ public class IpQueryRepositoryImpl implements IpQueryRepository {
                 .fetch();
     }
 
+    @Override
+    public boolean isIpReApply(Ip preIp) {
+        BooleanExpression existsExpr = query.selectOne()
+                .from(ip)
+                .where(validityEq("Y")
+                        , systemIdEq(preIp.getApplySystem().getId())
+                        , memberIdEq(preIp.getMember().getId())
+                        , startIpAddrEq(preIp.getStartIpAddr())
+                        , endIpAddrEq(preIp.getEndIpAddr())
+                        , startDateGoeNow(preIp.getStartDate())
+                        , endDateLtNow(preIp.getEndDate())
+                )
+                .exists();
+
+        return Boolean.TRUE.equals(query.select(existsExpr).fetchOne());
+    }
+
     private BooleanExpression dateBetween(LocalDate startDate, LocalDate endDate) {
         return startDate != null && endDate != null ?
                 ip.startDate.between(startDate, endDate)
@@ -106,6 +123,26 @@ public class IpQueryRepositoryImpl implements IpQueryRepository {
 
     private BooleanExpression endIpAddrLike(String endIpAddr) {
         return StringUtils.hasText(endIpAddr) ? ip.endIpAddr.like(endIpAddr) : null;
+    }
+
+    private BooleanExpression memberIdEq(Long applyMemberId) {
+        return applyMemberId != null ? ip.member.id.eq(applyMemberId) : null;
+    }
+
+    private BooleanExpression startIpAddrEq(String startIpAddr) {
+        return StringUtils.hasText(startIpAddr) ? ip.startIpAddr.eq(startIpAddr) : null;
+    }
+
+    private BooleanExpression endIpAddrEq(String endIpAddr) {
+        return StringUtils.hasText(endIpAddr) ? ip.endIpAddr.eq(endIpAddr) : null;
+    }
+
+    private BooleanExpression startDateGoeNow(LocalDate startDate) {
+        return startDate != null ? ip.startDate.goe(LocalDate.now()) : null;
+    }
+
+    private BooleanExpression endDateLtNow(LocalDate endDate) {
+        return endDate != null ? ip.endDate.lt(LocalDate.now()) : null;
     }
 
 

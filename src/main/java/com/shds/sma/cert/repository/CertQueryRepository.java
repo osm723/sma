@@ -15,4 +15,6 @@ public interface CertQueryRepository  {
     Page<SystemCertResponseDto> findSystemCertByCond(SystemCertRequestDto systemCertRequestDto, Pageable pageable);
 
     List<Cert> findCertPreExpiration();
+
+    boolean isCertReApply(Cert cert);
 }

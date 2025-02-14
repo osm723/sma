@@ -75,6 +75,22 @@ public class CertQueryRepositoryImpl implements CertQueryRepository {
                 .fetch();
     }
 
+    @Override
+    public boolean isCertReApply(Cert preCert) {
+        BooleanExpression existsExpr = query.selectOne()
+                .from(cert)
+                .where(validityEq("Y")
+                        , systemIdEq(preCert.getApplySystem().getId())
+                        , memberIdEq(preCert.getMember().getId())
+                        , certNameEq(preCert.getCertName())
+                        , startDateGoeNow(preCert.getStartDate())
+                        , endDateLtNow(preCert.getEndDate())
+                )
+                .exists();
+
+        return Boolean.TRUE.equals(query.select(existsExpr).fetchOne());
+    }
+
     private BooleanExpression dateBetween(LocalDate startDate, LocalDate endDate) {
         return startDate != null && endDate != null ?
                 cert.startDate.between(startDate, endDate)
@@ -99,5 +115,21 @@ public class CertQueryRepositoryImpl implements CertQueryRepository {
 
     private BooleanExpression certNameLike(String certName) {
         return StringUtils.hasText(certName) ? cert.certName.like("%"+certName+"%") : null;
+    }
+
+    private BooleanExpression memberIdEq(Long applyMemberId) {
+        return applyMemberId != null ? cert.member.id.eq(applyMemberId) : null;
+    }
+
+    private BooleanExpression certNameEq(String certName) {
+        return StringUtils.hasText(certName) ? cert.certName.eq(certName) : null;
+    }
+
+    private BooleanExpression startDateGoeNow(LocalDate startDate) {
+        return startDate != null ? cert.startDate.goe(LocalDate.now()) : null;
+    }
+
+    private BooleanExpression endDateLtNow(LocalDate endDate) {
+        return endDate != null ? cert.endDate.lt(LocalDate.now()) : null;
     }
 }

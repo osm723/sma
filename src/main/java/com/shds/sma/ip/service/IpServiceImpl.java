@@ -60,7 +60,15 @@ public class IpServiceImpl implements IpService {
     @Override
     public void getIpPreExpiration() {
         List<Ip> preIpExpiration = ipRepository.findIpPreExpiration();
-        sendAlarm(preIpExpiration, List.of(AlarmSendType.KAKAO, AlarmSendType.MAIL, AlarmSendType.SMS));
+        for (Ip ip : preIpExpiration) {
+            if(isNotIpReApply(ip)) {
+                sendAlarm(preIpExpiration, List.of(AlarmSendType.KAKAO, AlarmSendType.MAIL, AlarmSendType.SMS));
+            }
+        }
+    }
+
+    private boolean isNotIpReApply(Ip ip) {
+        return !ipRepository.isIpReApply(ip);
     }
 
     /**
