@@ -1,5 +1,6 @@
 package com.shds.sma.alarm.service.sms;
 
+import com.shds.sma.alarm.dto.AlarmRequestDto;
 import com.shds.sma.cert.dto.CertAlarmRequestDto;
 import com.shds.sma.ip.dto.IpAlarmRequestDto;
 import com.shds.sma.log.dto.LogAlarmRequestDto;
@@ -15,27 +16,27 @@ import java.util.List;
 public class SmsServiceImpl implements SmsService {
 
     @Override
-    public void sendSms(List<LogAlarmRequestDto> logs) {
-
+    public AlarmRequestDto sendSms(List<LogAlarmRequestDto> logs) {
+        return null;
     }
 
     @Override
-    public void sendIpSms(List<IpAlarmRequestDto> ips) {
-
+    public List<AlarmRequestDto> sendIpSms(List<IpAlarmRequestDto> ips) {
+        return null;
     }
 
     @Override
-    public void sendCertSms(List<CertAlarmRequestDto> certs) {
-
+    public List<AlarmRequestDto> sendCertSms(List<CertAlarmRequestDto> certs) {
+        return null;
     }
 
     @Override
-    public void sendIpToManagerSms(List<IpAlarmRequestDto> ips) {
-
+    public List<AlarmRequestDto> sendIpToManagerSms(List<IpAlarmRequestDto> ips) {
+        return null;
     }
 
     @Override
-    public void sendCertToManagerSms(List<CertAlarmRequestDto> certs) {
-
+    public List<AlarmRequestDto> sendCertToManagerSms(List<CertAlarmRequestDto> certs) {
+        return null;
     }
 }

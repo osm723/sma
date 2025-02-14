@@ -1,17 +1,26 @@
 package com.shds.sma.alarm.service;
 
+import com.shds.sma.alarm.dto.AlarmRequestDto;
+import com.shds.sma.alarm.entity.Alarm;
 import com.shds.sma.alarm.service.kakao.KakaoAppService;
 import com.shds.sma.alarm.service.mail.MailService;
 import com.shds.sma.alarm.service.sms.SmsService;
 import com.shds.sma.alarm.repository.AlarmRepository;
+import com.shds.sma.alarm.types.AlarmSendType;
+import com.shds.sma.alarm.types.PreAlarmTarget;
+import com.shds.sma.alarm.types.Sender;
 import com.shds.sma.cert.dto.CertAlarmRequestDto;
 import com.shds.sma.ip.dto.IpAlarmRequestDto;
 import com.shds.sma.log.dto.LogAlarmRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
+import static com.shds.sma.alarm.service.mail.MailServiceImpl.MAIL_LOG_SUBJECT;
 
 @Service
 @Transactional
@@ -26,79 +35,122 @@ public class AlarmServiceImpl implements AlarmService {
 
     private final SmsService smsService;
 
+    private final ModelMapper modelMapper;
+
     @Override
     public void sendLogByKakaoApp(List<LogAlarmRequestDto> logs) {
-        kakaoAppService.sendKakaoApp(logs);
+        AlarmRequestDto alarmRequestDto = kakaoAppService.sendKakaoApp(logs);
+        // 알림 저장
+        alarmRepository.save(modelMapper.map(alarmRequestDto, Alarm.class));
     }
 
     @Override
     public void sendLogByMail(List<LogAlarmRequestDto> logs) {
-        mailService.sendLogMail(logs);
+        AlarmRequestDto alarmRequestDto = mailService.sendLogMail(logs);
+        // 알림 저장
+        alarmRepository.save(modelMapper.map(alarmRequestDto, Alarm.class));
     }
 
     @Override
     public void sendLogBySms(List<LogAlarmRequestDto> logs) {
-        smsService.sendSms(logs);
+        AlarmRequestDto alarmRequestDto = smsService.sendSms(logs);
+        // 알림 저장
+        alarmRepository.save(modelMapper.map(alarmRequestDto, Alarm.class));
     }
 
     @Override
     public void sendIpByKakaoApp(List<IpAlarmRequestDto> ips) {
-        kakaoAppService.sendIpKakaoApp(ips);
+        List<AlarmRequestDto> alarmRequests = kakaoAppService.sendIpKakaoApp(ips);
+        // 알림 저장
+        saveAlarm(alarmRequests);
     }
 
     @Override
     public void sendIpByMail(List<IpAlarmRequestDto> ips) {
-        mailService.sendIpMail(ips);
+        List<AlarmRequestDto> alarmRequests = mailService.sendIpMail(ips);
+        // 알림 저장
+        saveAlarm(alarmRequests);
     }
 
     @Override
     public void sendIpBySms(List<IpAlarmRequestDto> ips) {
-        smsService.sendIpSms(ips);
+        List<AlarmRequestDto> alarmRequests = smsService.sendIpSms(ips);
+        // 알림 저장
+        saveAlarm(alarmRequests);
     }
 
     @Override
     public void sendIpToManagerByKakaoApp(List<IpAlarmRequestDto> ips) {
-        kakaoAppService.sendIpToManagerKakaoApp(ips);
+        List<AlarmRequestDto> alarmRequests = kakaoAppService.sendIpToManagerKakaoApp(ips);
+        // 알림 저장
+        saveAlarm(alarmRequests);
     }
 
     @Override
     public void sendIpToManagerByMail(List<IpAlarmRequestDto> ips) {
-        mailService.sendIpToManagerMail(ips);
+        List<AlarmRequestDto> alarmRequests = mailService.sendIpToManagerMail(ips);
+        // 알림 저장
+        saveAlarm(alarmRequests);
     }
 
     @Override
     public void sendIpToManagerBySms(List<IpAlarmRequestDto> ips) {
-        smsService.sendIpToManagerSms(ips);
+        List<AlarmRequestDto> alarmRequests = smsService.sendIpToManagerSms(ips);
+        // 알림 저장
+        saveAlarm(alarmRequests);
     }
 
     @Override
     public void sendCertByKakaoApp(List<CertAlarmRequestDto> certs) {
-        kakaoAppService.sendCertKakaoApp(certs);
+        List<AlarmRequestDto> alarmRequests = kakaoAppService.sendCertKakaoApp(certs);
+        // 알림 저장
+        saveAlarm(alarmRequests);
     }
 
     @Override
     public void sendCertByMail(List<CertAlarmRequestDto> certs) {
-        mailService.sendCertMail(certs);
+        List<AlarmRequestDto> alarmRequests = mailService.sendCertMail(certs);
+        // 알림 저장
+        saveAlarm(alarmRequests);
     }
 
     @Override
     public void sendCertBySms(List<CertAlarmRequestDto> certs) {
-        smsService.sendCertSms(certs);
+        List<AlarmRequestDto> alarmRequests = smsService.sendCertSms(certs);
+        // 알림 저장
+        saveAlarm(alarmRequests);
     }
 
     @Override
     public void sendCertToManagerByKakaoApp(List<CertAlarmRequestDto> certs) {
-        kakaoAppService.sendCertToManagerKakaoApp(certs);
+        List<AlarmRequestDto> alarmRequests = kakaoAppService.sendCertToManagerKakaoApp(certs);
+        // 알림 저장
+        saveAlarm(alarmRequests);
     }
 
     @Override
     public void sendCertToManagerByMail(List<CertAlarmRequestDto> certs) {
-        mailService.sendCertToManagerMail(certs);
+        List<AlarmRequestDto> alarmRequests = mailService.sendCertToManagerMail(certs);
+        // 알림 저장
+        saveAlarm(alarmRequests);
     }
 
     @Override
     public void sendCertToManagerBySms(List<CertAlarmRequestDto> certs) {
-        smsService.sendCertToManagerSms(certs);
+        List<AlarmRequestDto> alarmRequests = smsService.sendCertToManagerSms(certs);
+        // 알림 저장
+        saveAlarm(alarmRequests);
+    }
+
+    /**
+     * 알림 저장
+     * saveAlarm
+     * @param alarmRequests
+     */
+    private void saveAlarm(List<AlarmRequestDto> alarmRequests) {
+        for (AlarmRequestDto alarmRequest : alarmRequests) {
+            alarmRepository.save(modelMapper.map(alarmRequest, Alarm.class));
+        }
     }
 
 

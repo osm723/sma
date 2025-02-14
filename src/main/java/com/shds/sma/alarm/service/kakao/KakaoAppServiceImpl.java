@@ -1,5 +1,6 @@
 package com.shds.sma.alarm.service.kakao;
 
+import com.shds.sma.alarm.dto.AlarmRequestDto;
 import com.shds.sma.cert.dto.CertAlarmRequestDto;
 import com.shds.sma.ip.dto.IpAlarmRequestDto;
 import com.shds.sma.log.dto.LogAlarmRequestDto;
@@ -13,27 +14,27 @@ import java.util.List;
 public class KakaoAppServiceImpl implements KakaoAppService {
 
     @Override
-    public void sendKakaoApp(List<LogAlarmRequestDto> logs) {
-
+    public AlarmRequestDto sendKakaoApp(List<LogAlarmRequestDto> logs) {
+        return null;
     }
 
     @Override
-    public void sendIpKakaoApp(List<IpAlarmRequestDto> ips) {
-
+    public List<AlarmRequestDto> sendIpKakaoApp(List<IpAlarmRequestDto> ips) {
+        return null;
     }
 
     @Override
-    public void sendCertKakaoApp(List<CertAlarmRequestDto> certs) {
-
+    public List<AlarmRequestDto> sendCertKakaoApp(List<CertAlarmRequestDto> certs) {
+        return null;
     }
 
     @Override
-    public void sendIpToManagerKakaoApp(List<IpAlarmRequestDto> ips) {
-
+    public List<AlarmRequestDto> sendIpToManagerKakaoApp(List<IpAlarmRequestDto> ips) {
+        return null;
     }
 
     @Override
-    public void sendCertToManagerKakaoApp(List<CertAlarmRequestDto> certs) {
-
+    public List<AlarmRequestDto> sendCertToManagerKakaoApp(List<CertAlarmRequestDto> certs) {
+        return null;
     }
 }

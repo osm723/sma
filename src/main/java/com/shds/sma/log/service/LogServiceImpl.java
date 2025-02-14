@@ -40,7 +40,6 @@ public class LogServiceImpl implements LogService {
     @Override
     public void getLogErrorForTenMin() {
         List<Log> findLog = logRepository.findLogForMin(TEN_MINUTE);
-
         if (findLog.size() >= 5) {
             sendAlarm(findLog, List.of(AlarmSendType.KAKAO, AlarmSendType.SMS, AlarmSendType.MAIL));
         }
@@ -59,7 +58,6 @@ public class LogServiceImpl implements LogService {
      */
     private void sendAlarm(List<Log> findLog, List<AlarmSendType> alarmSendTypes) {
         List<LogAlarmRequestDto> errors = findLog.stream().map(LogAlarmRequestDto::new).collect(Collectors.toList());
-
         for (AlarmSendType alarmSendType : alarmSendTypes) {
             switch (alarmSendType) {
                 case SMS -> alarmService.sendLogBySms(errors);
