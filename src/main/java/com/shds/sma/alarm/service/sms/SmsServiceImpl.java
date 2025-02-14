@@ -28,4 +28,14 @@ public class SmsServiceImpl implements SmsService {
     public void sendCertSms(List<CertAlarmRequestDto> certs) {
 
     }
+
+    @Override
+    public void sendIpToManagerSms(List<IpAlarmRequestDto> ips) {
+
+    }
+
+    @Override
+    public void sendCertToManagerSms(List<CertAlarmRequestDto> certs) {
+
+    }
 }

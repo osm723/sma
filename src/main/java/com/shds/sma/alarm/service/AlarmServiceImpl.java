@@ -57,6 +57,21 @@ public class AlarmServiceImpl implements AlarmService {
     }
 
     @Override
+    public void sendIpToManagerByKakaoApp(List<IpAlarmRequestDto> ips) {
+        kakaoAppService.sendIpToManagerKakaoApp(ips);
+    }
+
+    @Override
+    public void sendIpToManagerByMail(List<IpAlarmRequestDto> ips) {
+        mailService.sendIpToManagerMail(ips);
+    }
+
+    @Override
+    public void sendIpToManagerBySms(List<IpAlarmRequestDto> ips) {
+        smsService.sendIpToManagerSms(ips);
+    }
+
+    @Override
     public void sendCertByKakaoApp(List<CertAlarmRequestDto> certs) {
         kakaoAppService.sendCertKakaoApp(certs);
     }
@@ -69,6 +84,21 @@ public class AlarmServiceImpl implements AlarmService {
     @Override
     public void sendCertBySms(List<CertAlarmRequestDto> certs) {
         smsService.sendCertSms(certs);
+    }
+
+    @Override
+    public void sendCertToManagerByKakaoApp(List<CertAlarmRequestDto> certs) {
+        kakaoAppService.sendCertToManagerKakaoApp(certs);
+    }
+
+    @Override
+    public void sendCertToManagerByMail(List<CertAlarmRequestDto> certs) {
+        mailService.sendCertToManagerMail(certs);
+    }
+
+    @Override
+    public void sendCertToManagerBySms(List<CertAlarmRequestDto> certs) {
+        smsService.sendCertToManagerSms(certs);
     }
 
 

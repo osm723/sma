@@ -20,9 +20,22 @@ public interface AlarmService {
 
     void sendIpBySms(List<IpAlarmRequestDto> ips);
 
+    void sendIpToManagerByKakaoApp(List<IpAlarmRequestDto> ips);
+
+    void sendIpToManagerByMail(List<IpAlarmRequestDto> ips);
+
+    void sendIpToManagerBySms(List<IpAlarmRequestDto> ips);
+
     void sendCertByKakaoApp(List<CertAlarmRequestDto> certs);
 
     void sendCertByMail(List<CertAlarmRequestDto> certs);
 
     void sendCertBySms(List<CertAlarmRequestDto> certs);
+
+    void sendCertToManagerByKakaoApp(List<CertAlarmRequestDto> certs);
+
+    void sendCertToManagerByMail(List<CertAlarmRequestDto> certs);
+
+    void sendCertToManagerBySms(List<CertAlarmRequestDto> certs);
+
 }

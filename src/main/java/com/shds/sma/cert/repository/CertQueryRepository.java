@@ -17,4 +17,6 @@ public interface CertQueryRepository  {
     List<Cert> findCertPreExpiration();
 
     boolean isCertReApply(Cert cert);
+
+    List<Cert> findCertPreDayExpiration(Long preDay);
 }

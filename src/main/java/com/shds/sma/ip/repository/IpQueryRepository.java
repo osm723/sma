@@ -17,4 +17,6 @@ public interface IpQueryRepository {
     List<Ip> findIpPreExpiration();
 
     boolean isIpReApply(Ip ip);
+
+    List<Ip> findIpPreDayExpiration(Long preDay);
 }

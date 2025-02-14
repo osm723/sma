@@ -21,4 +21,5 @@ public interface CertService {
 
     void getCertPreExpiration();
 
+    void getCertPreExpirationToManager();
 }

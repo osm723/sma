@@ -95,6 +95,14 @@ public class IpQueryRepositoryImpl implements IpQueryRepository {
         return Boolean.TRUE.equals(query.select(existsExpr).fetchOne());
     }
 
+    @Override
+    public List<Ip> findIpPreDayExpiration(Long preDay) {
+        return query.select(ip)
+                .from(ip)
+                .where(ip.endDate.goe(LocalDate.now().minusDays(preDay)))
+                .fetch();
+    }
+
     private BooleanExpression dateBetween(LocalDate startDate, LocalDate endDate) {
         return startDate != null && endDate != null ?
                 ip.startDate.between(startDate, endDate)

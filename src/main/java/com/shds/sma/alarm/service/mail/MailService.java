@@ -13,4 +13,8 @@ public interface MailService {
     void sendIpMail(List<IpAlarmRequestDto> ips);
 
     void sendCertMail(List<CertAlarmRequestDto> certs);
+
+    void sendIpToManagerMail(List<IpAlarmRequestDto> ips);
+
+    void sendCertToManagerMail(List<CertAlarmRequestDto> certs);
 }

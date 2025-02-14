@@ -26,4 +26,14 @@ public class KakaoAppServiceImpl implements KakaoAppService {
     public void sendCertKakaoApp(List<CertAlarmRequestDto> certs) {
 
     }
+
+    @Override
+    public void sendIpToManagerKakaoApp(List<IpAlarmRequestDto> ips) {
+
+    }
+
+    @Override
+    public void sendCertToManagerKakaoApp(List<CertAlarmRequestDto> certs) {
+
+    }
 }
