@@ -3,7 +3,7 @@ package com.shds.sma.batch.controller;
 
 import com.shds.sma.cert.service.CertService;
 import com.shds.sma.common.alarm.service.AlarmService;
-import com.shds.sma.common.log.service.LogService;
+import com.shds.sma.log.service.LogService;
 import com.shds.sma.ip.service.IpService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

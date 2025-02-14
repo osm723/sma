@@ -1,7 +1,6 @@
 package com.shds.sma.common.alarm.mail;
 
-import com.shds.sma.common.log.dto.LogErrorResponseDto;
-import jakarta.mail.MessagingException;
+import com.shds.sma.log.dto.LogErrorResponseDto;
 
 import java.util.List;
 

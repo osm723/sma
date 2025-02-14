@@ -1,6 +1,6 @@
-package com.shds.sma.common.entity;
+package com.shds.sma.log.entity;
 
-import com.shds.sma.common.types.LogType;
+import com.shds.sma.log.types.LogType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

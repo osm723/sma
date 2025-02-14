@@ -4,7 +4,7 @@ import com.shds.sma.common.alarm.kakao.KakaoAppService;
 import com.shds.sma.common.alarm.mail.MailService;
 import com.shds.sma.common.alarm.repository.AlarmRepository;
 import com.shds.sma.common.alarm.sms.SmsService;
-import com.shds.sma.common.log.dto.LogErrorResponseDto;
+import com.shds.sma.log.dto.LogErrorResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

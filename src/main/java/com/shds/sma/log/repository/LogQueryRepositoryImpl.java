@@ -1,16 +1,15 @@
-package com.shds.sma.common.log.repository;
+package com.shds.sma.log.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.shds.sma.common.entity.Log;
-import com.shds.sma.common.entity.QLog;
+import com.shds.sma.log.entity.Log;
+import com.shds.sma.log.entity.QLog;
 import jakarta.persistence.EntityManager;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.shds.sma.common.entity.QLog.log;
+import static com.shds.sma.log.entity.QLog.log;
 
 @Repository
 public class LogQueryRepositoryImpl implements LogQueryRepository {
