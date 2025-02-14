@@ -2,10 +2,12 @@ package com.shds.sma.common.advice;
 
 import com.shds.sma.common.exception.BizException;
 import com.shds.sma.common.exception.ErrorResult;
+import com.shds.sma.common.exception.MessagingBizException;
 import com.shds.sma.common.log.dto.LogRequestDto;
 import com.shds.sma.common.log.service.LogService;
 import com.shds.sma.common.types.ErrorType;
 import com.shds.sma.common.types.LogType;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -56,6 +58,14 @@ public class GlobalApiExHandler {
         log.error("[exceptionHandle] ex", e);
         saveLog(BIZ_EX, e);
         return new ErrorResult(BIZ_EX.name(), "내부 오류가 발생했습니다. 관리자에게 문의 바랍니다.", e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler
+    public ErrorResult exHandle(MessagingBizException e) {
+        log.error("[exceptionHandle] ex", e);
+        saveLog(MESSAGE_EX, e);
+        return new ErrorResult(MESSAGE_EX.name(), "메시지 오류가 발생했습니다. 관리자에게 문의 바랍니다.", e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
