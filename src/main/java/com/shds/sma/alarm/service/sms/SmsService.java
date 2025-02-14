@@ -1,5 +1,6 @@
 package com.shds.sma.alarm.service.sms;
 
+import com.shds.sma.alarm.dto.AlarmRequestDto;
 import com.shds.sma.cert.dto.CertAlarmRequestDto;
 import com.shds.sma.ip.dto.IpAlarmRequestDto;
 import com.shds.sma.log.dto.LogAlarmRequestDto;
@@ -8,13 +9,13 @@ import java.util.List;
 
 public interface SmsService {
 
-    void sendSms(List<LogAlarmRequestDto> logs);
+    AlarmRequestDto sendSms(List<LogAlarmRequestDto> logs);
 
-    void sendIpSms(List<IpAlarmRequestDto> ips);
+    List<AlarmRequestDto> sendIpSms(List<IpAlarmRequestDto> ips);
 
-    void sendCertSms(List<CertAlarmRequestDto> certs);
+    List<AlarmRequestDto> sendCertSms(List<CertAlarmRequestDto> certs);
 
-    void sendIpToManagerSms(List<IpAlarmRequestDto> ips);
+    List<AlarmRequestDto> sendIpToManagerSms(List<IpAlarmRequestDto> ips);
 
-    void sendCertToManagerSms(List<CertAlarmRequestDto> certs);
+    List<AlarmRequestDto> sendCertToManagerSms(List<CertAlarmRequestDto> certs);
 }

@@ -1,5 +1,6 @@
 package com.shds.sma.alarm.service.kakao;
 
+import com.shds.sma.alarm.dto.AlarmRequestDto;
 import com.shds.sma.cert.dto.CertAlarmRequestDto;
 import com.shds.sma.ip.dto.IpAlarmRequestDto;
 import com.shds.sma.log.dto.LogAlarmRequestDto;
@@ -8,13 +9,13 @@ import java.util.List;
 
 public interface KakaoAppService {
 
-    void sendKakaoApp(List<LogAlarmRequestDto> logs);
+    AlarmRequestDto sendKakaoApp(List<LogAlarmRequestDto> logs);
 
-    void sendIpKakaoApp(List<IpAlarmRequestDto> ips);
+    List<AlarmRequestDto> sendIpKakaoApp(List<IpAlarmRequestDto> ips);
 
-    void sendCertKakaoApp(List<CertAlarmRequestDto> certs);
+    List<AlarmRequestDto> sendCertKakaoApp(List<CertAlarmRequestDto> certs);
 
-    void sendIpToManagerKakaoApp(List<IpAlarmRequestDto> ips);
+    List<AlarmRequestDto> sendIpToManagerKakaoApp(List<IpAlarmRequestDto> ips);
 
-    void sendCertToManagerKakaoApp(List<CertAlarmRequestDto> certs);
+    List<AlarmRequestDto> sendCertToManagerKakaoApp(List<CertAlarmRequestDto> certs);
 }

@@ -1,6 +1,12 @@
 package com.shds.sma.alarm.service.mail;
 
 import com.shds.sma.admin.entity.Member;
+import com.shds.sma.alarm.dto.AlarmRequestDto;
+import com.shds.sma.alarm.entity.Alarm;
+import com.shds.sma.alarm.service.AlarmService;
+import com.shds.sma.alarm.types.AlarmSendType;
+import com.shds.sma.alarm.types.PreAlarmTarget;
+import com.shds.sma.alarm.types.Sender;
 import com.shds.sma.cert.dto.CertAlarmRequestDto;
 import com.shds.sma.common.exception.MessagingBizException;
 import com.shds.sma.ip.dto.IpAlarmRequestDto;
@@ -8,6 +14,7 @@ import com.shds.sma.log.dto.LogAlarmRequestDto;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Primary;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -15,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,15 +34,15 @@ public class MailServiceImpl implements MailService {
 
     private final JavaMailSender mailSender;
 
-    private final static String MAIL_FROM = "spcoff@naver.com";
+    public final static String MAIL_FROM = "spcoff@naver.com";
 
-    private final static String LOG_MAIL_TO = "spcoff@naver.com";
+    public final static String LOG_MAIL_TO = "spcoff@naver.com";
 
-    private final static String MAIL_LOG_SUBJECT = "에러로그 알림 메일 입니다.";
+    public final static String MAIL_LOG_SUBJECT = "에러로그 알림 메일 입니다.";
 
-    private final static String MAIL_IP_SUBJECT = "IP 만료 전 알림 메일 입니다.";
+    public final static String MAIL_IP_SUBJECT = "IP 만료 전 알림 메일 입니다.";
 
-    private final static String MAIL_CERT_SUBJECT = "인증서 만료 전 알림 메일 입니다.";
+    public final static String MAIL_CERT_SUBJECT = "인증서 만료 전 알림 메일 입니다.";
 
     /**
      * 에러로그 메일 발송
@@ -42,14 +50,23 @@ public class MailServiceImpl implements MailService {
      * @param logs
      */
     @Override
-    public void sendLogMail(List<LogAlarmRequestDto> logs) {
+    public AlarmRequestDto sendLogMail(List<LogAlarmRequestDto> logs) {
         // 메일 발송
         StringBuilder emailContent = new StringBuilder();
         setLogMessage(logs, emailContent);
         sendMail(MAIL_LOG_SUBJECT, emailContent.toString(), LOG_MAIL_TO, MAIL_FROM);
 
-        // 알림 로그
-
+        // 알림 저장
+        return AlarmRequestDto.builder()
+                .alarmSendType(AlarmSendType.MAIL)
+                .preAlarmTarget(PreAlarmTarget.LOG)
+                .system(null)
+                .sender(Sender.SYSTEM)
+                .subject(MAIL_LOG_SUBJECT)
+                .content(emailContent.toString())
+                .preAlarm(0)
+                .sendDate(LocalDateTime.now())
+                .isSuccess("Y").build();
     }
 
     /**
@@ -58,16 +75,32 @@ public class MailServiceImpl implements MailService {
      * @param ips
      */
     @Override
-    public void sendIpMail(List<IpAlarmRequestDto> ips) {
+    public List<AlarmRequestDto> sendIpMail(List<IpAlarmRequestDto> ips) {
+        List<AlarmRequestDto> alarmRequest = new ArrayList<>();
         for (IpAlarmRequestDto ip : ips) {
             // 메일 발송
             StringBuilder emailContent = new StringBuilder();
             setIpMessage(ip, emailContent);
             sendMail(MAIL_IP_SUBJECT, emailContent.toString(), ip.getMember().getMail(), MAIL_FROM);
 
-            // 알림 로그
-
+            setAlarmBulid(ip, emailContent, alarmRequest);
         }
+
+        return alarmRequest;
+    }
+
+    private static void setAlarmBulid(IpAlarmRequestDto ip, StringBuilder emailContent, List<AlarmRequestDto> alarmRequest) {
+        AlarmRequestDto alarmRequestDto = AlarmRequestDto.builder()
+                .alarmSendType(AlarmSendType.MAIL)
+                .preAlarmTarget(PreAlarmTarget.IP)
+                .system(ip.getApplySystem())
+                .sender(Sender.SYSTEM)
+                .subject(MAIL_IP_SUBJECT)
+                .content(emailContent.toString())
+                .preAlarm(ip.getApplySystem().getPreIpAlarm())
+                .sendDate(LocalDateTime.now())
+                .isSuccess("Y").build();
+        alarmRequest.add(alarmRequestDto);
     }
 
     /**
@@ -76,20 +109,34 @@ public class MailServiceImpl implements MailService {
      * @param certs
      */
     @Override
-    public void sendCertMail(List<CertAlarmRequestDto> certs) {
+    public List<AlarmRequestDto> sendCertMail(List<CertAlarmRequestDto> certs) {
+        List<AlarmRequestDto> alarmRequest = new ArrayList<>();
         for (CertAlarmRequestDto cert : certs) {
             // 메일 발송
             StringBuilder emailContent = new StringBuilder();
             setCertMessage(cert, emailContent);
             sendMail(MAIL_CERT_SUBJECT, emailContent.toString(), cert.getMember().getMail(), MAIL_FROM);
 
-            // 알림 로그
-
+            // 알림 저장
+            AlarmRequestDto alarmRequestDto = AlarmRequestDto.builder()
+                    .alarmSendType(AlarmSendType.MAIL)
+                    .preAlarmTarget(PreAlarmTarget.CERT)
+                    .system(cert.getApplySystem())
+                    .sender(Sender.SYSTEM)
+                    .subject(MAIL_CERT_SUBJECT)
+                    .content(emailContent.toString())
+                    .preAlarm(cert.getApplySystem().getPreIpAlarm())
+                    .sendDate(LocalDateTime.now())
+                    .isSuccess("Y").build();
+            alarmRequest.add(alarmRequestDto);
         }
+
+        return alarmRequest;
     }
 
     @Override
-    public void sendIpToManagerMail(List<IpAlarmRequestDto> ips) {
+    public List<AlarmRequestDto> sendIpToManagerMail(List<IpAlarmRequestDto> ips) {
+        List<AlarmRequestDto> alarmRequest = new ArrayList<>();
         for (IpAlarmRequestDto ip : ips) {
             List<Member> systemManagers = ip.getApplySystem().getSystemManagers();
             for (Member systemManager : systemManagers) {
@@ -98,14 +145,27 @@ public class MailServiceImpl implements MailService {
                 setIpMessage(ip, emailContent);
                 sendMail(MAIL_IP_SUBJECT, emailContent.toString(), systemManager.getMail(), MAIL_FROM);
 
-                // 알림 로그
-
+                // 알림 저장
+                AlarmRequestDto alarmRequestDto = AlarmRequestDto.builder()
+                        .alarmSendType(AlarmSendType.MAIL)
+                        .preAlarmTarget(PreAlarmTarget.IP)
+                        .system(ip.getApplySystem())
+                        .sender(Sender.SYSTEM)
+                        .subject(MAIL_IP_SUBJECT)
+                        .content(emailContent.toString())
+                        .preAlarm(ip.getApplySystem().getPreIpAlarm())
+                        .sendDate(LocalDateTime.now())
+                        .isSuccess("Y").build();
+                alarmRequest.add(alarmRequestDto);
             }
         }
+
+        return alarmRequest;
     }
 
     @Override
-    public void sendCertToManagerMail(List<CertAlarmRequestDto> certs) {
+    public List<AlarmRequestDto> sendCertToManagerMail(List<CertAlarmRequestDto> certs) {
+        List<AlarmRequestDto> alarmRequest = new ArrayList<>();
         for (CertAlarmRequestDto cert : certs) {
             List<Member> systemManagers = cert.getApplySystem().getSystemManagers();
             for (Member systemManager : systemManagers) {
@@ -114,10 +174,22 @@ public class MailServiceImpl implements MailService {
                 setCertMessage(cert, emailContent);
                 sendMail(MAIL_CERT_SUBJECT, emailContent.toString(), systemManager.getMail(), MAIL_FROM);
 
-                // 알림 로그
-
+                // 알림 저장
+                AlarmRequestDto alarmRequestDto = AlarmRequestDto.builder()
+                        .alarmSendType(AlarmSendType.MAIL)
+                        .preAlarmTarget(PreAlarmTarget.CERT)
+                        .system(cert.getApplySystem())
+                        .sender(Sender.SYSTEM)
+                        .subject(MAIL_CERT_SUBJECT)
+                        .content(emailContent.toString())
+                        .preAlarm(cert.getApplySystem().getPreIpAlarm())
+                        .sendDate(LocalDateTime.now())
+                        .isSuccess("Y").build();
+                alarmRequest.add(alarmRequestDto);
             }
         }
+
+        return alarmRequest;
     }
 
     /**
