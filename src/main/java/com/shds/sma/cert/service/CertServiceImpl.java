@@ -60,7 +60,15 @@ public class CertServiceImpl implements CertService {
     @Override
     public void getCertPreExpiration() {
         List<Cert> preCertExpiration = certRepository.findCertPreExpiration();
-        sendAlarm(preCertExpiration, List.of(AlarmSendType.KAKAO, AlarmSendType.MAIL, AlarmSendType.SMS));
+        for (Cert cert : preCertExpiration) {
+            if(isNotCertReApply(cert)) {
+                sendAlarm(preCertExpiration, List.of(AlarmSendType.KAKAO, AlarmSendType.MAIL, AlarmSendType.SMS));
+            }
+        }
+    }
+
+    private boolean isNotCertReApply(Cert cert) {
+        return !certRepository.isCertReApply(cert);
     }
 
     /**
