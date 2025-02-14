@@ -1,6 +1,6 @@
-package com.shds.sma.common.log.repository;
+package com.shds.sma.log.repository;
 
-import com.shds.sma.common.entity.Log;
+import com.shds.sma.log.entity.Log;
 
 import java.util.List;
 

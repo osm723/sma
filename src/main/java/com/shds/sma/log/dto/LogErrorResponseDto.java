@@ -1,10 +1,7 @@
-package com.shds.sma.common.log.dto;
+package com.shds.sma.log.dto;
 
-import com.shds.sma.common.entity.Log;
-import com.shds.sma.common.types.LogType;
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import com.shds.sma.log.entity.Log;
+import com.shds.sma.log.types.LogType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

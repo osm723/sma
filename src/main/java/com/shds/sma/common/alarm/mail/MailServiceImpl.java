@@ -1,7 +1,7 @@
 package com.shds.sma.common.alarm.mail;
 
 import com.shds.sma.common.exception.MessagingBizException;
-import com.shds.sma.common.log.dto.LogErrorResponseDto;
+import com.shds.sma.log.dto.LogErrorResponseDto;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;

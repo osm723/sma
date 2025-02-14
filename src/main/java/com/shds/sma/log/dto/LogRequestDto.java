@@ -1,6 +1,6 @@
-package com.shds.sma.common.log.dto;
+package com.shds.sma.log.dto;
 
-import com.shds.sma.common.types.LogType;
+import com.shds.sma.log.types.LogType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
