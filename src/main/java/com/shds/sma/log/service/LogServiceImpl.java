@@ -1,11 +1,11 @@
 package com.shds.sma.log.service;
 
-import com.shds.sma.common.alarm.service.AlarmService;
+import com.shds.sma.alarm.service.AlarmService;
 import com.shds.sma.log.entity.Log;
 import com.shds.sma.log.dto.LogErrorResponseDto;
 import com.shds.sma.log.dto.LogRequestDto;
 import com.shds.sma.log.repository.LogRepository;
-import com.shds.sma.common.types.AlarmSendType;
+import com.shds.sma.alarm.types.AlarmSendType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;

@@ -1,9 +1,9 @@
-package com.shds.sma.common.alarm.service;
+package com.shds.sma.alarm.service;
 
-import com.shds.sma.common.alarm.kakao.KakaoAppService;
-import com.shds.sma.common.alarm.mail.MailService;
-import com.shds.sma.common.alarm.repository.AlarmRepository;
-import com.shds.sma.common.alarm.sms.SmsService;
+import com.shds.sma.alarm.service.kakao.KakaoAppService;
+import com.shds.sma.alarm.service.mail.MailService;
+import com.shds.sma.alarm.service.sms.SmsService;
+import com.shds.sma.alarm.repository.AlarmRepository;
 import com.shds.sma.log.dto.LogErrorResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

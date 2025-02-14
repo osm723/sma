@@ -1,4 +1,4 @@
-package com.shds.sma.common.alarm.service;
+package com.shds.sma.alarm.service;
 
 import com.shds.sma.log.dto.LogErrorResponseDto;
 
