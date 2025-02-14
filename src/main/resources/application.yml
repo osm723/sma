@@ -1,4 +1,15 @@
 spring:
+  mail:
+    host: smtp.naver.com
+    port: 465
+    username: spcoff@naver.com
+    password: dhtjdals88@@
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
