@@ -7,8 +7,12 @@ import com.shds.sma.system.dto.SystemIpResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface IpQueryRepository {
     Page<Ip> findIpByCond(IpRequestDto ipRequestDto, Pageable pageable);
 
     Page<SystemIpResponseDto> findSystemIpByCond(SystemIpRequestDto systemIpRequestDto, Pageable pageable);
+
+    List<Ip> findPreExpirationIp();
 }

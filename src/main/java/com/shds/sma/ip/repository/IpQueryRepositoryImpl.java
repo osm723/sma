@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static com.shds.sma.ip.entity.QIp.ip;
 
@@ -67,6 +68,14 @@ public class IpQueryRepositoryImpl implements IpQueryRepository {
                 .fetchResults();
 
         return new PageImpl<>(result.getResults(), pageable, result.getTotal());
+    }
+
+    @Override
+    public List<Ip> findPreExpirationIp() {
+        return query.select(ip)
+                .from(ip)
+                .where(ip.endDate.goe(LocalDate.now().minusDays(Long.parseLong(ip.applySystem.preIpAlarm.toString()))))
+                .fetch();
     }
 
     private BooleanExpression dateBetween(LocalDate startDate, LocalDate endDate) {

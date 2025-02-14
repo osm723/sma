@@ -51,7 +51,10 @@ public class IpServiceImpl implements IpService {
         return adminService.findSystemAll();
     }
 
-
+    @Override
+    public void getPreExpiration() {
+        List<Ip> preExpirationIp = ipRepository.findPreExpirationIp();
+    }
 
 
 }
