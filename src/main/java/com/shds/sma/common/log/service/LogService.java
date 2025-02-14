@@ -9,7 +9,7 @@ public interface LogService {
 
     void saveLog(LogRequestDto logRequestDto);
 
-    List<LogErrorResponseDto> getLogErrorForTenMin();
+    void getLogErrorForTenMin();
 
-    List<LogErrorResponseDto> getLogErrorForDaily();
+    void getLogErrorForDaily();
 }

@@ -1,15 +1,14 @@
 package com.shds.sma.batch.controller;
 
 
-import com.shds.sma.common.alarm.AlarmService;
-import com.shds.sma.common.log.dto.LogErrorResponseDto;
+import com.shds.sma.cert.service.CertService;
+import com.shds.sma.common.alarm.service.AlarmService;
 import com.shds.sma.common.log.service.LogService;
+import com.shds.sma.ip.service.IpService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Slf4j
 @Component
@@ -18,33 +17,38 @@ public class BatchController {
 
     private final LogService logService;
 
+    private final IpService ipService;
+
+    private final CertService certService;
+
     private final AlarmService alarmService;
 
     /**
-     * 10분마다 에러로그를 조회해서 5건 이상이면 메일 발송
-     * sendErrorLogForTenMin
+     * 10분마다 에러로그를 조회해서 5건 이상이면 알림 발송
+     * alarmErrorLogForTenMin
      */
     @Scheduled(cron = "0 */10 * * * *")
     //@Scheduled(fixedRate = 600000)
-    public void sendErrorLogForTenMin() {
-        List<LogErrorResponseDto> errors = logService.getLogErrorForTenMin();
-        if (errors.size() >= 5) {
-            alarmService.sendMail(errors);
-            alarmService.sendSms(errors);
-            alarmService.sendKakaoApp(errors);
-        }
+    public void alarmErrorLogForTenMin() {
+        logService.getLogErrorForTenMin();
     }
 
     /**
-     * 하루동안 에러로그를 조회해서 메일 발송
-     * sendErrorLogForDaily
+     * 하루동안 에러로그를 조회해서 알림 발송
+     * alarmErrorLogForDaily
      */
     @Scheduled(cron = "0 0 8 * * *")
-    public void sendErrorLogForDaily() {
-        List<LogErrorResponseDto> errors = logService.getLogErrorForDaily();
-        alarmService.sendMail(errors);
-        alarmService.sendSms(errors);
-        alarmService.sendKakaoApp(errors);
+    public void alarmErrorLogForDaily() {
+        logService.getLogErrorForDaily();
+    }
+
+    /**
+     * Ip 만료도래시 알림 발송
+     * alarmPreExpiration
+     */
+    @Scheduled(cron = "0 0 10,16 * * *")
+    public void alarmIpPreExpiration() {
+        ipService.getPreExpiration();
     }
 
 

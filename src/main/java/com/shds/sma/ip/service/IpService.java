@@ -17,4 +17,6 @@ public interface IpService {
     List<MemberResponseDto> findMemberAll();
 
     List<SystemResponseDto> findSystemAll();
+
+    void getPreExpiration();
 }

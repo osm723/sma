@@ -44,6 +44,11 @@ public class MailServiceImpl implements MailService {
             helper.setText(emailContent.toString());
             helper.setFrom("spcoff@naver.com");  // 보낸 사람 이메일 설정
             mailSender.send(message);
+
+            // 알림 로그
+
+
+
         } catch (MessagingException e) {
             throw new MessagingBizException(e);
         }

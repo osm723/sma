@@ -1,10 +1,11 @@
 package com.shds.sma.common.log.service;
 
+import com.shds.sma.common.alarm.service.AlarmService;
 import com.shds.sma.common.entity.Log;
 import com.shds.sma.common.log.dto.LogErrorResponseDto;
 import com.shds.sma.common.log.dto.LogRequestDto;
 import com.shds.sma.common.log.repository.LogRepository;
-import jakarta.persistence.EntityManager;
+import com.shds.sma.common.types.AlarmSendType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -22,6 +23,8 @@ public class LogServiceImpl implements LogService {
 
     private final LogRepository logRepository;
 
+    private final AlarmService alarmService;
+
     private final ModelMapper modelMapper;
 
     private static final Long TEN_MINUTE = 10L;
@@ -34,14 +37,35 @@ public class LogServiceImpl implements LogService {
     }
 
     @Override
-    public List<LogErrorResponseDto> getLogErrorForTenMin() {
+    public void getLogErrorForTenMin() {
         List<Log> findLog = logRepository.findLogForMin(TEN_MINUTE);
-        return findLog.stream().map(LogErrorResponseDto::new).collect(Collectors.toList());
+
+        if (findLog.size() >= 5) {
+            sendAlarm(findLog, List.of(AlarmSendType.KAKAO, AlarmSendType.SMS, AlarmSendType.MAIL));
+        }
     }
 
     @Override
-    public List<LogErrorResponseDto> getLogErrorForDaily() {
+    public void getLogErrorForDaily() {
         List<Log> findLog = logRepository.findLogForDaily(ONE_DAY);
-        return findLog.stream().map(LogErrorResponseDto::new).collect(Collectors.toList());
+        sendAlarm(findLog, List.of(AlarmSendType.KAKAO, AlarmSendType.SMS, AlarmSendType.MAIL));
+    }
+
+    /**
+     * 알림 발송
+     * sendAlarm
+     * @param findLog
+     */
+    private void sendAlarm(List<Log> findLog, List<AlarmSendType> alarmSendTypes) {
+        List<LogErrorResponseDto> errors = findLog.stream().map(LogErrorResponseDto::new).collect(Collectors.toList());
+
+        for (AlarmSendType alarmSendType : alarmSendTypes) {
+            switch (alarmSendType) {
+                case SMS -> alarmService.sendSms(errors);
+                case MAIL -> alarmService.sendMail(errors);
+                case KAKAO -> alarmService.sendKakaoApp(errors);
+            }
+        }
+
     }
 }

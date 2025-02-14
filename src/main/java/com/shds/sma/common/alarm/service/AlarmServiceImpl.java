@@ -1,7 +1,8 @@
-package com.shds.sma.common.alarm;
+package com.shds.sma.common.alarm.service;
 
-import com.shds.sma.common.alarm.app.KakaoAppService;
+import com.shds.sma.common.alarm.kakao.KakaoAppService;
 import com.shds.sma.common.alarm.mail.MailService;
+import com.shds.sma.common.alarm.repository.AlarmRepository;
 import com.shds.sma.common.alarm.sms.SmsService;
 import com.shds.sma.common.log.dto.LogErrorResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +16,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AlarmServiceImpl implements AlarmService {
 
+    private final AlarmRepository alarmRepository;
+
     private final KakaoAppService kakaoAppService;
+
     private final MailService mailService;
+
     private final SmsService smsService;
 
     @Override
@@ -33,4 +38,7 @@ public class AlarmServiceImpl implements AlarmService {
     public void sendSms(List<LogErrorResponseDto> errorLogs) {
         smsService.sendSms(errorLogs);
     }
+
+
+
 }
