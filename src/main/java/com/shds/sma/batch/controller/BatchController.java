@@ -2,11 +2,8 @@ package com.shds.sma.batch.controller;
 
 
 import com.shds.sma.common.alarm.AlarmService;
-import com.shds.sma.common.alarm.mail.MailService;
 import com.shds.sma.common.log.dto.LogErrorResponseDto;
-import com.shds.sma.common.log.dto.LogRequestDto;
 import com.shds.sma.common.log.service.LogService;
-import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
