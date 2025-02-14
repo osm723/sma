@@ -2,10 +2,6 @@ package com.shds.sma.common.alarm.mail;
 
 import com.shds.sma.common.exception.MessagingBizException;
 import com.shds.sma.common.log.dto.LogErrorResponseDto;
-import com.shds.sma.common.log.dto.LogRequestDto;
-import com.shds.sma.common.log.service.LogService;
-import com.shds.sma.common.types.ErrorType;
-import com.shds.sma.common.types.LogType;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.shds.sma.common.types.ErrorType.MESSAGE_EX;
 
 @Service
 @Transactional
@@ -27,8 +22,6 @@ import static com.shds.sma.common.types.ErrorType.MESSAGE_EX;
 public class MailServiceImpl implements MailService {
 
     private final JavaMailSender mailSender;
-
-    private final LogService logService;
 
     private final static String MAIL_TO = "";
     private final static String MAIL_SUBJECT = "";
