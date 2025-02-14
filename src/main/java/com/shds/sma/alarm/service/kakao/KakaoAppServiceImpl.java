@@ -1,6 +1,8 @@
 package com.shds.sma.alarm.service.kakao;
 
-import com.shds.sma.log.dto.LogErrorResponseDto;
+import com.shds.sma.cert.dto.CertAlarmRequestDto;
+import com.shds.sma.ip.dto.IpAlarmRequestDto;
+import com.shds.sma.log.dto.LogAlarmRequestDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,7 +13,17 @@ import java.util.List;
 public class KakaoAppServiceImpl implements KakaoAppService {
 
     @Override
-    public void sendKakaoApp(List<LogErrorResponseDto> errorLogs) {
+    public void sendKakaoApp(List<LogAlarmRequestDto> logs) {
+
+    }
+
+    @Override
+    public void sendIpKakaoApp(List<IpAlarmRequestDto> ips) {
+
+    }
+
+    @Override
+    public void sendCertKakaoApp(List<CertAlarmRequestDto> certs) {
 
     }
 }

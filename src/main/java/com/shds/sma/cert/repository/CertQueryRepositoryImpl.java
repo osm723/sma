@@ -16,9 +16,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static com.shds.sma.cert.entity.QCert.cert;
-import static com.shds.sma.ip.entity.QIp.ip;
 
 @Repository
 public class CertQueryRepositoryImpl implements CertQueryRepository {
@@ -65,6 +65,14 @@ public class CertQueryRepositoryImpl implements CertQueryRepository {
                 .groupBy(cert.certName)
                 .fetchResults();
         return new PageImpl<>(result.getResults(), pageable, result.getTotal());
+    }
+
+    @Override
+    public List<Cert> findCertPreExpiration() {
+        return query.select(cert)
+                .from(cert)
+                .where(cert.endDate.goe(LocalDate.now().minusDays(Long.parseLong(cert.applySystem.preIpAlarm.toString()))))
+                .fetch();
     }
 
     private BooleanExpression dateBetween(LocalDate startDate, LocalDate endDate) {

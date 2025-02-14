@@ -3,6 +3,9 @@ package com.shds.sma.ip.service;
 import com.shds.sma.admin.dto.member.MemberResponseDto;
 import com.shds.sma.admin.dto.system.SystemResponseDto;
 import com.shds.sma.admin.service.AdminService;
+import com.shds.sma.alarm.service.AlarmService;
+import com.shds.sma.alarm.types.AlarmSendType;
+import com.shds.sma.ip.dto.IpAlarmRequestDto;
 import com.shds.sma.ip.dto.IpRequestDto;
 import com.shds.sma.ip.dto.IpResponseDto;
 import com.shds.sma.ip.entity.Ip;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -26,6 +30,8 @@ public class IpServiceImpl implements IpService {
     private final IpRepository ipRepository;
 
     private final AdminService adminService;
+
+    private final AlarmService alarmService;
 
     private final ModelMapper modelMapper;
 
@@ -52,8 +58,27 @@ public class IpServiceImpl implements IpService {
     }
 
     @Override
-    public void getPreExpiration() {
-        List<Ip> preExpirationIp = ipRepository.findPreExpirationIp();
+    public void getIpPreExpiration() {
+        List<Ip> preIpExpiration = ipRepository.findIpPreExpiration();
+        sendAlarm(preIpExpiration, List.of(AlarmSendType.KAKAO, AlarmSendType.MAIL, AlarmSendType.SMS));
+    }
+
+    /**
+     * 알림 발송
+     * sendAlarm
+     * @param preIpExpiration
+     * @param alarmSendTypes
+     */
+    private void sendAlarm(List<Ip> preIpExpiration, List<AlarmSendType> alarmSendTypes) {
+        List<IpAlarmRequestDto> ips = preIpExpiration.stream().map(IpAlarmRequestDto::new).collect(Collectors.toList());
+
+        for (AlarmSendType alarmSendType : alarmSendTypes) {
+            switch (alarmSendType) {
+                case SMS -> alarmService.sendIpBySms(ips);
+                case MAIL -> alarmService.sendIpByMail(ips);
+                case KAKAO -> alarmService.sendIpByKakaoApp(ips);
+            }
+        }
     }
 
 

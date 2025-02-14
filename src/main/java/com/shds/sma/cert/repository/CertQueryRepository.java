@@ -7,8 +7,12 @@ import com.shds.sma.system.dto.SystemCertResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface CertQueryRepository  {
     Page<Cert> findCertByCond(CertRequestDto certRequestDto, Pageable pageable);
 
     Page<SystemCertResponseDto> findSystemCertByCond(SystemCertRequestDto systemCertRequestDto, Pageable pageable);
+
+    List<Cert> findCertPreExpiration();
 }

@@ -1,6 +1,7 @@
 package com.shds.sma.log.service;
 
 import com.shds.sma.alarm.service.AlarmService;
+import com.shds.sma.log.dto.LogAlarmRequestDto;
 import com.shds.sma.log.entity.Log;
 import com.shds.sma.log.dto.LogErrorResponseDto;
 import com.shds.sma.log.dto.LogRequestDto;
@@ -57,13 +58,13 @@ public class LogServiceImpl implements LogService {
      * @param findLog
      */
     private void sendAlarm(List<Log> findLog, List<AlarmSendType> alarmSendTypes) {
-        List<LogErrorResponseDto> errors = findLog.stream().map(LogErrorResponseDto::new).collect(Collectors.toList());
+        List<LogAlarmRequestDto> errors = findLog.stream().map(LogAlarmRequestDto::new).collect(Collectors.toList());
 
         for (AlarmSendType alarmSendType : alarmSendTypes) {
             switch (alarmSendType) {
-                case SMS -> alarmService.sendSms(errors);
-                case MAIL -> alarmService.sendMail(errors);
-                case KAKAO -> alarmService.sendKakaoApp(errors);
+                case SMS -> alarmService.sendLogBySms(errors);
+                case MAIL -> alarmService.sendLogByMail(errors);
+                case KAKAO -> alarmService.sendLogByKakaoApp(errors);
             }
         }
 

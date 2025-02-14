@@ -18,4 +18,7 @@ public interface CertService {
     List<MemberResponseDto> findMemberAll();
 
     List<SystemResponseDto> findSystemAll();
+
+    void getCertPreExpiration();
+
 }

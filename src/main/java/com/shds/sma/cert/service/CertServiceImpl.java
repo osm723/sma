@@ -3,6 +3,9 @@ package com.shds.sma.cert.service;
 import com.shds.sma.admin.dto.member.MemberResponseDto;
 import com.shds.sma.admin.dto.system.SystemResponseDto;
 import com.shds.sma.admin.service.AdminService;
+import com.shds.sma.alarm.service.AlarmService;
+import com.shds.sma.alarm.types.AlarmSendType;
+import com.shds.sma.cert.dto.CertAlarmRequestDto;
 import com.shds.sma.cert.dto.CertRequestDto;
 import com.shds.sma.cert.dto.CertResponseDto;
 import com.shds.sma.cert.entity.Cert;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -26,6 +30,8 @@ public class CertServiceImpl implements CertService {
     private final CertRepository certRepository;
 
     private final AdminService adminService;
+
+    private final AlarmService alarmService;
 
     private final ModelMapper modelMapper;
 
@@ -51,7 +57,29 @@ public class CertServiceImpl implements CertService {
         return adminService.findSystemAll();
     }
 
+    @Override
+    public void getCertPreExpiration() {
+        List<Cert> preCertExpiration = certRepository.findCertPreExpiration();
+        sendAlarm(preCertExpiration, List.of(AlarmSendType.KAKAO, AlarmSendType.MAIL, AlarmSendType.SMS));
+    }
 
+    /**
+     * 알림 발송
+     * sendAlarm
+     * @param preCertExpiration
+     * @param alarmSendTypes
+     */
+    private void sendAlarm(List<Cert> preCertExpiration, List<AlarmSendType> alarmSendTypes) {
+        List<CertAlarmRequestDto> certs = preCertExpiration.stream().map(CertAlarmRequestDto::new).collect(Collectors.toList());
+
+        for (AlarmSendType alarmSendType : alarmSendTypes) {
+            switch (alarmSendType) {
+                case SMS -> alarmService.sendCertBySms(certs);
+                case MAIL -> alarmService.sendCertByMail(certs);
+                case KAKAO -> alarmService.sendCertByKakaoApp(certs);
+            }
+        }
+    }
 
 
 }
