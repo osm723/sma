@@ -1,7 +1,6 @@
-package com.shds.sma.common.alarm.sms;
+package com.shds.sma.alarm.service.kakao;
 
 import com.shds.sma.log.dto.LogErrorResponseDto;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,11 +8,10 @@ import java.util.List;
 
 @Service
 @Transactional
-@Primary
-public class SmsServiceImpl implements SmsService {
+public class KakaoAppServiceImpl implements KakaoAppService {
 
     @Override
-    public void sendSms(List<LogErrorResponseDto> errorLogs) {
+    public void sendKakaoApp(List<LogErrorResponseDto> errorLogs) {
 
     }
 }

@@ -1,4 +1,4 @@
-package com.shds.sma.common.alarm.repository;
+package com.shds.sma.alarm.repository;
 
 public class AlarmQueryRepositoryImpl implements AlarmQueryRepository {
 }

@@ -1,4 +1,4 @@
-package com.shds.sma.common.alarm.kakao;
+package com.shds.sma.alarm.service.kakao;
 
 import com.shds.sma.log.dto.LogErrorResponseDto;
 

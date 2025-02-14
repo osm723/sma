@@ -1,4 +1,4 @@
-package com.shds.sma.common.alarm.mail;
+package com.shds.sma.alarm.service.mail;
 
 import com.shds.sma.common.exception.MessagingBizException;
 import com.shds.sma.log.dto.LogErrorResponseDto;

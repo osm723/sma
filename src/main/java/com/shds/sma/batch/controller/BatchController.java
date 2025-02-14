@@ -2,7 +2,7 @@ package com.shds.sma.batch.controller;
 
 
 import com.shds.sma.cert.service.CertService;
-import com.shds.sma.common.alarm.service.AlarmService;
+import com.shds.sma.alarm.service.AlarmService;
 import com.shds.sma.log.service.LogService;
 import com.shds.sma.ip.service.IpService;
 import lombok.RequiredArgsConstructor;
