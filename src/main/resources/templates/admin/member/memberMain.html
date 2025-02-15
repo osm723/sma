@@ -111,6 +111,7 @@
                     <th scope="col">#직위명</th>
                     <th scope="col">#직책코드</th>
                     <th scope="col">#직책명</th>
+                    <th scope="col">#메일</th>
                     <th scope="col">#재직상태</th>
                     <th scope="col">#시스템권한</th>
                     <th scope="col">#담당시스템</th>
@@ -128,6 +129,7 @@
                     <td name="gradeName" th:text="${member.getGradeName()}">직위명</td>
                     <td name="roleCode" th:text="${member.getRoleCode()}">직책코드</td>
                     <td name="roleName" th:text="${member.getRoleName()}">직책명</td>
+                    <td name="roleName" th:text="${member.getMail()}">메일</td>
                     <td name="empStatus" th:text="${member.getEmpStatus().getDescription()}">재직상태</td>
                     <td name="empStatus" th:text="${member.getEmpAuth().getDescription()}">시스템권한</td>
                     <td name="systemRole" th:text="${member.getSystem().getSystemName()}">담당시스템</td>

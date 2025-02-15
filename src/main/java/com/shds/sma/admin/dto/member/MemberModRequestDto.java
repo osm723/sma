@@ -6,10 +6,12 @@ import com.shds.sma.admin.types.EmpAuth;
 import com.shds.sma.admin.types.SystemRole;
 import com.shds.sma.admin.types.EmpStatus;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class MemberModRequestDto {
 
     private Long memberId;
@@ -31,6 +33,8 @@ public class MemberModRequestDto {
     private String roleCode;
 
     private String roleName;
+
+    private String mail;
 
     private EmpStatus empStatus;
 

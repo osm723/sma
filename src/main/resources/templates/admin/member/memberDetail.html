@@ -98,17 +98,6 @@
                         <label>
                             <button class="w-40 btn btn-primary btn-sm" onclick="formSubmit()">직원수정</button>
                         </label>
-                        <!--                        <label>-->
-                        <!--                            <button th:if="${system.getValidity() == 'Y'}"-->
-                        <!--                                    class="w-30 btn btn-primary btn-sm"-->
-                        <!--                                    th:attr="onclick=|systemDelete('${system.getSystemId()}')|">직원삭제-->
-                        <!--                            </button>-->
-
-                        <!--                            <button th:if="${system.getValidity() == 'N'}"-->
-                        <!--                                    class="w-30 btn btn-primary btn-sm"-->
-                        <!--                                    th:attr="onclick=|systemUse('${system.getSystemId()}')|">직원사용-->
-                        <!--                            </button>-->
-                        <!--                        </label>-->
                         <label>
                             <button class="w-30 btn btn-primary btn-sm" onclick="closePopup()">팝업닫기</button>
                         </label>
@@ -187,6 +176,14 @@
                         <label class="form-label">직책명 : </label>
                         <label>
                             <input type="text" name="roleName" th:field="*{roleName}" th:value="${member.getRoleName()}"/>
+                        </label>
+                    </div>
+
+                    <!-- 직책명 -->
+                    <div class="col-12">
+                        <label class="form-label">메일 : </label>
+                        <label>
+                            <input type="text" name="mail" th:field="*{mail}" th:value="${member.getMail()}"/>
                         </label>
                     </div>
 

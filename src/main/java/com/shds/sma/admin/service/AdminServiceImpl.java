@@ -235,6 +235,7 @@ public class AdminServiceImpl implements AdminService {
                 .gradeName(memberSaveRequestDto.getGradeName())
                 .roleCode(memberSaveRequestDto.getRoleCode())
                 .roleName(memberSaveRequestDto.getRoleName())
+                .mail(memberSaveRequestDto.getMail())
                 .empStatus(memberSaveRequestDto.getEmpStatus())
                 .empAuth(memberSaveRequestDto.getEmpAuth())
                 .system(findSystem)
