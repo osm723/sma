@@ -92,6 +92,7 @@ public class Member {
         this.gradeName = memberModRequestDto.getGradeName();
         this.roleCode = memberModRequestDto.getRoleCode();
         this.roleName = memberModRequestDto.getRoleName();
+        this.mail = memberModRequestDto.getMail();
         this.empStatus = memberModRequestDto.getEmpStatus();
         this.empAuth = memberModRequestDto.getEmpAuth();
         this.system = memberModRequestDto.getSystem();
@@ -103,7 +104,7 @@ public class Member {
     }
 
     @Builder
-    public Member(String name, Client client, String deptCode, String deptName, String gradeCode, String gradeName, String roleCode, String roleName, EmpStatus empStatus, EmpAuth empAuth, System system, SystemRole systemRole) {
+    public Member(String name, Client client, String deptCode, String deptName, String gradeCode, String gradeName, String roleCode, String roleName, String mail, EmpStatus empStatus, EmpAuth empAuth, System system, SystemRole systemRole) {
         this.name = name;
         this.client = client;
         this.deptCode = deptCode;
@@ -112,6 +113,7 @@ public class Member {
         this.gradeName = gradeName;
         this.roleCode = roleCode;
         this.roleName = roleName;
+        this.mail = mail;
         this.empStatus = empStatus;
         this.empAuth = empAuth;
         this.system = system;
