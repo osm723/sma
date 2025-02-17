@@ -157,7 +157,8 @@
                     <td name="member" th:text="${ip.getMember().getName()}">적용대상자</td>
                     <td name="startDate" th:text="${ip.getStartDate()}">시작일자</td>
                     <td name="endDate" th:text="${ip.getEndDate()}">종료일자</td>
-                    <td name="approvalStatus">결재상태</td>
+                    <td name="approvalStatus" th:if="${ip.getApproval() != null}" th:text="${ip.getApproval().getApprovalStatus().getDescription()}">결재상태</td>
+                    <td name="approvalStatusNull" th:if="${ip.getApproval() == null}"></td>
                     <td name="modDate" th:text="${ip.getModDate()}">등록.수정일자</td>
                     <td name="modMemberId" th:text="${ip.getModMemberId()}">등록.수정자</td>
                     <td name="validity" th:text="${ip.getValidity()}">사용유무</td>

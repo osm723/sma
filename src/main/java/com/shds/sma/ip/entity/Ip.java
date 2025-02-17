@@ -44,7 +44,7 @@ public class Ip extends BaseEntity {
     @NotBlank
     private String endIpAddr;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SYSTEM_ID")
     private System applySystem;
 
@@ -62,7 +62,7 @@ public class Ip extends BaseEntity {
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDate endDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 

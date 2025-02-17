@@ -30,7 +30,7 @@ public class Member {
     @NotBlank
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CLIENT_ID", nullable = false)
     @NotNull
     private Client client;
@@ -69,7 +69,7 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private EmpAuth empAuth;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SYSTEM_ID")
     private System system;
 
