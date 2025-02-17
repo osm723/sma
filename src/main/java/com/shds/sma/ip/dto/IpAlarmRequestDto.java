@@ -28,6 +28,8 @@ public class IpAlarmRequestDto {
 
     private String endIpAddr;
 
+    private String port;
+
     private Long applySystemId;
 
     private System applySystem;
@@ -75,6 +77,7 @@ public class IpAlarmRequestDto {
         this.ipType = ip.getIpType();
         this.startIpAddr = ip.getStartIpAddr();
         this.endIpAddr = ip.getEndIpAddr();
+        this.port = ip.getPort();
         this.applySystem = ip.getApplySystem();
         this.content = ip.getContent();
         this.siteLink = ip.getSiteLink();

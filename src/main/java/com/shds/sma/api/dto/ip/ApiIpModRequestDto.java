@@ -23,6 +23,8 @@ public class ApiIpModRequestDto  {
 
     private String endIpAddr;
 
+    private String port;
+
     private String systemName;
 
     private System system;

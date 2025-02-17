@@ -28,6 +28,10 @@ public class ApiMemberSaveRequestDto {
 
     private String roleName;
 
+    private String mail;
+
+    private String phone;
+
     private EmpStatus empStatus;
 
     private EmpAuth empAuth;

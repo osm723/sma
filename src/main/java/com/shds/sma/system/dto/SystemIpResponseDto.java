@@ -23,12 +23,15 @@ public class SystemIpResponseDto {
 
     private String endIpAddr;
 
+    private String port;
+
     private String applySystemName;
 
     @QueryProjection
-    public SystemIpResponseDto(String startIpAddr, String endIpAddr, String applySystemName) {
+    public SystemIpResponseDto(String startIpAddr, String endIpAddr, String port, String applySystemName) {
         this.startIpAddr = startIpAddr;
         this.endIpAddr = endIpAddr;
+        this.port = port;
         this.applySystemName = applySystemName;
     }
 }

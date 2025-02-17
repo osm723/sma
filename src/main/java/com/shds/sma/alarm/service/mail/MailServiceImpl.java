@@ -246,6 +246,7 @@ public class MailServiceImpl implements MailService {
                 .append("▶ [IP 타입]: ").append(ip.getIpType()).append("\n")
                 .append("▶ [출발지 IP]: ").append(ip.getStartIpAddr()).append("\n")
                 .append("▶ [도착지 IP]: ").append(ip.getEndIpAddr()).append("\n")
+                .append("▶ [포트]: ").append(ip.getPort()).append("\n")
                 .append("▶ [시작일자]: ").append(ip.getStartDate()).append("\n\n")
                 .append("▶ [종료일자]: ").append(ip.getEndDate()).append("\n\n")
                 .append("▶ [내용]: ").append(ip.getContent()).append("\n\n")

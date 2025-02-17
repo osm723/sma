@@ -32,6 +32,10 @@ public class ApiMemberModRequestDto extends MemberModRequestDto {
 
     private String roleName;
 
+    private String mail;
+
+    private String phone;
+
     private EmpStatus empStatus;
 
     private EmpAuth empAuth;

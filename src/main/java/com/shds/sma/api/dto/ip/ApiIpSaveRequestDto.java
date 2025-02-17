@@ -20,6 +20,8 @@ public class ApiIpSaveRequestDto {
 
     private String endIpAddr;
 
+    private String port;
+
     private String systemName;
 
     private String content;

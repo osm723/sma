@@ -62,6 +62,8 @@ public class ApiMemberServiceImpl implements ApiMemberService {
                 .gradeName(apiMemberSaveRequestDto.getGradeName())
                 .roleCode(apiMemberSaveRequestDto.getRoleCode())
                 .roleName(apiMemberSaveRequestDto.getRoleName())
+                .mail(apiMemberSaveRequestDto.getMail())
+                .phone(apiMemberSaveRequestDto.getPhone())
                 .empStatus(apiMemberSaveRequestDto.getEmpStatus())
                 .empAuth(apiMemberSaveRequestDto.getEmpAuth())
                 .system(findSystem)
@@ -80,23 +82,6 @@ public class ApiMemberServiceImpl implements ApiMemberService {
         String systemName = apiMemberModRequestDto.getSystemName();
         System findSystem = systemRepository.findBySystemName(systemName);
         apiMemberModRequestDto.setSystem(findSystem);
-
-        log.info("memberId={}",apiMemberModRequestDto.getMemberId());
-
-//        Member updateMember = Member.builder()
-//                .name(apiMemberModRequestDto.getName())
-//                .client(findClient)
-//                .deptCode(apiMemberModRequestDto.getDeptCode())
-//                .deptName(apiMemberModRequestDto.getDeptName())
-//                .gradeCode(apiMemberModRequestDto.getGradeCode())
-//                .gradeName(apiMemberModRequestDto.getGradeName())
-//                .roleCode(apiMemberModRequestDto.getRoleCode())
-//                .roleName(apiMemberModRequestDto.getRoleName())
-//                .empStatus(apiMemberModRequestDto.getEmpStatus())
-//                .empAuth(apiMemberModRequestDto.getEmpAuth())
-//                .system(findSystem)
-//                .systemRole(apiMemberModRequestDto.getSystemRole()).build();
-
 
         Member updatedMember = memberRepository.findById(apiMemberModRequestDto.getMemberId()).orElseThrow(() -> new BizException("존재하지 않는 직원입니다."));
         updatedMember.memberModified(apiMemberModRequestDto);
