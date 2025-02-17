@@ -53,25 +53,6 @@
                 <form class="needs-validation" novalidate action="#" id="noticeForm" th:action="@{/admin/notice}" method="get">
                     <div class="row g-3">
 
-                        <!-- 일자 조건 -->
-                        <div class="col-sm-6">
-                            <label class="form-label">일자 : </label>
-                            <label>
-                                <input type="date" name="startDate"
-                                       th:value="${cond.getStartDate()}"/>
-                            </label>
-                            <label>
-                                <b>부터 </b>
-                            </label>
-                            <label>
-                                <input type="date" name="endDate"
-                                       th:value="${cond.getEndDate()}"/>
-                            </label>
-                            <label>
-                                <b>까지</b>
-                            </label>
-                        </div>
-
                         <!-- 공지종류 조건 -->
                         <div>
                             <label class="form-label">공지종류 : </label>
@@ -105,7 +86,26 @@
                             <label class="form-label">제목 : </label>
                             <label>
                                 <input type="text" name="subject"
-                                    th:value="${cond.getSubject()}"/>
+                                       th:value="${cond.getSubject()}"/>
+                            </label>
+                        </div>
+
+                        <!-- 일자 조건 -->
+                        <div class="col-sm-6">
+                            <label class="form-label">일자 : </label>
+                            <label>
+                                <input type="date" name="startDate"
+                                       th:value="${cond.getStartDate()}"/>
+                            </label>
+                            <label>
+                                <b>부터 </b>
+                            </label>
+                            <label>
+                                <input type="date" name="endDate"
+                                       th:value="${cond.getEndDate()}"/>
+                            </label>
+                            <label>
+                                <b>까지</b>
                             </label>
                         </div>
 
@@ -145,8 +145,8 @@
                     <th scope="col">#시작일자</th>
                     <th scope="col">#종료일자</th>
                     <th scope="col">#등록.수정일자</th>
-                    <th scope="col">#사용유무</th>
                     <th scope="col">#등록.수정자</th>
+                    <th scope="col">#사용유무</th>
                     <th scope="col">#상세보기</th>
                 </tr>
                 </thead>
@@ -157,8 +157,8 @@
                     <td name="startDate" th:text="${notice.getStartDate()}">시작일자</td>
                     <td name="endDate" th:text="${notice.getEndDate()}">종료일자</td>
                     <td name="modDate" th:text="${notice.getModDate()}">등록.수정일자</td>
-                    <td name="validity" th:text="${notice.getValidity()}">사용유무</td>
                     <td name="memberId" th:text="${notice.getModMemberId()}">등록.수정자</td>
+                    <td name="validity" th:text="${notice.getValidity()}">사용유무</td>
                     <td name="noticeId">
                         <button type="button" class="w-30 btn btn-primary btn-sm"
                                 th:attr="onclick=|openPopup('${notice.getId()}')|">상세보기
@@ -167,14 +167,6 @@
                 </tr>
                 </tbody>
             </table>
-<!--            <div class="col-12" th:if="${names}">-->
-<!--                <button class="w-60 btn btn-primary btn-sm"-->
-<!--                        id="loadMoreLinkButton"-->
-<!--                        onclick="loadMore()"-->
-<!--                        th:if="${names.hasNext()}">-->
-<!--                    더보기-->
-<!--                </button>-->
-<!--            </div>-->
         </div>
     </main>
 </div>

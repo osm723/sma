@@ -7,7 +7,6 @@ import lombok.Getter;
 public enum EmpAuth {
     NORMAL("일반"),
     MANAGER("담당자"),
-    HEADER("부서장"),
     ADMIN("관리자"),
     TEMP("임시")
     ;

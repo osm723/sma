@@ -47,6 +47,15 @@
                 <form class="needs-validation" novalidate action="#" id="certForm" th:object="${cond}" th:action="@{/cert/manage}" method="get">
                     <div class="row g-3">
 
+                        <!-- 시스템명 조건 -->
+                        <div class="col-12">
+                            <label class="form-label">시스템명 : </label>
+                            <label>
+                                <input type="text" name="applySystemName"
+                                       th:value="${cond.getApplySystemName()}"/>
+                            </label>
+                        </div>
+
                         <!-- 일자 조건 -->
                         <div class="col-sm-6">
                             <label class="form-label">일자 : </label>
@@ -72,15 +81,6 @@
                             <label>
                                 <input type="text" name="certName"
                                        th:value="${cond.getCertName()}"/>
-                            </label>
-                        </div>
-
-                        <!-- 시스템명 조건 -->
-                        <div class="col-12">
-                            <label class="form-label">시스템명 : </label>
-                            <label>
-                                <input type="text" name="applySystemName"
-                                       th:value="${cond.getApplySystemName()}"/>
                             </label>
                         </div>
 
@@ -123,33 +123,31 @@
             <table class="table table-striped table-sm">
                 <thead>
                 <tr>
-                    <th scope="col">#인증서 타입</th>
-                    <th scope="col">#인증서명</th>
                     <th scope="col">#시스템명</th>
-                    <!--                    <th scope="col">#내용</th>-->
-                    <!--                    <th scope="col">#사이트링크</th>-->
+                    <th scope="col">#타입</th>
+                    <th scope="col">#인증서명</th>
+                    <th scope="col">#적용담당자</th>
                     <th scope="col">#시작일자</th>
                     <th scope="col">#종료일자</th>
-                    <th scope="col">#담당자</th>
+                    <th scope="col">#결재상태</th>
                     <th scope="col">#등록.수정일자</th>
-                    <th scope="col">#사용유무</th>
                     <th scope="col">#등록.수정자</th>
-                    <th scope="col">#결재보기</th>
+                    <th scope="col">#사용유무</th>
+                    <th scope="col">#상세보기</th>
                 </tr>
                 </thead>
                 <tbody id="certContainer">
                 <tr th:each="cert : ${certs}">
-                    <td name="ipType" th:text="${cert.getCertType()}">인증서 타입</td>
-                    <td name="startIpAddr" th:text="${cert.getCertName()}">인증서명</td>
                     <td name="system" th:text="${cert.getApplySystem().getSystemName()}">시스템명</td>
-                    <!--                    <td name="content" th:text="${cert.getContent()}">내용</td>-->
-                    <!--                    <td name="siteLink" th:text="${cert.getSiteLink()}">사이트링크</td>-->
+                    <td name="ipType" th:text="${cert.getCertType()}">타입</td>
+                    <td name="startIpAddr" th:text="${cert.getCertName()}">인증서명</td>
+                    <td name="member" th:text="${cert.getMember().getName()}">적용담당자</td>
                     <td name="startDate" th:text="${cert.getStartDate()}">시작일자</td>
                     <td name="endDate" th:text="${cert.getEndDate()}">종료일자</td>
-                    <td name="member" th:text="${cert.getMember().getName()}">적용대상자</td>
+                    <td name="approvalStatus" >결재상태</td>
                     <td name="modDate" th:text="${cert.getModDate()}">등록.수정일자</td>
-                    <td name="validity" th:text="${cert.getValidity()}">사용유무</td>
                     <td name="modMemberId" th:text="${cert.getModMemberId()}">등록.수정자</td>
+                    <td name="validity" th:text="${cert.getValidity()}">사용유무</td>
                     <td name="certId">
                         <button type="button" class="w-30 btn btn-primary btn-sm"
                                 th:attr="onclick=|openPopup('${cert.getCertId()}')|">상세보기

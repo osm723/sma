@@ -88,11 +88,11 @@
                     <th scope="col">#시스템명</th>
                     <th scope="col">#시스템 담당자</th>
                     <th scope="col">#시스템 정보</th>
-                    <th scope="col">#IP 만료전 알림 일자</th>
-                    <th scope="col">#인증서 만료전 알림 일자</th>
+                    <th scope="col">#IP 만료전 알림일자</th>
+                    <th scope="col">#인증서 만료전 알림일자</th>
                     <th scope="col">#등록.수정일자</th>
-                    <th scope="col">#사용유무</th>
                     <th scope="col">#등록.수정자</th>
+                    <th scope="col">#사용유무</th>
                     <th scope="col">#상세보기</th>
                 </tr>
                 </thead>
@@ -106,11 +106,11 @@
                         </ul>
                     </td>
                     <td name="systemInfo" th:text="${system.getSystemInfo()}">시스템 정보</td>
-                    <td name="preIpAlarm" th:text="${system.getPreIpAlarm()}">IP 만료전 알림 일자</td>
-                    <td name="preCertAlarm" th:text="${system.getPreCertAlarm()}">인증서 만료전 알림 일자</td>
+                    <td name="preIpAlarm" th:text="${system.getPreIpAlarm()}">IP 만료전 알림일자</td>
+                    <td name="preCertAlarm" th:text="${system.getPreCertAlarm()}">인증서 만료전 알림일자</td>
                     <td name="modDate" th:text="${system.getModDate()}">등록.수정일자</td>
-                    <td name="validity" th:text="${system.getValidity()}">사용유무</td>
                     <td name="memberId" th:text="${system.getModMemberId()}">등록.수정자</td>
+                    <td name="validity" th:text="${system.getValidity()}">사용유무</td>
                     <td name="systemId">
                         <button type="button" class="w-30 btn btn-primary btn-sm"
                                 th:attr="onclick=|openPopup('${system.getSystemId()}')|">상세보기

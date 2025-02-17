@@ -53,6 +53,15 @@
                 <form class="needs-validation" novalidate action="#" id="ipForm" th:object="${cond}" th:action="@{/admin/ip}" method="get">
                     <div class="row g-3">
 
+                        <!-- 시스템명 조건 -->
+                        <div class="col-12">
+                            <label class="form-label">시스템명 : </label>
+                            <label>
+                                <input type="text" name="applySystemName"
+                                       th:value="${cond.getApplySystemName()}"/>
+                            </label>
+                        </div>
+
                         <!-- 일자 조건 -->
                         <div class="col-sm-6">
                             <label class="form-label">일자 : </label>
@@ -87,15 +96,6 @@
                             <label>
                                 <input type="text" name="endIpAddr"
                                        th:value="${cond.getEndIpAddr()}"/>
-                            </label>
-                        </div>
-
-                        <!-- 시스템명 조건 -->
-                        <div class="col-12">
-                            <label class="form-label">시스템명 : </label>
-                            <label>
-                                <input type="text" name="applySystemName"
-                                       th:value="${cond.getApplySystemName()}"/>
                             </label>
                         </div>
 
@@ -138,35 +138,33 @@
             <table class="table table-striped table-sm">
                 <thead>
                 <tr>
-                    <th scope="col">#IP 타입</th>
-                    <th scope="col">#출발지 IP 주소</th>
-                    <th scope="col">#도착지 IP 주소</th>
                     <th scope="col">#시스템명</th>
-<!--                    <th scope="col">#내용</th>-->
-<!--                    <th scope="col">#사이트링크</th>-->
+                    <th scope="col">#타입</th>
+                    <th scope="col">#출발 IP 주소</th>
+                    <th scope="col">#도착 IP 주소</th>
+                    <th scope="col">#적용대상자</th>
                     <th scope="col">#시작일자</th>
                     <th scope="col">#종료일자</th>
-                    <th scope="col">#적용대상자</th>
+                    <th scope="col">#결재상태</th>
                     <th scope="col">#등록.수정일자</th>
-                    <th scope="col">#사용유무</th>
                     <th scope="col">#등록.수정자</th>
+                    <th scope="col">#사용유무</th>
                     <th scope="col">#결재보기</th>
                 </tr>
                 </thead>
                 <tbody id="ipContainer">
                 <tr th:each="ip : ${ips}">
-                    <td name="ipType" th:text="${ip.getIpType()}">IP 타입</td>
-                    <td name="startIpAddr" th:text="${ip.getStartIpAddr()}">출발지 IP 주소</td>
-                    <td name="endIpAddr" th:text="${ip.getEndIpAddr()}">도착지 IP 주소</td>
                     <td name="system" th:text="${ip.getApplySystem().getSystemName()}">시스템명</td>
-<!--                    <td name="content" th:text="${ip.getContent()}">내용</td>-->
-<!--                    <td name="siteLink" th:text="${ip.getSiteLink()}">사이트링크</td>-->
+                    <td name="ipType" th:text="${ip.getIpType()}">타입</td>
+                    <td name="startIpAddr" th:text="${ip.getStartIpAddr()}">출발 IP 주소</td>
+                    <td name="endIpAddr" th:text="${ip.getEndIpAddr()}">도착 IP 주소</td>
+                    <td name="member" th:text="${ip.getMember().getName()}">적용대상자</td>
                     <td name="startDate" th:text="${ip.getStartDate()}">시작일자</td>
                     <td name="endDate" th:text="${ip.getEndDate()}">종료일자</td>
-                    <td name="member" th:text="${ip.getMember().getName()}">적용대상자</td>
+                    <td name="approvalStatus">결재상태</td>
                     <td name="modDate" th:text="${ip.getModDate()}">등록.수정일자</td>
-                    <td name="validity" th:text="${ip.getValidity()}">사용유무</td>
                     <td name="modMemberId" th:text="${ip.getModMemberId()}">등록.수정자</td>
+                    <td name="validity" th:text="${ip.getValidity()}">사용유무</td>
                     <td name="ipId">
                         <button type="button" class="w-30 btn btn-primary btn-sm"
                                 th:attr="onclick=|openPopup('${ip.getIpId()}')|">상세보기

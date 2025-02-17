@@ -58,18 +58,18 @@
                             </label>
                         </div>
 
-                        <!-- 출발지 IP주소 조건 -->
+                        <!-- 출발 IP 주소 조건 -->
                         <div class="col-12">
-                            <label class="form-label">출발지 IP주소 : </label>
+                            <label class="form-label">출발 IP 주소 : </label>
                             <label>
                                 <input type="text" name="startIpAddr" th:field="*{startIpAddr}"
                                        th:value="${cond.getStartIpAddr}"/>
                             </label>
                         </div>
 
-                        <!-- 도착지 IP주소 조건  -->
+                        <!-- 도착 IP 주소 조건  -->
                         <div class="col-12">
-                            <label class="form-label">도착지 IP주소 : </label>
+                            <label class="form-label">도착 IP 주소 : </label>
                             <label>
                                 <input type="text" name="endIpAddr" th:field="*{endIpAddr}"
                                        th:value="${cond.getEndIpAddr}"/>
@@ -77,23 +77,23 @@
                         </div>
 
                         <!-- 일자 조건 -->
-                        <div class="col-sm-6">
-                            <label class="form-label">일자 : </label>
-                            <label>
-                                <input type="date" name="startDate" th:field="*{startDate}"
-                                       th:value="${cond.getStartDate()}"/>
-                            </label>
-                            <label>
-                                <b>부터 </b>
-                            </label>
-                            <label>
-                                <input type="date" name="endDate" th:field="*{endDate}"
-                                       th:value="${cond.getEndDate()}"/>
-                            </label>
-                            <label>
-                                <b>까지</b>
-                            </label>
-                        </div>
+<!--                        <div class="col-sm-6">-->
+<!--                            <label class="form-label">일자 : </label>-->
+<!--                            <label>-->
+<!--                                <input type="date" name="startDate" th:field="*{startDate}"-->
+<!--                                       th:value="${cond.getStartDate()}"/>-->
+<!--                            </label>-->
+<!--                            <label>-->
+<!--                                <b>부터 </b>-->
+<!--                            </label>-->
+<!--                            <label>-->
+<!--                                <input type="date" name="endDate" th:field="*{endDate}"-->
+<!--                                       th:value="${cond.getEndDate()}"/>-->
+<!--                            </label>-->
+<!--                            <label>-->
+<!--                                <b>까지</b>-->
+<!--                            </label>-->
+<!--                        </div>-->
 
                         <!-- 사용유무 조건 -->
                         <div class="col-12">
@@ -126,23 +126,15 @@
                 <thead>
                 <tr>
                     <th scope="col">#시스템명</th>
-<!--                    <th scope="col">#IP 타입</th>-->
-                    <th scope="col">#출발지 IP 주소</th>
-                    <th scope="col">#도착지 IP 주소</th>
-<!--                    <th scope="col">#시작일자</th>-->
-<!--                    <th scope="col">#종료일자</th>-->
-<!--                    <th scope="col">#적용대상자</th>-->
-<!--                    <th scope="col">#등록.수정일자</th>-->
-<!--                    <th scope="col">#사용유무</th>-->
-<!--                    <th scope="col">#등록.수정자</th>-->
-<!--                    <th scope="col">#상세보기</th>-->
+                    <th scope="col">#출발 IP 주소</th>
+                    <th scope="col">#도착 IP 주소</th>
                 </tr>
                 </thead>
                 <tbody id="ipContainer">
                 <tr th:each="ip : ${systemIps}">
                     <td name="system" th:text="${ip.getApplySystemName()}">시스템명</td>
-                    <td name="startIpAddr" th:text="${ip.getStartIpAddr()}">출발지 IP 주소</td>
-                    <td name="endIpAddr" th:text="${ip.getEndIpAddr()}">도착지 IP 주소</td>
+                    <td name="startIpAddr" th:text="${ip.getStartIpAddr()}">출발 IP 주소</td>
+                    <td name="endIpAddr" th:text="${ip.getEndIpAddr()}">도착 IP 주소</td>
                 </tr>
                 </tbody>
             </table>

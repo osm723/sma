@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public enum SystemRole {
     NORMAL("일반"),
-    MANAGER("담당자"),
+//    MANAGER("담당자"),
     HEADER("부서장"),
     DEVELOPER("개발자"),
     INFRA("인프라"),

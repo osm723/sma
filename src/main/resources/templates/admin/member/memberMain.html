@@ -53,9 +53,9 @@
                 <form class="needs-validation" novalidate action="#" id="memberForm" th:action="@{/admin/member}" method="get">
                     <div class="row g-3">
 
-                        <!-- 직원명 조건 -->
+                        <!-- 임직원명 조건 -->
                         <div class="col-12">
-                            <label class="form-label">직원명 : </label>
+                            <label class="form-label">임직원명 : </label>
                             <label>
                                 <input type="text" name="name"
                                     th:value="${cond.getName()}"/>
@@ -103,7 +103,7 @@
             <table class="table table-striped table-sm">
                 <thead>
                 <tr>
-                    <th scope="col">#직원명</th>
+                    <th scope="col">#임직원명</th>
                     <th scope="col">#그룹사명</th>
                     <th scope="col">#부서코드</th>
                     <th scope="col">#부서명</th>
@@ -113,9 +113,9 @@
                     <th scope="col">#직책명</th>
                     <th scope="col">#메일</th>
                     <th scope="col">#재직상태</th>
-                    <th scope="col">#시스템권한</th>
                     <th scope="col">#담당시스템</th>
                     <th scope="col">#담당시스템 역할</th>
+                    <th scope="col">#시스템권한</th>
                     <th scope="col">#상세보기</th>
                 </tr>
                 </thead>
@@ -131,9 +131,9 @@
                     <td name="roleName" th:text="${member.getRoleName()}">직책명</td>
                     <td name="roleName" th:text="${member.getMail()}">메일</td>
                     <td name="empStatus" th:text="${member.getEmpStatus().getDescription()}">재직상태</td>
-                    <td name="empStatus" th:text="${member.getEmpAuth().getDescription()}">시스템권한</td>
                     <td name="systemRole" th:text="${member.getSystem().getSystemName()}">담당시스템</td>
                     <td name="systemRole" th:text="${member.getSystemRole().getDescription()}">담당시스템 역할</td>
+                    <td name="empStatus" th:text="${member.getEmpAuth().getDescription()}">시스템권한</td>
                     <td name="memberId">
                         <button type="button" class="w-30 btn btn-primary btn-sm"
                                 th:attr="onclick=|openPopup('${member.getMemberId()}')|">상세보기
