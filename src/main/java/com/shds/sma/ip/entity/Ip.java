@@ -44,6 +44,11 @@ public class Ip extends BaseEntity {
     @NotBlank
     private String endIpAddr;
 
+    @Column(length = 100, columnDefinition = "VARCHAR(100) COMMENT '포트'", nullable = false)
+    @Size(max = 100)
+    @NotBlank
+    private String port;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SYSTEM_ID")
     private System applySystem;
@@ -71,10 +76,11 @@ public class Ip extends BaseEntity {
     private Approval approval;
 
     @Builder
-    public Ip(IpType ipType, String startIpAddr, String endIpAddr, System applySystem, String content, String siteLink, LocalDate startDate, LocalDate endDate, Member member, Approval approval) {
+    public Ip(IpType ipType, String startIpAddr, String endIpAddr, String port, System applySystem, String content, String siteLink, LocalDate startDate, LocalDate endDate, Member member, Approval approval) {
         this.ipType = ipType;
         this.startIpAddr = startIpAddr;
         this.endIpAddr = endIpAddr;
+        this.port = port;
         this.applySystem = applySystem;
         this.content = content;
         this.siteLink = siteLink;
@@ -88,6 +94,7 @@ public class Ip extends BaseEntity {
         this.ipType = apiIpModRequestDto.getIpType();
         this.startIpAddr = apiIpModRequestDto.getStartIpAddr();
         this.endIpAddr = apiIpModRequestDto.getEndIpAddr();
+        this.port = apiIpModRequestDto.getPort();
         this.applySystem = apiIpModRequestDto.getSystem();
         this.content = apiIpModRequestDto.getContent();
         this.siteLink = apiIpModRequestDto.getSiteLink();
@@ -101,6 +108,7 @@ public class Ip extends BaseEntity {
         this.ipType = ipModRequestDto.getIpType();
         this.startIpAddr = ipModRequestDto.getStartIpAddr();
         this.endIpAddr = ipModRequestDto.getEndIpAddr();
+        this.port = ipModRequestDto.getPort();
         this.applySystem = ipModRequestDto.getApplySystem();
         this.content = ipModRequestDto.getContent();
         this.siteLink = ipModRequestDto.getSiteLink();

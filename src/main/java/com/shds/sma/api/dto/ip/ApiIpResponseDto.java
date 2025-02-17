@@ -29,6 +29,8 @@ public class ApiIpResponseDto {
 
     private String endIpAddr;
 
+    private String port;
+
     private ApiSystem applySystem;
 
     private String content;
@@ -50,6 +52,7 @@ public class ApiIpResponseDto {
         this.ipType = ip.getIpType();
         this.startIpAddr = ip.getStartIpAddr();
         this.endIpAddr = ip.getEndIpAddr();
+        this.port = ip.getPort();
         this.applySystem = new ApiSystem(ip.getApplySystem());
         this.content = ip.getContent();
         this.siteLink = ip.getSiteLink();

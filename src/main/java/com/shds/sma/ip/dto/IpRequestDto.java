@@ -19,6 +19,8 @@ public class IpRequestDto {
 
     private String endIpAddr;
 
+    private String port;
+
     private String applySystemName;
 
     private String memberName;

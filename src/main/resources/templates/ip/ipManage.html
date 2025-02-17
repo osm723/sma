@@ -136,7 +136,7 @@
                     <th scope="col">#타입</th>
                     <th scope="col">#출발 IP 주소</th>
                     <th scope="col">#도착 IP 주소</th>
-<!--                    <th scope="col">#도착 포트</th>-->
+                    <th scope="col">#포트</th>
                     <th scope="col">#적용대상자</th>
                     <th scope="col">#시작일자</th>
                     <th scope="col">#종료일자</th>
@@ -153,7 +153,7 @@
                     <td name="ipType" th:text="${ip.getIpType()}">IP 타입</td>
                     <td name="startIpAddr" th:text="${ip.getStartIpAddr()}">출발 IP 주소</td>
                     <td name="endIpAddr" th:text="${ip.getEndIpAddr()}">도착 IP 주소</td>
-<!--                    <td name="endIpPort" >도착 포트</td>-->
+                    <td name="port" th:text="${ip.getPort()}">포트</td>
                     <td name="member" th:text="${ip.getMember().getName()}">적용대상자</td>
                     <td name="startDate" th:text="${ip.getStartDate()}">시작일자</td>
                     <td name="endDate" th:text="${ip.getEndDate()}">종료일자</td>

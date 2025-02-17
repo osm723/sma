@@ -294,6 +294,7 @@ public class AdminServiceImpl implements AdminService {
                 .ipType(ipSaveRequestDto.getIpType())
                 .startIpAddr(ipSaveRequestDto.getStartIpAddr())
                 .endIpAddr(ipSaveRequestDto.getEndIpAddr())
+                .port(ipSaveRequestDto.getPort())
                 .applySystem(findSystem)
                 .content(ipSaveRequestDto.getContent())
                 .siteLink(ipSaveRequestDto.getSiteLink())

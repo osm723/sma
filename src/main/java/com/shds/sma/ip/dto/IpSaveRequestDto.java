@@ -26,6 +26,8 @@ public class IpSaveRequestDto {
 
     private String endIpAddr;
 
+    private String port;
+
     private Long applySystemId;
 
     private System applySystem;

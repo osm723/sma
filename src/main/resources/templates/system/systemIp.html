@@ -128,6 +128,7 @@
                     <th scope="col">#시스템명</th>
                     <th scope="col">#출발 IP 주소</th>
                     <th scope="col">#도착 IP 주소</th>
+                    <th scope="col">#포트</th>
                 </tr>
                 </thead>
                 <tbody id="ipContainer">
@@ -135,6 +136,7 @@
                     <td name="system" th:text="${ip.getApplySystemName()}">시스템명</td>
                     <td name="startIpAddr" th:text="${ip.getStartIpAddr()}">출발 IP 주소</td>
                     <td name="endIpAddr" th:text="${ip.getEndIpAddr()}">도착 IP 주소</td>
+                    <td name="port" th:text="${ip.getPort()}">포트</td>
                 </tr>
                 </tbody>
             </table>

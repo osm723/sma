@@ -32,8 +32,8 @@ public class Log {
     @Size(max = 200)
     private String logCode;
 
-    @Column(length = 1000, columnDefinition = "VARCHAR(1000) COMMENT '로그내용'")
-    @Size(max = 1000)
+    @Column(length = 2000, columnDefinition = "VARCHAR(2000) COMMENT '로그내용'")
+    @Size(max = 2000)
     private String content;
 
     @Column(columnDefinition = "BIGINT COMMENT 'memberId'")

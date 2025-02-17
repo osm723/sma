@@ -56,6 +56,7 @@ public class IpQueryRepositoryImpl implements IpQueryRepository {
         QueryResults<SystemIpResponseDto> result = query.select(new QSystemIpResponseDto(
                         ip.startIpAddr,
                         ip.endIpAddr,
+                        ip.port,
                         ip.applySystem.systemName))
                 .from(ip)
                 .where(
@@ -67,7 +68,7 @@ public class IpQueryRepositoryImpl implements IpQueryRepository {
                 )
                 .limit(pageable.getPageSize())
                 .offset(pageable.getOffset())
-                .groupBy(ip.startIpAddr, ip.endIpAddr, ip.applySystem)
+                .groupBy(ip.startIpAddr, ip.endIpAddr, ip.applySystem, ip.port)
                 .fetchResults();
 
         return new PageImpl<>(result.getResults(), pageable, result.getTotal());

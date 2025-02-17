@@ -76,6 +76,7 @@ public class ApiIpServiceImpl implements ApiIpService {
                 .ipType(apiIpSaveRequestDto.getIpType())
                 .startIpAddr(apiIpSaveRequestDto.getStartIpAddr())
                 .endIpAddr(apiIpSaveRequestDto.getEndIpAddr())
+                .port(apiIpSaveRequestDto.getPort())
                 .applySystem(saveSystem)
                 .content(apiIpSaveRequestDto.getContent())
                 .siteLink(apiIpSaveRequestDto.getSiteLink())
