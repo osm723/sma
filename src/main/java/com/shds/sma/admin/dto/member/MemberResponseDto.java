@@ -38,6 +38,8 @@ public class MemberResponseDto {
 
     private String mail;
 
+    private String phone;
+
     private EmpStatus empStatus;
 
     private EmpAuth empAuth;
@@ -61,6 +63,7 @@ public class MemberResponseDto {
         this.roleCode = member.getRoleCode();
         this.roleName = member.getRoleName();
         this.mail = member.getMail();
+        this.phone = member.getPhone();
         this.empStatus = member.getEmpStatus();
         this.empAuth = member.getEmpAuth();
         this.systemId = member.getSystem().getId();
