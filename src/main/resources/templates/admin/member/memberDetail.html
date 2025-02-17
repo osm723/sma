@@ -201,20 +201,6 @@
                         </label>
                     </div>
 
-                    <!-- 권한 -->
-                    <div class="col-12">
-                        <label class="form-label">권한 : </label>
-                        <label for="empAuth">
-                            <select id="empAuth" th:field="*{empAuth}">
-                                <option th:each="auth : ${empAuths}"
-                                        th:value="${auth.name()}"
-                                        th:text="${auth.getDescription()}"
-                                        th:selected="${auth.name()} == ${member.getEmpAuth()}">
-                                </option>
-                            </select>
-                        </label>
-                    </div>
-
                     <!-- 담당 시스템 -->
                     <div class="col-12">
                         <label class="form-label">담당 시스템 : </label>
@@ -238,6 +224,20 @@
                                         th:value="${role.name()}"
                                         th:text="${role.getDescription()}"
                                         th:selected="${role.name()} == ${member.getSystemRole()}">
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <!-- 권한 -->
+                    <div class="col-12">
+                        <label class="form-label">권한 : </label>
+                        <label for="empAuth">
+                            <select id="empAuth" th:field="*{empAuth}">
+                                <option th:each="auth : ${empAuths}"
+                                        th:value="${auth.name()}"
+                                        th:text="${auth.getDescription()}"
+                                        th:selected="${auth.name()} == ${member.getEmpAuth()}">
                                 </option>
                             </select>
                         </label>

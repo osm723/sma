@@ -121,6 +121,19 @@
                         </label>
                     </div>
 
+                    <div class="col-12">
+                        <label class="form-label">적용 시스템 : </label>
+                        <label for="applySystemId">
+                            <select id="applySystemId" th:field="*{applySystemId}">
+                                <option th:each="system : ${systems}"
+                                        th:value="${system.getSystemId()}"
+                                        th:text="${system.getSystemName()}"
+                                        th:selected="${system.getSystemId()} == ${ip.getApplySystem().getId()}">
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+
                     <!-- IP타입 -->
                     <div class="col-12">
                         <label>IP타입 : </label>
@@ -135,30 +148,31 @@
                         </label>
                     </div>
 
-                    <!-- IP 출발지 주소 -->
+                    <!-- 출발 IP 주소 -->
                     <div class="col-12">
-                        <label class="form-label">IP 출발지 주소  : </label>
+                        <label class="form-label">출발 IP 주소  : </label>
                         <label>
                             <input type="text" name="startIpAddr" th:value="${ip.getStartIpAddr()}"/>
                         </label>
                     </div>
 
-                    <!-- IP 도착지 주소 -->
+                    <!-- 도착 IP 주소 -->
                     <div class="col-12">
-                        <label class="form-label">IP 도착지 주소  : </label>
+                        <label class="form-label">도착 IP 주소  : </label>
                         <label>
                             <input type="text" name="endIpAddr" th:value="${ip.getEndIpAddr()}"/>
                         </label>
                     </div>
 
+                    <!-- 적용대상자 -->
                     <div class="col-12">
-                        <label class="form-label">적용 시스템 : </label>
-                        <label for="applySystemId">
-                            <select id="applySystemId" th:field="*{applySystemId}">
-                                <option th:each="system : ${systems}"
-                                        th:value="${system.getSystemId()}"
-                                        th:text="${system.getSystemName()}"
-                                        th:selected="${system.getSystemId()} == ${ip.getApplySystem().getId()}">
+                        <label class="form-label">적용대상자 : </label>
+                        <label for="memberId">
+                            <select id="memberId" th:field="*{memberId}">
+                                <option th:each="member : ${members}"
+                                        th:value="${member.getMemberId()}"
+                                        th:text="${member.getDeptName()} + ' ' + ${member.getName()} + ' ' + ${member.getGradeName()} "
+                                        th:selected="${member.getMemberId()} == ${ip.getMember().getId()}">
                                 </option>
                             </select>
                         </label>
@@ -195,20 +209,6 @@
                         <label class="form-label">종료일자 : </label>
                         <label>
                             <input type="date" name="endDate"  th:value="${ip.getEndDate()}"/>
-                        </label>
-                    </div>
-
-                    <!-- 적용대상자 -->
-                    <div class="col-12">
-                        <label class="form-label">적용대상자 : </label>
-                        <label for="memberId">
-                            <select id="memberId" th:field="*{memberId}">
-                                <option th:each="member : ${members}"
-                                        th:value="${member.getMemberId()}"
-                                        th:text="${member.getDeptName()} + ' ' + ${member.getName()} + ' ' + ${member.getGradeName()} "
-                                        th:selected="${member.getMemberId()} == ${ip.getMember().getId()}">
-                                </option>
-                            </select>
                         </label>
                     </div>
 

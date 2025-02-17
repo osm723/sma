@@ -121,6 +121,19 @@
                         </label>
                     </div>
 
+                    <div class="col-12">
+                        <label class="form-label">적용 시스템 : </label>
+                        <label for="applySystemId">
+                            <select id="applySystemId" th:field="*{applySystemId}">
+                                <option th:each="system : ${systems}"
+                                        th:value="${system.getSystemId()}"
+                                        th:text="${system.getSystemName()}"
+                                        th:selected="${system.getSystemId()} == ${cert.getApplySystem().getId()}">
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+
                     <!-- 인증서타입 -->
                     <div class="col-12">
                         <label>인증서타입 : </label>
@@ -143,25 +156,26 @@
                         </label>
                     </div>
 
-                    <div class="col-12">
-                        <label class="form-label">적용 시스템 : </label>
-                        <label for="applySystemId">
-                            <select id="applySystemId" th:field="*{applySystemId}">
-                                <option th:each="system : ${systems}"
-                                        th:value="${system.getSystemId()}"
-                                        th:text="${system.getSystemName()}"
-                                        th:selected="${system.getSystemId()} == ${cert.getApplySystem().getId()}">
-                                </option>
-                            </select>
-                        </label>
-                    </div>
-
                     <!-- 내용 -->
                     <div class="col-12">
                         <label class="form-label">내용 : </label>
                         <label>
                             <input type="text" name="content" th:field="*{content}"
                                    th:value="${cert.getContent()}"/>
+                        </label>
+                    </div>
+
+                    <!-- 적용담당자 -->
+                    <div class="col-12">
+                        <label class="form-label">적용담당자 : </label>
+                        <label for="memberId">
+                            <select id="memberId" th:field="*{memberId}">
+                                <option th:each="member : ${members}"
+                                        th:value="${member.getMemberId()}"
+                                        th:text="${member.getDeptName()} + ' ' + ${member.getName()} + ' ' + ${member.getGradeName()}"
+                                        th:selected="${member.getMemberId()} == ${cert.getMember().getId()}">
+                                </option>
+                            </select>
                         </label>
                     </div>
 
@@ -187,20 +201,6 @@
                         <label class="form-label">종료일자 : </label>
                         <label>
                             <input type="date" name="endDate"  th:value="${cert.getEndDate()}"/>
-                        </label>
-                    </div>
-
-                    <!-- 담당자 -->
-                    <div class="col-12">
-                        <label class="form-label">담당자 : </label>
-                        <label for="memberId">
-                            <select id="memberId" th:field="*{memberId}">
-                                <option th:each="member : ${members}"
-                                        th:value="${member.getMemberId()}"
-                                        th:text="${member.getDeptName()} + ' ' + ${member.getName()} + ' ' + ${member.getGradeName()}"
-                                        th:selected="${member.getMemberId()} == ${cert.getMember().getId()}">
-                                </option>
-                            </select>
                         </label>
                     </div>
 
