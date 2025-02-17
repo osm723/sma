@@ -56,6 +56,9 @@ public class Member {
     @Column(length = 200, columnDefinition = "VARCHAR(200) COMMENT '메일주소'")
     private String mail;
 
+    @Column(length = 20, columnDefinition = "VARCHAR(20) COMMENT '핸드폰 번호'")
+    private String phone;
+
     @Column(length = 20, columnDefinition = "VARCHAR(20) COMMENT '재직상태'", nullable = false)
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -93,6 +96,7 @@ public class Member {
         this.roleCode = memberModRequestDto.getRoleCode();
         this.roleName = memberModRequestDto.getRoleName();
         this.mail = memberModRequestDto.getMail();
+        this.phone = memberModRequestDto.getPhone();
         this.empStatus = memberModRequestDto.getEmpStatus();
         this.empAuth = memberModRequestDto.getEmpAuth();
         this.system = memberModRequestDto.getSystem();
@@ -104,7 +108,7 @@ public class Member {
     }
 
     @Builder
-    public Member(String name, Client client, String deptCode, String deptName, String gradeCode, String gradeName, String roleCode, String roleName, String mail, EmpStatus empStatus, EmpAuth empAuth, System system, SystemRole systemRole) {
+    public Member(String name, Client client, String deptCode, String deptName, String gradeCode, String gradeName, String roleCode, String roleName, String mail, String phone, EmpStatus empStatus, EmpAuth empAuth, System system, SystemRole systemRole) {
         this.name = name;
         this.client = client;
         this.deptCode = deptCode;
@@ -114,6 +118,7 @@ public class Member {
         this.roleCode = roleCode;
         this.roleName = roleName;
         this.mail = mail;
+        this.phone = phone;
         this.empStatus = empStatus;
         this.empAuth = empAuth;
         this.system = system;

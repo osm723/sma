@@ -179,11 +179,19 @@
                         </label>
                     </div>
 
-                    <!-- 직책명 -->
+                    <!-- 메일 -->
                     <div class="col-12">
                         <label class="form-label">메일 : </label>
                         <label>
                             <input type="text" name="mail" th:field="*{mail}" th:value="${member.getMail()}"/>
+                        </label>
+                    </div>
+
+                    <!-- 핸드폰 -->
+                    <div class="col-12">
+                        <label class="form-label">핸드폰 : </label>
+                        <label>
+                            <input type="text" maxlength="13" name="phone" th:field="*{phone}" th:value="${member.getPhone()}"/>
                         </label>
                     </div>
 
