@@ -33,6 +33,7 @@ public class CertQueryRepositoryImpl implements CertQueryRepository {
     public Page<Cert> findCertByCond(CertRequestDto certRequestDto, Pageable pageable) {
         QueryResults<Cert> result = query.select(cert)
                 .from(cert)
+                .leftJoin(cert.approval).fetchJoin()
                 .where(
                         certNameLike(certRequestDto.getCertName())
                         ,systemNameLike(certRequestDto.getApplySystemName())
