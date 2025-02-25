@@ -2,6 +2,7 @@ package com.shds.sma.common.advice;
 
 import com.shds.sma.common.exception.BizException;
 import com.shds.sma.common.exception.ErrorResult;
+import com.shds.sma.common.exception.JobException;
 import com.shds.sma.common.exception.MessagingBizException;
 import com.shds.sma.log.dto.LogRequestDto;
 import com.shds.sma.log.service.LogService;
@@ -73,6 +74,14 @@ public class GlobalApiExHandler {
         log.error("[exceptionHandle] ex", e);
         saveLog(EX, e);
         return new ErrorResult(EX.name(), "내부 오류가 발생했습니다. 관리자에게 문의 바랍니다.", e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler
+    public ErrorResult exHandle(JobException e) {
+        log.error("[exceptionHandle] ex", e);
+        saveLog(JOB_EX, e);
+        return new ErrorResult(JOB_EX.name(), "내부 오류가 발생했습니다. 관리자에게 문의 바랍니다.", e.getMessage());
     }
 
     private void saveLog(ErrorType errorType ,Exception e) {
