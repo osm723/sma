@@ -43,6 +43,9 @@ spring:
     web:
       pageable:
         default-page-size: 20
+  batch:
+    jdbc:
+      initialize-schema: always
 logging.level:
   org.hibernate.SQL: debug
 
