@@ -9,12 +9,14 @@ import jakarta.validation.constraints.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "SMA_ALARM")
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Alarm {
 
@@ -29,7 +31,7 @@ public class Alarm {
     private AlarmSendType alarmSendType;
 
     @Column(length = 20, columnDefinition = "VARCHAR(20) COMMENT '알림 대상 (IP,인증서)'", nullable = false)
-    @NotBlank
+    @NotNull
     @Enumerated(EnumType.STRING)
     private PreAlarmTarget preAlarmTarget;
 
@@ -51,7 +53,7 @@ public class Alarm {
     private String content;
 
     @Column(length = 2, columnDefinition = "INT COMMENT '만료 전 알림 일자'")
-    @Min(1)
+    @Min(0)
     @Max(99)
     private Integer preAlarm;
 

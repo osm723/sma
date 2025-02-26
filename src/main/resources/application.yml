@@ -4,12 +4,12 @@ spring:
     port: 465
     username: spcoff@naver.com
     password: dhtjdals88@@
+    protocol: smtps
     properties:
-      mail:
-        smtp:
-          auth: true
-          ssl:
-            enable: true
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.starttls.required: true
+      mail.smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
