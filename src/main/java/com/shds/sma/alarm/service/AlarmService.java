@@ -1,6 +1,5 @@
 package com.shds.sma.alarm.service;
 
-import com.shds.sma.alarm.dto.AlarmRequestDto;
 import com.shds.sma.cert.dto.CertAlarmRequestDto;
 import com.shds.sma.ip.dto.IpAlarmRequestDto;
 import com.shds.sma.log.dto.LogAlarmRequestDto;

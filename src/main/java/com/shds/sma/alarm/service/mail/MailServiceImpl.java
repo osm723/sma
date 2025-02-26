@@ -2,8 +2,6 @@ package com.shds.sma.alarm.service.mail;
 
 import com.shds.sma.admin.entity.Member;
 import com.shds.sma.alarm.dto.AlarmRequestDto;
-import com.shds.sma.alarm.entity.Alarm;
-import com.shds.sma.alarm.service.AlarmService;
 import com.shds.sma.alarm.types.AlarmSendType;
 import com.shds.sma.alarm.types.PreAlarmTarget;
 import com.shds.sma.alarm.types.Sender;
@@ -14,7 +12,6 @@ import com.shds.sma.log.dto.LogAlarmRequestDto;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Primary;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -64,7 +61,7 @@ public class MailServiceImpl implements MailService {
                 .sender(Sender.SYSTEM)
                 .subject(MAIL_LOG_SUBJECT)
                 .content(emailContent.toString())
-                .preAlarm(0)
+                .preAlarm(1)
                 .sendDate(LocalDateTime.now())
                 .isSuccess("Y").build();
     }

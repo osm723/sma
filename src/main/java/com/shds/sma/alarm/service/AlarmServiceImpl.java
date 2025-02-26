@@ -6,9 +6,6 @@ import com.shds.sma.alarm.service.kakao.KakaoAppService;
 import com.shds.sma.alarm.service.mail.MailService;
 import com.shds.sma.alarm.service.sms.SmsService;
 import com.shds.sma.alarm.repository.AlarmRepository;
-import com.shds.sma.alarm.types.AlarmSendType;
-import com.shds.sma.alarm.types.PreAlarmTarget;
-import com.shds.sma.alarm.types.Sender;
 import com.shds.sma.cert.dto.CertAlarmRequestDto;
 import com.shds.sma.ip.dto.IpAlarmRequestDto;
 import com.shds.sma.log.dto.LogAlarmRequestDto;
@@ -17,10 +14,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.shds.sma.alarm.service.mail.MailServiceImpl.MAIL_LOG_SUBJECT;
 
 @Service
 @Transactional

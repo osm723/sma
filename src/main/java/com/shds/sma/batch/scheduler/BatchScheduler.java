@@ -32,11 +32,14 @@ public class BatchScheduler {
 
     private final Job expiredCertJob;
 
+    private final Job errorLogDailyJob;
+
     public BatchScheduler(LogService logService, IpService ipService, CertService certService, JobLauncher jobLauncher,
                           @Qualifier("importPersonJob") Job importPersonJob,
                           @Qualifier("processOrderJob") Job processOrderJob,
                           @Qualifier("expiredIpJob") Job expiredIpJob,
-                          @Qualifier("expiredCertJob") Job expiredCertJob
+                          @Qualifier("expiredCertJob") Job expiredCertJob,
+                          @Qualifier("errorLogDailyJob") Job errorLogDailyJob
                           ) {
         this.logService = logService;
         this.ipService = ipService;
@@ -46,6 +49,7 @@ public class BatchScheduler {
         this.processOrderJob = processOrderJob;
         this.expiredIpJob = expiredIpJob;
         this.expiredCertJob = expiredCertJob;
+        this.errorLogDailyJob = errorLogDailyJob;
     }
 
     /**
@@ -58,15 +62,7 @@ public class BatchScheduler {
         logService.getLogErrorForTenMin();
     }
 
-    /**
-     * 하루동안 에러로그를 조회해서 알림 발송
-     * 매일 8시 발송
-     * alarmErrorLogForDaily
-     */
-    @Scheduled(cron = "0 0 8 * * *")
-    public void alarmErrorLogForDaily() {
-        logService.getLogErrorForDaily();
-    }
+
 
     /**
      * Ip 만료도래시 알림 발송
@@ -121,6 +117,38 @@ public class BatchScheduler {
      */
 
     /**
+     * 10분마다 에러로그를 조회해서 5건 이상이면 알림 발송
+     * alarmErrorLogForTenMin
+     */
+    @Scheduled(cron = "0 */10 * * * *")
+    public void errorLogTenMinJob() {
+        logService.getLogErrorForTenMin();
+    }
+
+    /**
+     * 하루동안 에러로그를 조회해서 알림 발송
+     * 매일 8시
+     * errorLogDailyJob
+     */
+//    //AS-IS
+//    @Scheduled(cron = "0 8 0 * * *")
+//    public void alarmErrorLogForDaily() {
+//        logService.getLogErrorForDaily();
+//    }
+    @Scheduled(cron = "0 8 0 * * *")
+    public void errorLogDailyJob() {
+        try {
+            JobParameters params = new JobParametersBuilder()
+                    .addLong("errorLogDailyJob", System.currentTimeMillis())
+                    .toJobParameters();
+            JobExecution execution = jobLauncher.run(errorLogDailyJob, params);
+            log.info("errorLogDailyJob 실행 상태: {}", execution.getStatus());
+        } catch (Exception e) {
+            throw new JobException(e);
+        }
+    }
+
+    /**
      * 기간이 만료된 IP 사용유무 N 처리
      * 매일 1시 5분
      * expiredIpJob
@@ -144,7 +172,6 @@ public class BatchScheduler {
      * expiredCertJob
      */
     @Scheduled(cron = "30 0/1 * * * ?")
-    //@Scheduled(cron = "0 10 1 * * ?")
     public void expiredCertJob() {
         try {
             JobParameters params = new JobParametersBuilder()
@@ -174,7 +201,7 @@ public class BatchScheduler {
                 .addLong("orderJobTime", System.currentTimeMillis())
                 .toJobParameters();
         JobExecution execution = jobLauncher.run(processOrderJob, params);
-        log.info("processOrderJob 실행 상태: {}", execution.getStatus());
+        log.info("orderJobTime 실행 상태: {}", execution.getStatus());
     }
 
 }
