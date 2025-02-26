@@ -49,7 +49,7 @@ public class Alarm {
     @NotBlank
     private String subject;
 
-    @Column(length = 1000, columnDefinition = "VARCHAR(1000) COMMENT '알림내용'")
+    @Column(length = 4000, columnDefinition = "VARCHAR(4000) COMMENT '알림내용'")
     private String content;
 
     @Column(length = 2, columnDefinition = "INT COMMENT '만료 전 알림 일자'")

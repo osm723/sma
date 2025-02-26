@@ -35,7 +35,7 @@ public class MailServiceImpl implements MailService {
 
     public final static String LOG_MAIL_TO = "spcoff@naver.com";
 
-    public final static String MAIL_LOG_SUBJECT = "에러로그 알림 메일 입니다.";
+    public final static String MAIL_LOG_SUBJECT = "[관리시스템] 에러로그 알림 메일 입니다.";
 
     public final static String MAIL_IP_SUBJECT = "IP 만료 전 알림 메일 입니다.";
 
@@ -52,6 +52,7 @@ public class MailServiceImpl implements MailService {
         StringBuilder emailContent = new StringBuilder();
         setLogMessage(logs, emailContent);
         sendMail(MAIL_LOG_SUBJECT, emailContent.toString(), LOG_MAIL_TO, MAIL_FROM);
+        String emailContentStr = getContentStr(emailContent);
 
         // 알림 저장
         return AlarmRequestDto.builder()
@@ -60,10 +61,19 @@ public class MailServiceImpl implements MailService {
                 .system(null)
                 .sender(Sender.SYSTEM)
                 .subject(MAIL_LOG_SUBJECT)
-                .content(emailContent.toString())
+                .content(emailContentStr)
                 .preAlarm(1)
                 .sendDate(LocalDateTime.now())
                 .isSuccess("Y").build();
+    }
+
+    private static String getContentStr(StringBuilder emailContent) {
+        String emailContentStr = emailContent.toString();
+        if (emailContent.length() >= 4000) {
+            StringBuilder stringBuilder = new StringBuilder(emailContent);
+            emailContentStr = stringBuilder.delete(4000, emailContent.length()).toString();
+        }
+        return emailContentStr;
     }
 
     /**
