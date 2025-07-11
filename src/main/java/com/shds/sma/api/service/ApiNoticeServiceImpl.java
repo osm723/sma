@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.shds.sma.common.exception.ExceptionMessageConst.NOT_FOUND_NOTICE;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -30,7 +32,7 @@ public class ApiNoticeServiceImpl implements ApiNoticeService {
 
     @Override
     public ApiNoticeResponseDto getNotice(Long noticeId) {
-        Notice notice = noticeRepository.findById(noticeId).orElseThrow(() -> new BizException("존재하지 않는 공지입니다."));
+        Notice notice = noticeRepository.findById(noticeId).orElseThrow(() -> new BizException(NOT_FOUND_NOTICE));
         return modelMapper.map(notice, ApiNoticeResponseDto.class);
     }
 
@@ -42,20 +44,20 @@ public class ApiNoticeServiceImpl implements ApiNoticeService {
 
     @Override
     public ApiNoticeResponseDto updateNotice(ApiNoticeModRequestDto apiMemberModRequestDto) {
-        Notice updatedNotice = noticeRepository.findById(apiMemberModRequestDto.getNoticeId()).orElseThrow(() -> new BizException("존재하지 않는 공지입니다."));
+        Notice updatedNotice = noticeRepository.findById(apiMemberModRequestDto.getNoticeId()).orElseThrow(() -> new BizException(NOT_FOUND_NOTICE));
         updatedNotice.noticeModified(apiMemberModRequestDto);
         return modelMapper.map(updatedNotice, ApiNoticeResponseDto.class);
     }
 
     @Override
     public void deleteNotice(Long noticeId) {
-        Notice deletedNotice = noticeRepository.findById(noticeId).orElseThrow(() -> new BizException("존재하지 않는 공지입니다."));
+        Notice deletedNotice = noticeRepository.findById(noticeId).orElseThrow(() -> new BizException(NOT_FOUND_NOTICE));
         deletedNotice.setValidityN();
     }
 
     @Override
     public void reuseNotice(Long noticeId) {
-        Notice deletedNotice = noticeRepository.findById(noticeId).orElseThrow(() -> new BizException("존재하지 않는 공지입니다."));
+        Notice deletedNotice = noticeRepository.findById(noticeId).orElseThrow(() -> new BizException(NOT_FOUND_NOTICE));
         deletedNotice.setValidityY();
     }
 }

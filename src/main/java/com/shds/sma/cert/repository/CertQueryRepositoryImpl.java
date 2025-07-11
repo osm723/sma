@@ -72,7 +72,7 @@ public class CertQueryRepositoryImpl implements CertQueryRepository {
     public List<Cert> findCertPreExpiration() {
         return query.select(cert)
                 .from(cert)
-                .where(cert.endDate.goe(LocalDate.now().minusDays(Long.parseLong(cert.applySystem.preIpAlarm.toString()))))
+                .where(cert.endDate.goe(LocalDate.now().minusDays(Long.parseLong(cert.applySystem.preCertAlarm.toString()))))
                 .fetch();
     }
 

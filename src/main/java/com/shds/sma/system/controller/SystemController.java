@@ -1,4 +1,4 @@
-package com.shds.sma.system.contoller;
+package com.shds.sma.system.controller;
 
 import com.shds.sma.system.dto.SystemResponseDto;
 import com.shds.sma.system.dto.*;

@@ -19,6 +19,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.shds.sma.common.exception.ExceptionMessageConst.NOT_FOUND_MEMBER;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -41,7 +43,7 @@ public class ApiMemberServiceImpl implements ApiMemberService {
 
     @Override
     public ApiMemberResponseDto getMember(Long memberId) {
-        Member member = memberRepository.findById(memberId).orElseThrow(() -> new BizException("존재하지 않는 직원입니다."));
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new BizException(NOT_FOUND_MEMBER));
         return modelMapper.map(member, ApiMemberResponseDto.class);
     }
 
@@ -83,14 +85,14 @@ public class ApiMemberServiceImpl implements ApiMemberService {
         System findSystem = systemRepository.findBySystemName(systemName);
         apiMemberModRequestDto.setSystem(findSystem);
 
-        Member updatedMember = memberRepository.findById(apiMemberModRequestDto.getMemberId()).orElseThrow(() -> new BizException("존재하지 않는 직원입니다."));
+        Member updatedMember = memberRepository.findById(apiMemberModRequestDto.getMemberId()).orElseThrow(() -> new BizException(NOT_FOUND_MEMBER));
         updatedMember.memberModified(apiMemberModRequestDto);
         return modelMapper.map(updatedMember, ApiMemberResponseDto.class);
     }
 
     @Override
     public void deleteMember(Long memberId) {
-        Member deletedMember = memberRepository.findById(memberId).orElseThrow(() -> new BizException("존재하지 않는 직원입니다."));
+        Member deletedMember = memberRepository.findById(memberId).orElseThrow(() -> new BizException(NOT_FOUND_MEMBER));
         deletedMember.empStatusChange(EmpStatus.RETIRE);
     }
 

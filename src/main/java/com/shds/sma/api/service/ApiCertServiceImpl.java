@@ -22,6 +22,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.shds.sma.common.exception.ExceptionMessageConst.*;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -48,7 +50,7 @@ public class ApiCertServiceImpl implements ApiCertService {
 
     @Override
     public ApiCertResponseDto getCert(Long certId) {
-        Cert cert = certRepository.findById(certId).orElseThrow(() -> new BizException("존재하지 않는 인증서 입니다."));
+        Cert cert = certRepository.findById(certId).orElseThrow(() -> new BizException(NOT_FOUND_CERT));
         return modelMapper.map(cert, ApiCertResponseDto.class);
     }
 
@@ -72,7 +74,7 @@ public class ApiCertServiceImpl implements ApiCertService {
         System saveSystem = systemRepository.findBySystemName(systemName);
 
         Long memberId = apiCertSaveRequestDto.getMemberId();
-        Member saveMember = memberRepository.findById(memberId).orElseThrow(() -> new BizException("존재하지 않는 직원 입니다."));
+        Member saveMember = memberRepository.findById(memberId).orElseThrow(() -> new BizException(NOT_FOUND_MEMBER));
 
         Cert savrCert = Cert.builder()
                 .certType(apiCertSaveRequestDto.getCertType())
@@ -92,7 +94,7 @@ public class ApiCertServiceImpl implements ApiCertService {
     public ApiCertResponseDto updateCert(ApiCertModRequestDto apiCertModRequestDto) {
         Approval updateApproval;
         if (apiCertModRequestDto.getApproval() != null) {
-            updateApproval = approvalRepository.findById(apiCertModRequestDto.getApproval().getApprovalId()).orElseThrow(() -> new BizException("존재하지 않는 결재 입니다."));
+            updateApproval = approvalRepository.findById(apiCertModRequestDto.getApproval().getApprovalId()).orElseThrow(() -> new BizException(NOT_FOUND_APPROVAL));
             updateApproval.approvalApiCertModified(apiCertModRequestDto.getApproval());
             apiCertModRequestDto.setApproval(new ApiApproval(updateApproval));
         }
@@ -102,17 +104,17 @@ public class ApiCertServiceImpl implements ApiCertService {
         apiCertModRequestDto.setSystem(updateSystem);
 
         Long memberId = apiCertModRequestDto.getMemberId();
-        Member updateMember = memberRepository.findById(memberId).orElseThrow(() -> new BizException("존재하지 않는 직원 입니다."));
+        Member updateMember = memberRepository.findById(memberId).orElseThrow(() -> new BizException(NOT_FOUND_MEMBER));
         apiCertModRequestDto.setMember(updateMember);
 
-        Cert updatedCert = certRepository.findById(apiCertModRequestDto.getCertId()).orElseThrow(() -> new BizException("존재하지 않는 인증서 입니다."));
+        Cert updatedCert = certRepository.findById(apiCertModRequestDto.getCertId()).orElseThrow(() -> new BizException(NOT_FOUND_CERT));
         updatedCert.apiCertModified(apiCertModRequestDto);
 
         return modelMapper.map(updatedCert, ApiCertResponseDto.class);
     }
     @Override
     public void deleteCert(Long certId) {
-        Cert deletedCert = certRepository.findById(certId).orElseThrow(() -> new BizException("존재하지 않는 인증서 입니다."));
+        Cert deletedCert = certRepository.findById(certId).orElseThrow(() -> new BizException(NOT_FOUND_CERT));
         deletedCert.setValidityN();
     }
 }
