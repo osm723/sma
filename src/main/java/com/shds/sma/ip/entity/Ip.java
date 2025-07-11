@@ -3,14 +3,11 @@ package com.shds.sma.ip.entity;
 import com.shds.sma.api.dto.ip.ApiIpModRequestDto;
 import com.shds.sma.ip.dto.IpModRequestDto;
 import com.shds.sma.common.entity.BaseEntity;
-import com.shds.sma.admin.entity.System;
-import com.shds.sma.common.entity.Approval;
+import com.shds.sma.system.entity.System;
+import com.shds.sma.admin.entity.Approval;
 import com.shds.sma.ip.types.IpType;
 import com.shds.sma.admin.entity.Member;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,23 +27,16 @@ public class Ip extends BaseEntity {
     private Long id;
 
     @Column(length = 20, columnDefinition = "VARCHAR(20) COMMENT 'IP 타입'", nullable = false)
-    @NotNull
     @Enumerated(EnumType.STRING)
     private IpType ipType;
 
     @Column(length = 200, columnDefinition = "VARCHAR(200) COMMENT '출발지 IP 주소'", nullable = false)
-    @Size(max = 200)
-    @NotBlank
     private String startIpAddr;
 
     @Column(length = 200, columnDefinition = "VARCHAR(200) COMMENT '도착지 IP 주소'", nullable = false)
-    @Size(max = 200)
-    @NotBlank
     private String endIpAddr;
 
     @Column(length = 100, columnDefinition = "VARCHAR(100) COMMENT '포트'", nullable = false)
-    @Size(max = 100)
-    @NotBlank
     private String port;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -54,11 +44,9 @@ public class Ip extends BaseEntity {
     private System applySystem;
 
     @Column(length = 400, columnDefinition = "VARCHAR(400) COMMENT '내용'")
-    @Size(max = 400)
     private String content;
 
     @Column(length = 400, columnDefinition = "VARCHAR(400) COMMENT '사이트주소'")
-    @Size(max = 400)
     private String siteLink;
 
     @Column(columnDefinition = "TIMESTAMP")

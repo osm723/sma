@@ -1,12 +1,9 @@
 package com.shds.sma.api.dto.cert;
 
 import com.shds.sma.admin.entity.Member;
-import com.shds.sma.admin.entity.System;
+import com.shds.sma.system.entity.System;
 import com.shds.sma.api.dto.common.ApiApproval;
-import com.shds.sma.api.dto.common.ApiMember;
-import com.shds.sma.cert.dto.CertModRequestDto;
 import com.shds.sma.cert.types.CertType;
-import com.shds.sma.common.entity.Approval;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

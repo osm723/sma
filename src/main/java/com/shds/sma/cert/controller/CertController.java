@@ -1,7 +1,7 @@
 package com.shds.sma.cert.controller;
 
 import com.shds.sma.admin.dto.member.MemberResponseDto;
-import com.shds.sma.admin.dto.system.SystemResponseDto;
+import com.shds.sma.system.dto.SystemResponseDto;
 import com.shds.sma.cert.service.CertService;
 import com.shds.sma.cert.dto.CertRequestDto;
 import com.shds.sma.cert.dto.CertResponseDto;

@@ -7,17 +7,15 @@ import com.shds.sma.admin.types.EmpStatus;
 import com.shds.sma.admin.types.SystemRole;
 import com.shds.sma.cert.entity.Cert;
 import com.shds.sma.ip.entity.Ip;
+import com.shds.sma.system.entity.System;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.List;
 
 @Entity
-@Table(name = "SMA_MEBER")
+@Table(name = "SMA_MEMBER")
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
@@ -27,12 +25,10 @@ public class Member {
     private Long id;
 
     @Column(length = 40, columnDefinition = "VARCHAR(40) COMMENT '직원명'")
-    @NotBlank
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CLIENT_ID", nullable = false)
-    @NotNull
     private Client client;
 
     @Column(length = 20, columnDefinition = "VARCHAR(20) COMMENT '부서코드'")
@@ -60,21 +56,18 @@ public class Member {
     private String phone;
 
     @Column(length = 20, columnDefinition = "VARCHAR(20) COMMENT '재직상태'", nullable = false)
-    @NotNull
     @Enumerated(EnumType.STRING)
     private EmpStatus empStatus;
 
     @Column(length = 20, columnDefinition = "VARCHAR(20) COMMENT '시스템 권한'", nullable = false)
-    @NotNull
     @Enumerated(EnumType.STRING)
     private EmpAuth empAuth;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SYSTEM_ID")
-    private System system;
+    private com.shds.sma.system.entity.System system;
 
     @Column(length = 20, columnDefinition = "VARCHAR(20) COMMENT '담당 시스템 역할'", nullable = false)
-    @NotNull
     @Enumerated(EnumType.STRING)
     private SystemRole systemRole;
 

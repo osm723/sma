@@ -1,7 +1,7 @@
 package com.shds.sma.ip.service;
 
 import com.shds.sma.admin.dto.member.MemberResponseDto;
-import com.shds.sma.admin.dto.system.SystemResponseDto;
+import com.shds.sma.system.dto.SystemResponseDto;
 import com.shds.sma.ip.dto.IpRequestDto;
 import com.shds.sma.ip.dto.IpResponseDto;
 import org.springframework.data.domain.Page;

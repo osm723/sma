@@ -3,7 +3,7 @@ package com.shds.sma.api.controller;
 import com.shds.sma.api.dto.notice.ApiNoticeModRequestDto;
 import com.shds.sma.api.dto.notice.ApiNoticeResponseDto;
 import com.shds.sma.api.dto.notice.ApiNoticeSaveRequestDto;
-import com.shds.sma.api.servie.ApiNoticeService;
+import com.shds.sma.api.service.ApiNoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,7 +1,5 @@
 package com.shds.sma.api.dto.member;
 
-import com.shds.sma.admin.entity.Client;
-import com.shds.sma.admin.entity.System;
 import com.shds.sma.admin.types.EmpAuth;
 import com.shds.sma.admin.types.EmpStatus;
 import com.shds.sma.admin.types.SystemRole;

@@ -1,6 +1,6 @@
 package com.shds.sma.alarm.dto;
 
-import com.shds.sma.admin.entity.System;
+import com.shds.sma.system.entity.System;
 import com.shds.sma.alarm.types.AlarmSendType;
 import com.shds.sma.alarm.types.PreAlarmTarget;
 import com.shds.sma.alarm.types.Sender;

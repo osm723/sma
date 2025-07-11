@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  app:
+    image: "${IMAGE_TAG}"
+    container_name: myapp
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_DATASOURCE_URL:    jdbc:mysql://${DB_HOST:-your-db-host}:3306/sma
+      SPRING_DATASOURCE_USERNAME: ${DB_USER:-appuser}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-apppass}
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

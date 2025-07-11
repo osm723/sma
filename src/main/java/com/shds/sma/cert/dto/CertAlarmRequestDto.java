@@ -1,10 +1,10 @@
 package com.shds.sma.cert.dto;
 
 import com.shds.sma.admin.entity.Member;
-import com.shds.sma.admin.entity.System;
+import com.shds.sma.system.entity.System;
 import com.shds.sma.cert.entity.Cert;
 import com.shds.sma.cert.types.CertType;
-import com.shds.sma.common.entity.Approval;
+import com.shds.sma.admin.entity.Approval;
 import com.shds.sma.common.types.ApprovalStatus;
 import com.shds.sma.common.types.Degree;
 import lombok.Getter;

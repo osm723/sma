@@ -1,8 +1,5 @@
 package com.shds.sma.system.dto;
 
-import com.shds.sma.admin.entity.System;
-import com.shds.sma.ip.dto.IpRequestDto;
-import com.shds.sma.ip.types.IpType;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

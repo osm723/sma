@@ -2,8 +2,6 @@ package com.shds.sma.log.entity;
 
 import com.shds.sma.log.types.LogType;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,22 +22,18 @@ public class Log {
     private Long id;
 
     @Column(length = 20, columnDefinition = "VARCHAR(20) COMMENT '로그타입'", nullable = false)
-    @NotNull
     @Enumerated(EnumType.STRING)
     private LogType logType;
 
     @Column(length = 200, columnDefinition = "VARCHAR(200) COMMENT '로그 주내용'")
-    @Size(max = 200)
     private String logCode;
 
     @Column(length = 2000, columnDefinition = "VARCHAR(2000) COMMENT '로그내용'")
-    @Size(max = 2000)
     private String content;
 
     @Column(columnDefinition = "BIGINT COMMENT 'memberId'")
     private Long memberId;
 
     @Column(columnDefinition = "TIMESTAMP", nullable = false)
-    @NotNull
     private LocalDateTime logDate;
 }

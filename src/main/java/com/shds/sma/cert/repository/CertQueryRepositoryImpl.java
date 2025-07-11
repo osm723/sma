@@ -63,7 +63,7 @@ public class CertQueryRepositoryImpl implements CertQueryRepository {
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .groupBy(cert.certName)
+                .groupBy(cert.certName, cert.applySystem.systemName)
                 .fetchResults();
         return new PageImpl<>(result.getResults(), pageable, result.getTotal());
     }

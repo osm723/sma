@@ -1,6 +1,6 @@
 package com.shds.sma.api.dto.common;
 
-import com.shds.sma.admin.entity.System;
+import com.shds.sma.system.entity.System;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

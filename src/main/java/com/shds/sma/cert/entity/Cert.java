@@ -2,16 +2,12 @@ package com.shds.sma.cert.entity;
 
 import com.shds.sma.admin.entity.Member;
 import com.shds.sma.api.dto.cert.ApiCertModRequestDto;
-import com.shds.sma.api.dto.common.ApiApproval;
 import com.shds.sma.common.entity.BaseEntity;
-import com.shds.sma.admin.entity.System;
+import com.shds.sma.system.entity.System;
 import com.shds.sma.cert.dto.CertModRequestDto;
-import com.shds.sma.common.entity.Approval;
+import com.shds.sma.admin.entity.Approval;
 import com.shds.sma.cert.types.CertType;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,13 +27,10 @@ public class Cert extends BaseEntity {
     private Long id;
 
     @Column(length = 20, columnDefinition = "VARCHAR(20) COMMENT '인증서 타입'", nullable = false)
-    @NotNull
     @Enumerated(EnumType.STRING)
     private CertType certType;
 
     @Column(length = 200, columnDefinition = "VARCHAR(200) COMMENT '인증서명'", nullable = false)
-    @Size(max = 200)
-    @NotBlank
     private String certName;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -45,11 +38,9 @@ public class Cert extends BaseEntity {
     private System applySystem;
 
     @Column(length = 400, columnDefinition = "VARCHAR(400) COMMENT '내용'")
-    @Size(max = 400)
     private String content;
 
     @Column(length = 400, columnDefinition = "VARCHAR(400) COMMENT '사이트주소'")
-    @Size(max = 400)
     private String siteLink;
 
     @Column(columnDefinition = "TIMESTAMP")

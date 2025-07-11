@@ -1,10 +1,11 @@
 package com.shds.sma.ip.service;
 
 import com.shds.sma.admin.dto.member.MemberResponseDto;
-import com.shds.sma.admin.dto.system.SystemResponseDto;
+import com.shds.sma.system.dto.SystemResponseDto;
 import com.shds.sma.admin.service.AdminService;
 import com.shds.sma.alarm.service.AlarmService;
 import com.shds.sma.alarm.types.AlarmSendType;
+import com.shds.sma.common.exception.BizException;
 import com.shds.sma.ip.dto.IpAlarmRequestDto;
 import com.shds.sma.ip.dto.IpRequestDto;
 import com.shds.sma.ip.dto.IpResponseDto;
@@ -20,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.shds.sma.common.exception.ExceptionMessageConst.NOT_FOUND_IP;
 
 @Service
 @Transactional
@@ -43,7 +46,7 @@ public class IpServiceImpl implements IpService {
 
     @Override
     public IpResponseDto findIpById(Long ipId) {
-        Ip findIp = ipRepository.findById(ipId).get();
+        Ip findIp = ipRepository.findById(ipId).orElseThrow(() -> new BizException(NOT_FOUND_IP));
         return modelMapper.map(findIp, IpResponseDto.class);
     }
 
