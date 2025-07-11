@@ -1,6 +1,7 @@
 package com.shds.sma.api.service;
 
 import com.shds.sma.admin.entity.Member;
+import com.shds.sma.common.exception.ExceptionMessageConst;
 import com.shds.sma.system.entity.System;
 import com.shds.sma.admin.repository.approval.ApprovalRepository;
 import com.shds.sma.admin.repository.member.MemberRepository;
@@ -19,6 +20,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import static com.shds.sma.common.exception.ExceptionMessageConst.*;
 
 @Service
 @Transactional
@@ -43,7 +46,7 @@ public class ApiIpServiceImpl implements ApiIpService {
 
     @Override
     public ApiIpResponseDto getIp(Long ipId) {
-        Ip ip = ipRepository.findById(ipId).orElseThrow(() -> new BizException("존재하지 않는 IP 입니다."));
+        Ip ip = ipRepository.findById(ipId).orElseThrow(() -> new BizException(NOT_FOUND_IP));
         return modelMapper.map(ip, ApiIpResponseDto.class);
     }
 
@@ -67,7 +70,7 @@ public class ApiIpServiceImpl implements ApiIpService {
         System saveSystem = systemRepository.findBySystemName(systemName);
 
         Long memberId = apiIpSaveRequestDto.getMemberId();
-        Member saveMember = memberRepository.findById(memberId).orElseThrow(() -> new BizException("존재하지 않는 직원 입니다."));
+        Member saveMember = memberRepository.findById(memberId).orElseThrow(() -> new BizException(NOT_FOUND_MEMBER));
 
         Ip saveIp = Ip.builder()
                 .ipType(apiIpSaveRequestDto.getIpType())
@@ -90,7 +93,7 @@ public class ApiIpServiceImpl implements ApiIpService {
     public ApiIpResponseDto updateIp(ApiIpModRequestDto apiIpModRequestDto) {
         Approval updateApproval = new Approval();
         if (apiIpModRequestDto.getApproval() != null) {
-            updateApproval = approvalRepository.findById(apiIpModRequestDto.getApproval().getApprovalId()).orElseThrow(() -> new BizException("존재하지 않는 결재 입니다."));
+            updateApproval = approvalRepository.findById(apiIpModRequestDto.getApproval().getApprovalId()).orElseThrow(() -> new BizException(NOT_FOUND_APPROVAL));
             updateApproval.approvalApiIpModified(apiIpModRequestDto.getApproval());
             apiIpModRequestDto.setApproval(new ApiApproval(updateApproval));
         }
@@ -100,10 +103,10 @@ public class ApiIpServiceImpl implements ApiIpService {
         apiIpModRequestDto.setSystem(updateSystem);
 
         Long memberId = apiIpModRequestDto.getMemberId();
-        Member updateMember = memberRepository.findById(memberId).orElseThrow(() -> new BizException("존재하지 않는 직원 입니다."));
+        Member updateMember = memberRepository.findById(memberId).orElseThrow(() -> new BizException(NOT_FOUND_MEMBER));
         apiIpModRequestDto.setMember(updateMember);
 
-        Ip updatedIp = ipRepository.findById(apiIpModRequestDto.getIpId()).orElseThrow(() -> new BizException("존재하지 않는 IP 입니다."));
+        Ip updatedIp = ipRepository.findById(apiIpModRequestDto.getIpId()).orElseThrow(() -> new BizException(NOT_FOUND_IP));
         updatedIp.apiIpModified(apiIpModRequestDto);
 
         return modelMapper.map(updatedIp, ApiIpResponseDto.class);
@@ -111,7 +114,7 @@ public class ApiIpServiceImpl implements ApiIpService {
 
     @Override
     public void deleteIp(Long ipId) {
-        Ip deletedIp = ipRepository.findById(ipId).orElseThrow(() -> new BizException("존재하지 않는 IP 입니다."));
+        Ip deletedIp = ipRepository.findById(ipId).orElseThrow(() -> new BizException(NOT_FOUND_IP));
         deletedIp.setValidityN();
     }
 }
