@@ -74,10 +74,18 @@ public class IpQueryRepositoryImpl implements IpQueryRepository {
 
     @Override
     public List<Ip> findIpPreExpiration() {
-        return query.select(ip)
-                .from(ip)
-                .where(ip.endDate.goe(LocalDate.now().minusDays(Long.parseLong(ip.applySystem.preIpAlarm.toString()))))
+        List<Ip> results = query.selectFrom(ip)
+                .leftJoin(ip.applySystem).fetchJoin()
                 .fetch();
+
+        return results.stream()
+                .filter(i -> i.getApplySystem() != null && i.getApplySystem().getPreIpAlarm() != null)
+                .filter(i -> {
+                    long alarm = i.getApplySystem().getPreIpAlarm();
+                    LocalDate target = LocalDate.now().minusDays(alarm);
+                    return !i.getEndDate().isBefore(target);
+                })
+                .toList();
     }
 
     @Override
