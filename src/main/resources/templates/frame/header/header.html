@@ -1,35 +1,34 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" href="/assets/dist/css/bootstrap.css">
-<script src="/assets/dist/js/color-modes.js"></script>
-<link href="/assets/dist/css/headers.css" rel="stylesheet">
-<link href="/assets/dist/css/bootstrap.css" rel="stylesheet">
-<script src="/assets/dist/js/bootstrap.bundle.min.js"></script>
-<link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<div class="container" th:fragment="copy">
-    <header class="d-flex justify-content-center py-3">
-        <ul class="nav nav-pills">
-            <li class="nav-item"><a class="nav-link" th:href="@{/}"
-                                    th:classappend="${currentUrl == '/'} ? 'active'">Home</a></li>
-            <li class="nav-item"><a class="nav-link" th:href="@{/ip/manage}"
-                                    th:classappend="${currentUrl == '/ip/manage'} ? 'active'">Ip-Manage</a></li>
-            <li class="nav-item"><a class="nav-link" th:href="@{/cert/manage}"
-                                    th:classappend="${currentUrl == '/cert/manage'} ? 'active'">Cert-Manage</a></li>
-            <li class="nav-item"><a class="nav-link" th:href="@{/system/manage}"
-                                    th:classappend="${#strings.contains(currentUrl, '/system/manage')} ? 'active'">Systems</a></li>
-            <li class="nav-item"><a class="nav-link" th:href="@{/admin/main}"
-                                    th:classappend="${#strings.contains(currentUrl, '/admin')} ? 'active'">Admin</a></li>
-        </ul>
-        <!--        <ul class="nav nav-pills">-->
-        <!--            <li class="nav-item"><a th:href="@{/static}" class="nav-link"-->
-        <!--                                    th:classappend="${currentUrl == '/'} ? 'active'">Home</a></li>-->
-        <!--            <li class="nav-item"><a th:href="@{/stats/main}" class="nav-link"-->
-        <!--                                    th:classappend="${currentUrl.contains('/stats')} ? 'active'">Stats</a></li>-->
-        <!--            <li class="nav-item"><a th:href="@{/generation/main}" class="nav-link"-->
-        <!--                                    th:classappend="${currentUrl.contains('/generation')} ? 'active'">Generation</a></li>-->
-        <!--            <li class="nav-item"><a th:href="@{/save/main}" class="nav-link"-->
-        <!--                                    th:classappend="${currentUrl.contains('/save')} ? 'active'">Favorite</a></li>-->
-        <!--        </ul>-->
-    </header>
+<link rel="stylesheet" href="/assets/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/dist/css/layout.css">
+<div class="container-fluid" th:fragment="copy">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">IPCertManager</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/}" th:classappend="${currentUrl == '/'} ? 'active'">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/ip/manage}" th:classappend="${currentUrl == '/ip/manage'} ? 'active'">Ip-Manage</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/cert/manage}" th:classappend="${currentUrl == '/cert/manage'} ? 'active'">Cert-Manage</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/system/manage}" th:classappend="${#strings.contains(currentUrl,'/system/manage')} ? 'active'">Systems</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/main}" th:classappend="${#strings.contains(currentUrl,'/admin')} ? 'active'">Admin</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 </div>
+</html>
