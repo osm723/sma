@@ -31,13 +31,8 @@ header {
     position: fixed;
     top: 0;
     left: 0;
-    height: 70px; /* 헤더 높이 설정 */
     width: 100%;
-    background-color: transparent;
-    color: white;
-    padding: 10px;
-    z-index: 1000;  /* 다른 콘텐츠보다 위에 위치하도록 설정 */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);  /* 헤더에 그림자 추가 */
+    z-index: 1000;
 }
 
 /* 내비게이션 링크 스타일 */
@@ -57,12 +52,10 @@ header nav ul li a {
 
 /* 본문 영역 (스크롤 가능) */
 main {
-    margin-top: 70px; /* 헤더 높이만큼 본문 상단에 여백 추가 */
-    padding-top: 10px; /* 헤더 높이만큼 여백을 추가 */
-    padding-bottom: 50px; /* 푸터 높이만큼 여백을 추가 */
-    margin-bottom: 50px; /* 푸터 높이만큼 여백을 추가 */
+    padding-top: 80px;  /* 고정 헤더 높이만큼 여백 */
+    padding-bottom: 60px; /* 푸터 공간 확보 */
+    min-height: calc(100vh - 140px); /* 화면 높이에서 헤더와 푸터를 제외한 영역 */
     overflow-y: auto;
-    height: calc(100vh - 120px); /* 화면 높이에서 헤더와 푸터를 제외한 나머지 공간 */
 }
 
 /* 푸터 고정 */
