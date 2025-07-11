@@ -3,7 +3,7 @@ package com.shds.sma.api.controller;
 import com.shds.sma.api.dto.member.ApiMemberModRequestDto;
 import com.shds.sma.api.dto.member.ApiMemberSaveRequestDto;
 import com.shds.sma.api.dto.member.ApiMemberResponseDto;
-import com.shds.sma.api.servie.ApiMemberService;
+import com.shds.sma.api.service.ApiMemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

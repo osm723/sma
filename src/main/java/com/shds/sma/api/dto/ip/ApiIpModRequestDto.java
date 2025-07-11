@@ -1,10 +1,8 @@
 package com.shds.sma.api.dto.ip;
 
 import com.shds.sma.admin.entity.Member;
-import com.shds.sma.admin.entity.System;
+import com.shds.sma.system.entity.System;
 import com.shds.sma.api.dto.common.ApiApproval;
-import com.shds.sma.common.entity.Approval;
-import com.shds.sma.ip.dto.IpModRequestDto;
 import com.shds.sma.ip.types.IpType;
 import lombok.Getter;
 import lombok.Setter;

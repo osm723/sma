@@ -1,11 +1,8 @@
 package com.shds.sma.api.dto.ip;
 
-import com.shds.sma.admin.entity.Member;
-import com.shds.sma.admin.entity.System;
 import com.shds.sma.api.dto.common.ApiApproval;
 import com.shds.sma.api.dto.common.ApiMember;
 import com.shds.sma.api.dto.common.ApiSystem;
-import com.shds.sma.common.entity.Approval;
 import com.shds.sma.ip.entity.Ip;
 import com.shds.sma.ip.types.IpType;
 import lombok.AccessLevel;
@@ -14,7 +11,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter

@@ -1,8 +1,5 @@
 package com.shds.sma.system.dto;
 
-import com.shds.sma.admin.entity.System;
-import com.shds.sma.cert.dto.CertRequestDto;
-import com.shds.sma.cert.types.CertType;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

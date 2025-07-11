@@ -109,11 +109,6 @@ public class BatchScheduler {
      * 매일 오전 08시
      * errorLogDailyJob
      */
-//    //AS-IS
-//    @Scheduled(cron = "0 8 0 * * *")
-//    public void alarmErrorLogForDaily() {
-//        logService.getLogErrorForDaily();
-//    }
     @Scheduled(cron = "0 0 8 * * *")
     public void errorLogDailyJob() {
         try {
@@ -132,11 +127,6 @@ public class BatchScheduler {
      * 10분마다
      * errorLogMinuteJob
      */
-//    @Scheduled(cron = "0 */10 * * * *")
-//    //@Scheduled(fixedRate = 600000)
-//    public void alarmErrorLogForTenMin() {
-//        logService.getLogErrorForTenMin();
-//    }
     @Scheduled(cron = "0 */10 * * * *")
     public void errorLogMinuteJob() {
         try {

@@ -1,9 +1,8 @@
 package com.shds.sma.api.dto.common;
 
-import com.shds.sma.common.entity.Approval;
+import com.shds.sma.admin.entity.Approval;
 import com.shds.sma.common.types.ApprovalStatus;
 import com.shds.sma.common.types.Degree;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

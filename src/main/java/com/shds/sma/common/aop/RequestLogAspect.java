@@ -18,7 +18,7 @@ public class RequestLogAspect {
         log.info("======== API 요청 ======== {} : {}",signature.getDeclaringTypeName(), signature.getName());
     }
 
-    @Before("execution(* com.shds.sma.batch.controller..*(..))")
+    @Before("execution(* com.shds.sma.batch.scheduler..*(..))")
     public void addBatchLog(JoinPoint joinPoint) {
         Signature signature = joinPoint.getSignature();
         log.info("======== Batch 요청 ======== {} : {}",signature.getDeclaringTypeName(), signature.getName());

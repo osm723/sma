@@ -1,7 +1,7 @@
 package com.shds.sma.cert.service;
 
 import com.shds.sma.admin.dto.member.MemberResponseDto;
-import com.shds.sma.admin.dto.system.SystemResponseDto;
+import com.shds.sma.system.dto.SystemResponseDto;
 import com.shds.sma.admin.service.AdminService;
 import com.shds.sma.alarm.service.AlarmService;
 import com.shds.sma.alarm.types.AlarmSendType;
@@ -10,7 +10,7 @@ import com.shds.sma.cert.dto.CertRequestDto;
 import com.shds.sma.cert.dto.CertResponseDto;
 import com.shds.sma.cert.entity.Cert;
 import com.shds.sma.cert.repository.CertRepository;
-import com.shds.sma.ip.entity.Ip;
+import com.shds.sma.common.exception.BizException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -21,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.shds.sma.common.exception.ExceptionMessageConst.NOT_FOUND_CERT;
 
 @Service
 @Transactional
@@ -44,7 +46,7 @@ public class CertServiceImpl implements CertService {
 
     @Override
     public CertResponseDto findCertById(Long certId) {
-        Cert findCert = certRepository.findById(certId).get();
+        Cert findCert = certRepository.findById(certId).orElseThrow(() -> new BizException(NOT_FOUND_CERT));
         return modelMapper.map(findCert, CertResponseDto.class);
     }
 

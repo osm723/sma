@@ -1,6 +1,6 @@
 package com.shds.sma.system.contoller;
 
-import com.shds.sma.admin.dto.system.SystemResponseDto;
+import com.shds.sma.system.dto.SystemResponseDto;
 import com.shds.sma.system.dto.*;
 import com.shds.sma.system.service.SystemService;
 import lombok.RequiredArgsConstructor;

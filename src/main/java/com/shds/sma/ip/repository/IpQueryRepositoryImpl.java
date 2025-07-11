@@ -3,7 +3,6 @@ package com.shds.sma.ip.repository;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.shds.sma.common.entity.QApproval;
 import com.shds.sma.ip.dto.IpRequestDto;
 import com.shds.sma.ip.entity.Ip;
 import com.shds.sma.system.dto.QSystemIpResponseDto;
@@ -19,7 +18,6 @@ import org.springframework.util.StringUtils;
 import java.time.LocalDate;
 import java.util.List;
 
-import static com.shds.sma.common.entity.QApproval.approval;
 import static com.shds.sma.ip.entity.QIp.ip;
 
 @Repository

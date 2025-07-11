@@ -1,10 +1,10 @@
 package com.shds.sma.system.service;
 
-import com.shds.sma.admin.dto.system.SystemResponseDto;
+import com.shds.sma.system.dto.SystemResponseDto;
 import com.shds.sma.admin.entity.Member;
-import com.shds.sma.admin.entity.System;
-import com.shds.sma.admin.repositroy.member.MemberRepository;
-import com.shds.sma.admin.repositroy.system.SystemRepository;
+import com.shds.sma.system.entity.System;
+import com.shds.sma.admin.repository.member.MemberRepository;
+import com.shds.sma.system.repository.SystemRepository;
 import com.shds.sma.cert.repository.CertRepository;
 import com.shds.sma.ip.repository.IpRepository;
 import com.shds.sma.system.dto.*;

@@ -3,7 +3,7 @@ package com.shds.sma.api.controller;
 import com.shds.sma.api.dto.cert.ApiCertModRequestDto;
 import com.shds.sma.api.dto.cert.ApiCertResponseDto;
 import com.shds.sma.api.dto.cert.ApiCertSaveRequestDto;
-import com.shds.sma.api.servie.ApiCertService;
+import com.shds.sma.api.service.ApiCertService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
 public class ApiCertController {
-
+    
     private final ApiCertService apiCertService;
 
     @GetMapping("/certs")
@@ -31,7 +31,7 @@ public class ApiCertController {
     }
 
     @PostMapping("/cert")
-    public  ResponseEntity<ApiCertResponseDto> createCert(@RequestBody ApiCertSaveRequestDto apiCertSaveRequestDto) {
+    public ResponseEntity<ApiCertResponseDto> createCert(@RequestBody ApiCertSaveRequestDto apiCertSaveRequestDto) {
         ApiCertResponseDto createdCert = apiCertService.createCert(apiCertSaveRequestDto);
         return new ResponseEntity<>(createdCert, HttpStatus.OK);
     }
