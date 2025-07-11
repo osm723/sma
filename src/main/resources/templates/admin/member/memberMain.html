@@ -4,13 +4,8 @@
     <meta charset="UTF-8">
     <title>IP 인증서 관리 프로그램</title>
 </head>
-<link rel="stylesheet" href="/assets/dist/css/bootstrap.css">
-<script src="/assets/dist/js/color-modes.js"></script>
-<link href="/assets/dist/css/headers.css" rel="stylesheet">
-<link href="/assets/dist/css/bootstrap.css" rel="stylesheet">
-<script src="/assets/dist/js/bootstrap.bundle.min.js"></script>
-<link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="/assets/dist/css/layout.css" rel="stylesheet">
+<link rel="stylesheet" href="/assets/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/dist/css/layout.css">
 <body>
 <div th:insert="~{frame/header/header :: copy}"></div>
 <script>
@@ -36,20 +31,21 @@
 <div class="container">
     <main>
 
-        <div class="py-1 text-center">
-            <h2>관리자 화면</h2>
-            <p class="lead">관리자가 직원정보를 관리합니다.</p>
-        </div>
-
-        <div class="d-flex justify-content-center align-items-center vh-40">
-            <label>
-                <a th:href="@{/admin/main}" methods="get" class="nav-link">뒤로가기</a>
-            </label>
+        <div class="p-5 mb-4 bg-light rounded-3 mt-3">
+            <div class="container-fluid py-5 text-center">
+                <h1 class="display-6 fw-bold">[관리자] 사용자 관리 화면</h1>
+                <p class="fs-5">관리자가 사용자 정보를 관리합니다.</p>
+                <span>
+                    <a th:href="@{/admin/member/save}" class="nav-link" methods="get">사용자 등록</a>
+                </span>
+                <span>
+                    <a th:href="@{/admin/main}" methods="get" class="nav-link">뒤로가기</a>
+                </span>
+            </div>
         </div>
 
         <div class="row g-5">
             <div class="col-md-7 col-lg-8">
-                <h4 class="mb-3">직원 조회</h4>
                 <form class="needs-validation" novalidate action="#" id="memberForm" th:action="@{/admin/member}" method="get">
                     <div class="row g-3">
 
