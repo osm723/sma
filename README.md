@@ -19,3 +19,13 @@ SMA(System Management Application)는 IP 주소, 인증서를 관리하는 Sprin
 - IP 만료 예정 알림 – `0 0 10,16 * * *`
 - 인증서 만료 예정 알림 – `0 10 10,16 * * *`
 - IP 또는 인증서 만료 하루 전 관리자 알림 – `0 0 8,12,16,18 * * *`
+
+## 구조
+- admin
+- alarm
+- api
+- batch
+- cert
+- ip
+- log
+- system

@@ -70,10 +70,18 @@ public class CertQueryRepositoryImpl implements CertQueryRepository {
 
     @Override
     public List<Cert> findCertPreExpiration() {
-        return query.select(cert)
-                .from(cert)
-                .where(cert.endDate.goe(LocalDate.now().minusDays(Long.parseLong(cert.applySystem.preCertAlarm.toString()))))
+        List<Cert> results = query.selectFrom(cert)
+                .leftJoin(cert.applySystem).fetchJoin()
                 .fetch();
+
+        return results.stream()
+                .filter(c -> c.getApplySystem() != null && c.getApplySystem().getPreCertAlarm() != null)
+                .filter(c -> {
+                    long alarm = c.getApplySystem().getPreCertAlarm();
+                    LocalDate target = LocalDate.now().minusDays(alarm);
+                    return !c.getEndDate().isBefore(target);
+                })
+                .toList();
     }
 
     @Override
