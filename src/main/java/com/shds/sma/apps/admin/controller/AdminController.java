@@ -43,11 +43,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.shds.sma.common.constants.Constants.*;
+
 @Controller
 @RequestMapping("/admin")
 @RequiredArgsConstructor
 @Slf4j
 public class AdminController {
+
 
     private final AdminService adminService;
 
@@ -70,7 +73,6 @@ public class AdminController {
      */
     @GetMapping("/notice")
     public String notice(NoticeCondRequestDto noticeCondRequestDto, Pageable pageable, Model model) {
-        //Page<NoticeResponseDto> notices = adminService.findNoticeAll(pageable);
         Page<NoticeResponseDto> notices = adminService.findNoticeByCond(noticeCondRequestDto, pageable);
         model.addAttribute("notices", notices);
         model.addAttribute("cond", noticeCondRequestDto);
@@ -134,7 +136,7 @@ public class AdminController {
     @PostMapping("/notice/remove")
     public ResponseEntity<String> noticeRemove(@RequestParam Long noticeId) {
         adminService.removeNotice(noticeId);
-        return ResponseEntity.ok("공지를 삭제 완료했습니다.");
+        return ResponseEntity.ok(NOTICE_DELETE_SUCCESS);
     }
 
     /**
@@ -146,7 +148,7 @@ public class AdminController {
     @PostMapping("/notice/use")
     public ResponseEntity<String> noticeUse(@RequestParam Long noticeId) {
         adminService.useNotice(noticeId);
-        return ResponseEntity.ok("공지를 사용 완료했습니다.");
+        return ResponseEntity.ok(NOTICE_USE_SUCCESS);
     }
 
     /**
@@ -188,7 +190,6 @@ public class AdminController {
         List<MemberResponseDto> members = adminService.findMemberAll();
         model.addAttribute("system", new SystemSaveRequestDto());
         model.addAttribute("members", members);
-
         return "/admin/system/systemSaveForm";
     }
 
@@ -225,7 +226,7 @@ public class AdminController {
     @PostMapping("/system/remove")
     public ResponseEntity<String> systemRemove(@RequestParam Long systemId) {
         adminService.removeSystem(systemId);
-        return ResponseEntity.ok("시스템 삭제 완료했습니다.");
+        return ResponseEntity.ok(SYSTEM_DELETE_SUCCESS);
     }
 
     /**
@@ -237,7 +238,7 @@ public class AdminController {
     @PostMapping("/system/use")
     public ResponseEntity<String> systemUse(@RequestParam Long systemId) {
         adminService.useSystem(systemId);
-        return ResponseEntity.ok("시스템 사용 완료했습니다.");
+        return ResponseEntity.ok(SYSTEM_USE_SUCCESS);
     }
 
     /**
@@ -312,7 +313,7 @@ public class AdminController {
     @PostMapping("/client/remove")
     public ResponseEntity<String> clientRemove(@RequestParam Long clientId) {
         adminService.removeClient(clientId);
-        return ResponseEntity.ok("그룹사를 미사용처리 완료했습니다.");
+        return ResponseEntity.ok(CLIENT_UNUSE_SUCCESS);
     }
 
     /**
@@ -324,7 +325,7 @@ public class AdminController {
     @PostMapping("/client/use")
     public ResponseEntity<String> clientUse(@RequestParam Long clientId) {
         adminService.useClient(clientId);
-        return ResponseEntity.ok("그룹사를 사용처리 완료했습니다.");
+        return ResponseEntity.ok(CLIENT_USE_SUCCESS);
     }
 
     /**
@@ -404,7 +405,7 @@ public class AdminController {
     @PostMapping("/member/remove")
     public ResponseEntity<String> memberChangeStatus(@RequestParam Long memberId, EmpStatus empStatus) {
         adminService.memberChangeStatus(memberId, empStatus);
-        return ResponseEntity.ok("직원 재직정보를 변경 완료했습니다.");
+        return ResponseEntity.ok(MEMBER_UPDATE_SUCCESS);
     }
 
     /**
@@ -486,7 +487,7 @@ public class AdminController {
     @PostMapping("/ip/remove")
     public ResponseEntity<String> ipRemove(@RequestParam Long ipId) {
         adminService.removeIp(ipId);
-        return ResponseEntity.ok("IP를 미사용처리 완료했습니다.");
+        return ResponseEntity.ok(IP_UNUSE_SUCCESS);
     }
 
     /**
@@ -498,7 +499,7 @@ public class AdminController {
     @PostMapping("/ip/use")
     public ResponseEntity<String> ipUse(@RequestParam Long ipId) {
         adminService.useIp(ipId);
-        return ResponseEntity.ok("IP를 사용처리 완료했습니다.");
+        return ResponseEntity.ok(IP_USE_SUCCESS);
     }
 
     /**
@@ -580,7 +581,7 @@ public class AdminController {
     @PostMapping("/cert/remove")
     public ResponseEntity<String> certRemove(@RequestParam Long certId) {
         adminService.removeCert(certId);
-        return ResponseEntity.ok("인증서를 미사용처리 완료했습니다.");
+        return ResponseEntity.ok(CERT_UNUSE_SUCCESS);
     }
 
     /**
@@ -592,7 +593,7 @@ public class AdminController {
     @PostMapping("/cert/use")
     public ResponseEntity<String> certUse(@RequestParam Long certId) {
         adminService.useCert(certId);
-        return ResponseEntity.ok("인증서를 사용처리 완료했습니다.");
+        return ResponseEntity.ok(CERT_USE_SUCCESS);
     }
 
     /**

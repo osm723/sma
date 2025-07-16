@@ -2,6 +2,7 @@ package com.shds.sma.apps.admin.repository.client;
 
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.shds.sma.apps.admin.dto.client.ClientRequestDto;
 import com.shds.sma.apps.admin.entity.Client;
@@ -43,11 +44,29 @@ public class ClientQueryRepositoryImpl implements ClientQueryRepository {
     }
 
     private static BooleanExpression clientCodeEq(String clientCode) {
-        return StringUtils.hasText(clientCode) ? client.clientCode.eq(clientCode) : null;
+        if (!StringUtils.hasText(clientCode)) {
+            return null;
+        }
+
+        return injectionCheck(client.clientCode, clientCode);
     }
 
     private static BooleanExpression clientNameLike(String clientName) {
-        return StringUtils.hasText(clientName) ? client.clientName.like(clientName) : null;
+        if (!StringUtils.hasText(clientName)) {
+            return null;
+        }
+
+        return injectionCheck(client.clientName, clientName);
+    }
+
+    /**
+     * SQL Injection 패턴 검증
+     * @param inputValue
+     * @return
+     */
+    private static BooleanExpression injectionCheck(StringPath dataColumn, String inputValue) {
+        String sanitized = inputValue.replaceAll("[';\"\\-\\-]", "");
+        return dataColumn.like("%" + sanitized + "%");
     }
 }
 
