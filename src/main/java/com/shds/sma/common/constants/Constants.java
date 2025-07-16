@@ -2,6 +2,9 @@ package com.shds.sma.common.constants;
 
 public class Constants {
 
+    private Constants() {
+    }
+
     public static final String VALIDITY_Y = "Y";
     public static final String VALIDITY_N = "N";
     public static final int DEFAULT_PAGE_SIZE = 10;

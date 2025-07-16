@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class RequestLogAspect {
 
-    @Before("execution(* com.shds.sma.api.controller..*(..))")
+    @Before("execution(* com.shds.sma.external.api.controller..*(..))")
     public void addApiLog(JoinPoint joinPoint) {
         Signature signature = joinPoint.getSignature();
         log.info("======== API 요청 ======== {} : {}",signature.getDeclaringTypeName(), signature.getName());
