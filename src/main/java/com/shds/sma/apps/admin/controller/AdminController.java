@@ -4,6 +4,7 @@ import com.shds.sma.apps.admin.dto.client.ClientModRequestDto;
 import com.shds.sma.apps.admin.dto.client.ClientRequestDto;
 import com.shds.sma.apps.admin.dto.client.ClientResponseDto;
 import com.shds.sma.apps.admin.dto.client.ClientSaveRequestDto;
+import com.shds.sma.apps.admin.helper.AdminModelHelper;
 import com.shds.sma.apps.cert.dto.CertModRequestDto;
 import com.shds.sma.apps.cert.dto.CertSaveRequestDto;
 import com.shds.sma.common.types.ApprovalStatus;
@@ -51,8 +52,9 @@ import static com.shds.sma.common.constants.Constants.*;
 @Slf4j
 public class AdminController {
 
-
     private final AdminService adminService;
+
+    private final AdminModelHelper adminModelHelper;
 
     /**
      * 관리자 메인화면
@@ -355,7 +357,7 @@ public class AdminController {
     public String memberDetail(Long memberId, Model model) {
         MemberResponseDto member = adminService.findMemberById(memberId);
         model.addAttribute("member", member);
-        setMemberModel(model);
+        adminModelHelper.setMemberModel(model);
         return "/admin/member/memberDetail";
     }
 
@@ -367,7 +369,7 @@ public class AdminController {
     @GetMapping("/member/save")
     public String memberSaveForm(Model model) {
         model.addAttribute("member", new MemberSaveRequestDto());
-        setMemberModel(model);
+        adminModelHelper.setMemberModel(model);
         return "/admin/member/memberSaveForm";
     }
 
@@ -438,7 +440,7 @@ public class AdminController {
             ip.setApproverId(ip.getApproval().getApproverId());
         }
         model.addAttribute("ip", ip);
-        setIpModel(model);
+        adminModelHelper.setIpModel(model);
         return "/admin/ip/ipDetail";
     }
 
@@ -450,7 +452,7 @@ public class AdminController {
     @GetMapping("/ip/save")
     public String ipSaveForm(Model model) {
         model.addAttribute("ip", new IpSaveRequestDto());
-        setIpModel(model);
+        adminModelHelper.setIpModel(model);
         return "/admin/ip/ipSaveForm";
     }
 
@@ -532,7 +534,7 @@ public class AdminController {
             cert.setDrafterId(cert.getApproval().getDrafterId());
             cert.setApproverId(cert.getApproval().getApproverId());
         }
-        setCertModel(model);
+        adminModelHelper.setCertModel(model);
         return "/admin/cert/certDetail";
     }
 
@@ -544,7 +546,7 @@ public class AdminController {
     @GetMapping("/cert/save")
     public String certSaveForm(Model model) {
         model.addAttribute("cert", new CertSaveRequestDto());
-        setCertModel(model);
+        adminModelHelper.setCertModel(model);
         return "/admin/cert/certSaveForm";
     }
 
@@ -594,60 +596,6 @@ public class AdminController {
     public ResponseEntity<String> certUse(@RequestParam Long certId) {
         adminService.useCert(certId);
         return ResponseEntity.ok(CERT_USE_SUCCESS);
-    }
-
-    /**
-     * 직원 화면 model 설정
-     * setMemberModel
-     * @param model
-     */
-    private void setMemberModel(Model model) {
-        model.addAttribute("empStatuses", List.of(EmpStatus.values()));
-        model.addAttribute("empAuths", List.of(EmpAuth.values()));
-        model.addAttribute("systemRoles", List.of(SystemRole.values()));
-
-        List<SystemResponseDto> systems = adminService.findSystemAll();
-        model.addAttribute("systems", systems);
-
-        List<ClientResponseDto> clients = adminService.findClientAll();
-        model.addAttribute("clients", clients);
-    }
-
-    /**
-     * IP 화면 model 설정
-     * setMemberModel
-     * @param model
-     */
-    private void setIpModel(Model model) {
-        model.addAttribute("ipTypes", List.of(IpType.values()));
-        model.addAttribute("degrees", List.of(Degree.values()));
-        model.addAttribute("approvalStatuses", List.of(ApprovalStatus.values()));
-        setMemberAndSystemModel(model);
-    }
-
-    /**
-     * 인증서 화면 model 설정
-     * setMemberModel
-     * @param model
-     */
-    private void setCertModel(Model model) {
-        model.addAttribute("certTypes", List.of(CertType.values()));
-        model.addAttribute("degrees", List.of(Degree.values()));
-        model.addAttribute("approvalStatuses", List.of(ApprovalStatus.values()));
-        setMemberAndSystemModel(model);
-    }
-
-    /**
-     * 직원,시스템 model 설정
-     * setMemberAndSystemModel
-     * @param model
-     */
-    private void setMemberAndSystemModel(Model model) {
-        List<MemberResponseDto> members = adminService.findMemberAll();
-        model.addAttribute("members", members);
-
-        List<SystemResponseDto> systems = adminService.findSystemAll();
-        model.addAttribute("systems", systems);
     }
 
 }
