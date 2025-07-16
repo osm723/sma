@@ -53,18 +53,6 @@ public class IpServiceImpl implements IpService {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<MemberResponseDto> findMemberAll() {
-        return adminService.findMemberAll();
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<SystemResponseDto> findSystemAll() {
-        return adminService.findSystemAll();
-    }
-
-    @Override
     public void getIpPreExpiration() {
         List<Ip> preIpExpiration = ipRepository.findIpPreExpiration();
         for (Ip ip : preIpExpiration) {

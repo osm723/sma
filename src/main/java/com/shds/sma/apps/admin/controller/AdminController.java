@@ -4,11 +4,9 @@ import com.shds.sma.apps.admin.dto.client.ClientModRequestDto;
 import com.shds.sma.apps.admin.dto.client.ClientRequestDto;
 import com.shds.sma.apps.admin.dto.client.ClientResponseDto;
 import com.shds.sma.apps.admin.dto.client.ClientSaveRequestDto;
-import com.shds.sma.apps.admin.helper.AdminModelHelper;
+import com.shds.sma.common.helper.ModelHelper;
 import com.shds.sma.apps.cert.dto.CertModRequestDto;
 import com.shds.sma.apps.cert.dto.CertSaveRequestDto;
-import com.shds.sma.common.types.ApprovalStatus;
-import com.shds.sma.common.types.Degree;
 import com.shds.sma.apps.ip.dto.IpModRequestDto;
 import com.shds.sma.apps.admin.dto.member.MemberModRequestDto;
 import com.shds.sma.apps.admin.dto.member.MemberRequestDto;
@@ -22,8 +20,6 @@ import com.shds.sma.apps.system.dto.SystemModRequestDto;
 import com.shds.sma.apps.system.dto.SystemRequestDto;
 import com.shds.sma.apps.system.dto.SystemResponseDto;
 import com.shds.sma.apps.system.dto.SystemSaveRequestDto;
-import com.shds.sma.apps.admin.types.EmpAuth;
-import com.shds.sma.apps.admin.types.SystemRole;
 import com.shds.sma.apps.admin.types.EmpStatus;
 import com.shds.sma.apps.admin.service.AdminService;
 import com.shds.sma.apps.cert.dto.CertRequestDto;
@@ -31,8 +27,6 @@ import com.shds.sma.apps.cert.dto.CertResponseDto;
 import com.shds.sma.apps.ip.dto.IpRequestDto;
 import com.shds.sma.apps.ip.dto.IpResponseDto;
 import com.shds.sma.apps.ip.dto.IpSaveRequestDto;
-import com.shds.sma.apps.cert.types.CertType;
-import com.shds.sma.apps.ip.types.IpType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -54,7 +48,7 @@ public class AdminController {
 
     private final AdminService adminService;
 
-    private final AdminModelHelper adminModelHelper;
+    private final ModelHelper modelHelper;
 
     /**
      * 관리자 메인화면
@@ -357,7 +351,7 @@ public class AdminController {
     public String memberDetail(Long memberId, Model model) {
         MemberResponseDto member = adminService.findMemberById(memberId);
         model.addAttribute("member", member);
-        adminModelHelper.setMemberModel(model);
+        modelHelper.setMemberModel(model);
         return "/admin/member/memberDetail";
     }
 
@@ -369,7 +363,7 @@ public class AdminController {
     @GetMapping("/member/save")
     public String memberSaveForm(Model model) {
         model.addAttribute("member", new MemberSaveRequestDto());
-        adminModelHelper.setMemberModel(model);
+        modelHelper.setMemberModel(model);
         return "/admin/member/memberSaveForm";
     }
 
@@ -440,7 +434,7 @@ public class AdminController {
             ip.setApproverId(ip.getApproval().getApproverId());
         }
         model.addAttribute("ip", ip);
-        adminModelHelper.setIpModel(model);
+        modelHelper.setIpModel(model);
         return "/admin/ip/ipDetail";
     }
 
@@ -452,7 +446,7 @@ public class AdminController {
     @GetMapping("/ip/save")
     public String ipSaveForm(Model model) {
         model.addAttribute("ip", new IpSaveRequestDto());
-        adminModelHelper.setIpModel(model);
+        modelHelper.setIpModel(model);
         return "/admin/ip/ipSaveForm";
     }
 
@@ -534,7 +528,7 @@ public class AdminController {
             cert.setDrafterId(cert.getApproval().getDrafterId());
             cert.setApproverId(cert.getApproval().getApproverId());
         }
-        adminModelHelper.setCertModel(model);
+        modelHelper.setCertModel(model);
         return "/admin/cert/certDetail";
     }
 
@@ -546,7 +540,7 @@ public class AdminController {
     @GetMapping("/cert/save")
     public String certSaveForm(Model model) {
         model.addAttribute("cert", new CertSaveRequestDto());
-        adminModelHelper.setCertModel(model);
+        modelHelper.setCertModel(model);
         return "/admin/cert/certSaveForm";
     }
 

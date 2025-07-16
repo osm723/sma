@@ -14,10 +14,6 @@ public interface IpService {
 
     IpResponseDto findIpById(Long ipId);
 
-    List<MemberResponseDto> findMemberAll();
-
-    List<SystemResponseDto> findSystemAll();
-
     void getIpPreExpiration();
 
     void getIpPreExpirationToManager();

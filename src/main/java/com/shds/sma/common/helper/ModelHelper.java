@@ -1,4 +1,4 @@
-package com.shds.sma.apps.admin.helper;
+package com.shds.sma.common.helper;
 
 import com.shds.sma.apps.admin.dto.client.ClientResponseDto;
 import com.shds.sma.apps.admin.dto.member.MemberResponseDto;
@@ -19,7 +19,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class AdminModelHelper {
+public class ModelHelper {
 
     private final AdminService adminService;
 

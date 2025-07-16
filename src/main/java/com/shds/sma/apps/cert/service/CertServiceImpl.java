@@ -32,8 +32,6 @@ public class CertServiceImpl implements CertService {
 
     private final CertRepository certRepository;
 
-    private final AdminService adminService;
-
     private final AlarmService alarmService;
 
     private final ModelMapper modelMapper;
@@ -50,18 +48,6 @@ public class CertServiceImpl implements CertService {
     public CertResponseDto findCertById(Long certId) {
         Cert findCert = certRepository.findById(certId).orElseThrow(() -> new BizException(NOT_FOUND_CERT));
         return modelMapper.map(findCert, CertResponseDto.class);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<MemberResponseDto> findMemberAll() {
-        return adminService.findMemberAll();
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<SystemResponseDto> findSystemAll() {
-        return adminService.findSystemAll();
     }
 
     @Override

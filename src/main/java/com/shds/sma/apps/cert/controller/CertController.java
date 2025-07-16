@@ -1,13 +1,9 @@
 package com.shds.sma.apps.cert.controller;
 
-import com.shds.sma.apps.admin.dto.member.MemberResponseDto;
-import com.shds.sma.apps.system.dto.SystemResponseDto;
+import com.shds.sma.common.helper.ModelHelper;
 import com.shds.sma.apps.cert.service.CertService;
 import com.shds.sma.apps.cert.dto.CertRequestDto;
 import com.shds.sma.apps.cert.dto.CertResponseDto;
-import com.shds.sma.apps.cert.types.CertType;
-import com.shds.sma.common.types.ApprovalStatus;
-import com.shds.sma.common.types.Degree;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
 
 @Controller
 @RequestMapping("/cert")
@@ -24,6 +19,8 @@ import java.util.List;
 public class CertController {
 
     private final CertService certService;
+
+    private final ModelHelper modelHelper;
 
     /**
      * 인증서관리 화면
@@ -51,25 +48,8 @@ public class CertController {
             cert.setDrafterId(cert.getApproval().getDrafterId());
             cert.setApproverId(cert.getApproval().getApproverId());
         }
-        setCertModel(model);
+        modelHelper.setCertModel(model);
         return "/cert/certManageDetail";
-    }
-
-    /**
-     * 인증서 화면 model 설정
-     * setMemberModel
-     * @param model
-     */
-    private void setCertModel(Model model) {
-        model.addAttribute("certTypes", List.of(CertType.values()));
-        model.addAttribute("degrees", List.of(Degree.values()));
-        model.addAttribute("approvalStatuses", List.of(ApprovalStatus.values()));
-
-        List<MemberResponseDto> members = certService.findMemberAll();
-        model.addAttribute("members", members);
-
-        List<SystemResponseDto> systems = certService.findSystemAll();
-        model.addAttribute("systems", systems);
     }
 
 }
