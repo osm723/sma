@@ -1,6 +1,6 @@
 package com.shds.sma.batch.processor;
 
-import com.shds.sma.ip.entity.Ip;
+import com.shds.sma.apps.ip.entity.Ip;
 import org.springframework.batch.item.ItemProcessor;
 
 

@@ -1,11 +1,11 @@
 package com.shds.sma.batch.config;
 
-import com.shds.sma.alarm.service.AlarmService;
+import com.shds.sma.apps.alarm.service.AlarmService;
 import com.shds.sma.batch.listener.JobListener;
 import com.shds.sma.batch.writer.ErrorLogDailyWriter;
 import com.shds.sma.batch.writer.ErrorLogMinuteWriter;
-import com.shds.sma.log.entity.Log;
-import com.shds.sma.log.repository.LogRepository;
+import com.shds.sma.apps.log.entity.Log;
+import com.shds.sma.apps.log.repository.LogRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -24,6 +24,8 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.shds.sma.common.constants.Constants.ONE_HUNDRED_PAGE_SIZE;
 
 @Configuration
 @EnableBatchProcessing
@@ -58,7 +60,7 @@ public class BatchLogConfig {
         Map<String, Sort.Direction> sorts = new HashMap<>();
         sorts.put("id", Sort.Direction.ASC);
         reader.setSort(sorts);
-        reader.setPageSize(100);
+        reader.setPageSize(ONE_HUNDRED_PAGE_SIZE);
 
         return reader;
     }
@@ -113,7 +115,7 @@ public class BatchLogConfig {
     @Bean
     public Step errorLogDailyStep() {
         return new StepBuilder("errorLogDailyStep", jobRepository)
-                .<Log,Log>chunk(100, platformTransactionManager)
+                .<Log,Log>chunk(ONE_HUNDRED_PAGE_SIZE, platformTransactionManager)
                 .reader(errorLogDailyReader(logRepository))
                 .processor(item -> item)
                 .writer(errorLogDailyWriter())
@@ -138,7 +140,7 @@ public class BatchLogConfig {
         Map<String, Sort.Direction> sorts = new HashMap<>();
         sorts.put("id", Sort.Direction.ASC);
         reader.setSort(sorts);
-        reader.setPageSize(100);
+        reader.setPageSize(ONE_HUNDRED_PAGE_SIZE);
 
         return reader;
     }
@@ -193,7 +195,7 @@ public class BatchLogConfig {
     @Bean
     public Step errorLogMinuteStep() {
         return new StepBuilder("errorLogMinuteStep", jobRepository)
-                .<Log,Log>chunk(100, platformTransactionManager)
+                .<Log,Log>chunk(ONE_HUNDRED_PAGE_SIZE, platformTransactionManager)
                 .reader(errorLogMinuteReader(logRepository))
                 .processor(item -> item)
                 .writer(errorLogMinuteWriter())

@@ -1,10 +1,8 @@
 package com.shds.sma.common.entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.MappedSuperclass;
-import jakarta.validation.constraints.NotBlank;
+import com.shds.sma.common.types.ValidityStatus;
+import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -12,36 +10,35 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
+import static com.shds.sma.common.types.ValidityStatus.*;
+
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 public class BaseEntity {
 
-    @Column(columnDefinition = "TIMESTAMP", nullable = false)
+    @Column(nullable = false)
     @CreatedDate
     private LocalDateTime regDate;
 
-    @Column(columnDefinition = "BIGINT COMMENT '등록자'")
     private Long regMemberId;
 
-    @Column(columnDefinition = "TIMESTAMP", nullable = false)
+    @Column(nullable = false)
     @LastModifiedDate
     private LocalDateTime modDate;
 
-    @Column(columnDefinition = "BIGINT COMMENT '수정자'")
     private Long modMemberId;
 
-    @Column(length = 1, columnDefinition = "VARCHAR(1) COMMENT '사용여부'", nullable = false)
-    @NotBlank
-    private String validity = "Y";
-
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ValidityStatus validity = Y;
 
     /**
      * 삭제 처리 (미사용 처리)
      * validity = N
      */
     public void setValidityN() {
-        this.validity = "N";
+        this.validity = N;
     }
 
     /**
@@ -49,7 +46,7 @@ public class BaseEntity {
      * validity = Y
      */
     public void setValidityY() {
-        this.validity = "Y";
+        this.validity = Y;
     }
 
 }

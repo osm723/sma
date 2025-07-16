@@ -1,6 +1,6 @@
 package com.shds.sma.batch.processor;
 
-import com.shds.sma.cert.entity.Cert;
+import com.shds.sma.apps.cert.entity.Cert;
 import org.springframework.batch.item.ItemProcessor;
 
 public class ExpiredCertProcessor implements ItemProcessor<Cert, Cert> {

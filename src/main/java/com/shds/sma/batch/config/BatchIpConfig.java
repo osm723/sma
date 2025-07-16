@@ -2,8 +2,8 @@ package com.shds.sma.batch.config;
 
 import com.shds.sma.batch.listener.JobListener;
 import com.shds.sma.batch.processor.ExpiredIpProcessor;
-import com.shds.sma.ip.entity.Ip;
-import com.shds.sma.ip.repository.IpRepository;
+import com.shds.sma.apps.ip.entity.Ip;
+import com.shds.sma.apps.ip.repository.IpRepository;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
@@ -24,6 +24,8 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.shds.sma.common.constants.Constants.DEFAULT_PAGE_SIZE;
 
 
 @Configuration
@@ -60,7 +62,7 @@ public class BatchIpConfig {
         Map<String, Sort.Direction> sorts = new HashMap<>();
         sorts.put("id", Sort.Direction.ASC);
         reader.setSort(sorts);
-        reader.setPageSize(10);
+        reader.setPageSize(DEFAULT_PAGE_SIZE);
 
         return reader;
     }
@@ -119,7 +121,7 @@ public class BatchIpConfig {
     @Bean
     public Step expiredIpStep() {
         return new StepBuilder("expiredIpStep", jobRepository)
-                .<Ip, Ip>chunk(10, platformTransactionManager)
+                .<Ip, Ip>chunk(DEFAULT_PAGE_SIZE, platformTransactionManager)
                 .reader(expiredIpReader(ipRepository))
                 .processor(expiredIpProcessor())
                 .writer(expiredIpWriter())

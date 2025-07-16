@@ -1,9 +1,9 @@
 package com.shds.sma.batch.writer;
 
-import com.shds.sma.alarm.service.AlarmService;
-import com.shds.sma.alarm.types.AlarmSendType;
-import com.shds.sma.log.dto.LogAlarmRequestDto;
-import com.shds.sma.log.entity.Log;
+import com.shds.sma.apps.alarm.service.AlarmService;
+import com.shds.sma.apps.alarm.types.AlarmSendType;
+import com.shds.sma.apps.log.dto.LogAlarmRequestDto;
+import com.shds.sma.apps.log.entity.Log;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.item.Chunk;
 import org.springframework.batch.item.ItemWriter;
