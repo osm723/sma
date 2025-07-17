@@ -43,12 +43,11 @@ public class CertController {
     @GetMapping("/manage/detail")
     public String certDetail(Long certId, Model model) {
         CertResponseDto cert = certService.findCertById(certId);
-        model.addAttribute("cert", cert);
         if (cert.getApproval() != null) {
             cert.setDrafterId(cert.getApproval().getDrafterId());
             cert.setApproverId(cert.getApproval().getApproverId());
         }
-        modelHelper.setCertModel(model);
+        modelHelper.setCertModel(model, cert);
         return "/cert/certManageDetail";
     }
 

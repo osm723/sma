@@ -23,37 +23,48 @@ public class ModelHelper {
 
     private final AdminService adminService;
 
-    public void setMemberModel(Model model) {
+    public <T> void setMemberModel(Model model, T member) {
+        model.addAttribute("member", member);
         model.addAttribute("empStatuses", List.of(EmpStatus.values()));
         model.addAttribute("empAuths", List.of(EmpAuth.values()));
         model.addAttribute("systemRoles", List.of(SystemRole.values()));
 
-        List<SystemResponseDto> systems = adminService.findSystemAll();
-        model.addAttribute("systems", systems);
-
-        List<ClientResponseDto> clients = adminService.findClientAll();
-        model.addAttribute("clients", clients);
+        setSystemModel(model);
+        setClientModel(model);
     }
 
-    public void setIpModel(Model model) {
+    public <T> void setIpModel(Model model, T ip) {
+        model.addAttribute("ip", ip);
         model.addAttribute("ipTypes", List.of(IpType.values()));
         model.addAttribute("degrees", List.of(Degree.values()));
         model.addAttribute("approvalStatuses", List.of(ApprovalStatus.values()));
-        setMemberAndSystemModel(model);
+
+        setMemberModel(model);
+        setSystemModel(model);
     }
 
-    public void setCertModel(Model model) {
+    public <T> void setCertModel(Model model, T cert) {
+        model.addAttribute("cert", cert);
         model.addAttribute("certTypes", List.of(CertType.values()));
         model.addAttribute("degrees", List.of(Degree.values()));
         model.addAttribute("approvalStatuses", List.of(ApprovalStatus.values()));
-        setMemberAndSystemModel(model);
+
+        setMemberModel(model);
+        setSystemModel(model);
     }
 
-    private void setMemberAndSystemModel(Model model) {
+    private void setMemberModel(Model model) {
         List<MemberResponseDto> members = adminService.findMemberAll();
         model.addAttribute("members", members);
+    }
 
+    private void setSystemModel(Model model) {
         List<SystemResponseDto> systems = adminService.findSystemAll();
         model.addAttribute("systems", systems);
+    }
+
+    private void setClientModel(Model model) {
+        List<ClientResponseDto> clients = adminService.findClientAll();
+        model.addAttribute("clients", clients);
     }
 }

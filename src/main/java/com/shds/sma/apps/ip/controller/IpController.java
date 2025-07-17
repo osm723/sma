@@ -47,8 +47,7 @@ public class IpController {
             ip.setDrafterId(ip.getApproval().getDrafterId());
             ip.setApproverId(ip.getApproval().getApproverId());
         }
-        model.addAttribute("ip", ip);
-        modelHelper.setIpModel(model);
+        modelHelper.setIpModel(model, ip);
         return "/ip/ipManageDetail";
     }
 

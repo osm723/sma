@@ -350,8 +350,7 @@ public class AdminController {
     @GetMapping("/member/detail")
     public String memberDetail(Long memberId, Model model) {
         MemberResponseDto member = adminService.findMemberById(memberId);
-        model.addAttribute("member", member);
-        modelHelper.setMemberModel(model);
+        modelHelper.setMemberModel(model, member);
         return "/admin/member/memberDetail";
     }
 
@@ -362,8 +361,7 @@ public class AdminController {
      */
     @GetMapping("/member/save")
     public String memberSaveForm(Model model) {
-        model.addAttribute("member", new MemberSaveRequestDto());
-        modelHelper.setMemberModel(model);
+        modelHelper.setMemberModel(model, new MemberSaveRequestDto());
         return "/admin/member/memberSaveForm";
     }
 
@@ -433,8 +431,7 @@ public class AdminController {
             ip.setDrafterId(ip.getApproval().getDrafterId());
             ip.setApproverId(ip.getApproval().getApproverId());
         }
-        model.addAttribute("ip", ip);
-        modelHelper.setIpModel(model);
+        modelHelper.setIpModel(model, ip);
         return "/admin/ip/ipDetail";
     }
 
@@ -445,8 +442,7 @@ public class AdminController {
      */
     @GetMapping("/ip/save")
     public String ipSaveForm(Model model) {
-        model.addAttribute("ip", new IpSaveRequestDto());
-        modelHelper.setIpModel(model);
+        modelHelper.setIpModel(model, new IpSaveRequestDto());
         return "/admin/ip/ipSaveForm";
     }
 
@@ -523,12 +519,12 @@ public class AdminController {
     @GetMapping("/cert/detail")
     public String certDetail(Long certId, Model model) {
         CertResponseDto cert = adminService.findCertById(certId);
-        model.addAttribute("cert", cert);
+
         if (cert.getApproval() != null) {
             cert.setDrafterId(cert.getApproval().getDrafterId());
             cert.setApproverId(cert.getApproval().getApproverId());
         }
-        modelHelper.setCertModel(model);
+        modelHelper.setCertModel(model, cert);
         return "/admin/cert/certDetail";
     }
 
@@ -539,8 +535,7 @@ public class AdminController {
      */
     @GetMapping("/cert/save")
     public String certSaveForm(Model model) {
-        model.addAttribute("cert", new CertSaveRequestDto());
-        modelHelper.setCertModel(model);
+        modelHelper.setCertModel(model, new CertSaveRequestDto());
         return "/admin/cert/certSaveForm";
     }
 
