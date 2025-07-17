@@ -43,19 +43,47 @@ public class ApiMemberServiceImpl implements ApiMemberService {
 
     @Override
     public ApiMemberResponseDto getMember(Long memberId) {
-        Member member = memberRepository.findById(memberId).orElseThrow(() -> new BizException(NOT_FOUND_MEMBER));
+        Member member = getMemberById(memberId);
         return modelMapper.map(member, ApiMemberResponseDto.class);
     }
 
     @Override
     public ApiMemberResponseDto createMember(ApiMemberSaveRequestDto apiMemberSaveRequestDto) {
-        String clientCode = apiMemberSaveRequestDto.getClientCode();
-        Client findClient = clientRepository.findByClientCode(clientCode);
+        Client findClient = clientRepository.findByClientCode(apiMemberSaveRequestDto.getClientCode());
+        System findSystem = systemRepository.findBySystemName(apiMemberSaveRequestDto.getSystemName());
 
-        String systemName = apiMemberSaveRequestDto.getSystemName();
-        System findSystem = systemRepository.findBySystemName(systemName);
+        Member saveMember = buildMember(apiMemberSaveRequestDto, findClient, findSystem);
+        Member createdMember = memberRepository.save(saveMember);
 
-        Member saveMember = Member.builder()
+        return modelMapper.map(createdMember, ApiMemberResponseDto.class);
+    }
+
+    @Override
+    public ApiMemberResponseDto updateMember(ApiMemberModRequestDto apiMemberModRequestDto) {
+        Client findClient = clientRepository.findByClientCode(apiMemberModRequestDto.getClientCode());
+        apiMemberModRequestDto.setClient(findClient);
+
+        System findSystem = systemRepository.findBySystemName(apiMemberModRequestDto.getSystemName());
+        apiMemberModRequestDto.setSystem(findSystem);
+
+        Member updatedMember = getMemberById(apiMemberModRequestDto.getMemberId());
+        updatedMember.memberModified(apiMemberModRequestDto);
+
+        return modelMapper.map(updatedMember, ApiMemberResponseDto.class);
+    }
+
+    @Override
+    public void deleteMember(Long memberId) {
+        Member deletedMember = getMemberById(memberId);
+        deletedMember.empStatusChange(EmpStatus.RETIRE);
+    }
+
+    private Member getMemberById(Long memberId) {
+        return memberRepository.findById(memberId).orElseThrow(() -> new BizException(NOT_FOUND_MEMBER));
+    }
+
+    private static Member buildMember(ApiMemberSaveRequestDto apiMemberSaveRequestDto, Client findClient, System findSystem) {
+        return Member.builder()
                 .name(apiMemberSaveRequestDto.getName())
                 .client(findClient)
                 .deptCode(apiMemberSaveRequestDto.getDeptCode())
@@ -70,30 +98,6 @@ public class ApiMemberServiceImpl implements ApiMemberService {
                 .empAuth(apiMemberSaveRequestDto.getEmpAuth())
                 .system(findSystem)
                 .systemRole(apiMemberSaveRequestDto.getSystemRole()).build();
-
-        Member createdMember = memberRepository.save(saveMember);
-        return modelMapper.map(createdMember, ApiMemberResponseDto.class);
-    }
-
-    @Override
-    public ApiMemberResponseDto updateMember(ApiMemberModRequestDto apiMemberModRequestDto) {
-        String clientCode = apiMemberModRequestDto.getClientCode();
-        Client findClient = clientRepository.findByClientCode(clientCode);
-        apiMemberModRequestDto.setClient(findClient);
-
-        String systemName = apiMemberModRequestDto.getSystemName();
-        System findSystem = systemRepository.findBySystemName(systemName);
-        apiMemberModRequestDto.setSystem(findSystem);
-
-        Member updatedMember = memberRepository.findById(apiMemberModRequestDto.getMemberId()).orElseThrow(() -> new BizException(NOT_FOUND_MEMBER));
-        updatedMember.memberModified(apiMemberModRequestDto);
-        return modelMapper.map(updatedMember, ApiMemberResponseDto.class);
-    }
-
-    @Override
-    public void deleteMember(Long memberId) {
-        Member deletedMember = memberRepository.findById(memberId).orElseThrow(() -> new BizException(NOT_FOUND_MEMBER));
-        deletedMember.empStatusChange(EmpStatus.RETIRE);
     }
 
 }

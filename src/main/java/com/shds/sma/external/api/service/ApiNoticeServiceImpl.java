@@ -32,7 +32,7 @@ public class ApiNoticeServiceImpl implements ApiNoticeService {
 
     @Override
     public ApiNoticeResponseDto getNotice(Long noticeId) {
-        Notice notice = noticeRepository.findById(noticeId).orElseThrow(() -> new BizException(NOT_FOUND_NOTICE));
+        Notice notice = getNoticeById(noticeId);
         return modelMapper.map(notice, ApiNoticeResponseDto.class);
     }
 
@@ -44,20 +44,24 @@ public class ApiNoticeServiceImpl implements ApiNoticeService {
 
     @Override
     public ApiNoticeResponseDto updateNotice(ApiNoticeModRequestDto apiMemberModRequestDto) {
-        Notice updatedNotice = noticeRepository.findById(apiMemberModRequestDto.getNoticeId()).orElseThrow(() -> new BizException(NOT_FOUND_NOTICE));
+        Notice updatedNotice = getNoticeById(apiMemberModRequestDto.getNoticeId());
         updatedNotice.noticeModified(apiMemberModRequestDto);
         return modelMapper.map(updatedNotice, ApiNoticeResponseDto.class);
     }
 
     @Override
     public void deleteNotice(Long noticeId) {
-        Notice deletedNotice = noticeRepository.findById(noticeId).orElseThrow(() -> new BizException(NOT_FOUND_NOTICE));
+        Notice deletedNotice = getNoticeById(noticeId);
         deletedNotice.setValidityN();
     }
 
     @Override
     public void reuseNotice(Long noticeId) {
-        Notice deletedNotice = noticeRepository.findById(noticeId).orElseThrow(() -> new BizException(NOT_FOUND_NOTICE));
+        Notice deletedNotice = getNoticeById(noticeId);
         deletedNotice.setValidityY();
+    }
+
+    private Notice getNoticeById(Long noticeId) {
+        return noticeRepository.findById(noticeId).orElseThrow(() -> new BizException(NOT_FOUND_NOTICE));
     }
 }

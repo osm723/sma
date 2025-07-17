@@ -45,7 +45,7 @@ public class ApiIpServiceImpl implements ApiIpService {
 
     @Override
     public ApiIpResponseDto getIp(Long ipId) {
-        Ip ip = ipRepository.findById(ipId).orElseThrow(() -> new BizException(NOT_FOUND_IP));
+        Ip ip = getIpById(ipId);
         return modelMapper.map(ip, ApiIpResponseDto.class);
     }
 
@@ -53,25 +53,55 @@ public class ApiIpServiceImpl implements ApiIpService {
     public ApiIpResponseDto createIp(ApiIpSaveRequestDto apiIpSaveRequestDto) {
         Approval saveApproval = new Approval();
         if (apiIpSaveRequestDto.getApproval() != null) {
-            saveApproval = Approval.builder()
-                    .approvalNo(apiIpSaveRequestDto.getApproval().getApprovalNo())
-                    .drafterId(apiIpSaveRequestDto.getApproval().getDrafterId())
-                    .degree(apiIpSaveRequestDto.getApproval().getDegree())
-                    .approverId(apiIpSaveRequestDto.getApproval().getApproverId())
-                    .approvalStatus(apiIpSaveRequestDto.getApproval().getApprovalStatus())
-                    .approveDate(apiIpSaveRequestDto.getApproval().getApproveDate())
-                    .cancelDate(apiIpSaveRequestDto.getApproval().getCancelDate()).build();
-
-            approvalRepository.save(saveApproval);
+            approvalRepository.save(buildApproval(apiIpSaveRequestDto));
         }
 
-        String systemName = apiIpSaveRequestDto.getSystemName();
-        System saveSystem = systemRepository.findBySystemName(systemName);
+        System saveSystem = systemRepository.findBySystemName(apiIpSaveRequestDto.getSystemName());
+        Member saveMember = memberRepository.findById(apiIpSaveRequestDto.getMemberId()).orElseThrow(() -> new BizException(NOT_FOUND_MEMBER));
 
-        Long memberId = apiIpSaveRequestDto.getMemberId();
-        Member saveMember = memberRepository.findById(memberId).orElseThrow(() -> new BizException(NOT_FOUND_MEMBER));
+        Ip saveIp = buildIp(apiIpSaveRequestDto, saveSystem, saveMember, saveApproval);
+        Ip createdIp = ipRepository.save(saveIp);
 
-        Ip saveIp = Ip.builder()
+        return modelMapper.map(createdIp, ApiIpResponseDto.class);
+    }
+
+    @Override
+    public ApiIpResponseDto updateIp(ApiIpModRequestDto apiIpModRequestDto) {
+        Approval updateApproval;
+        if (apiIpModRequestDto.getApproval() != null) {
+            updateApproval = approvalRepository.findById(apiIpModRequestDto.getApproval().getApprovalId()).orElseThrow(() -> new BizException(NOT_FOUND_APPROVAL));
+            updateApproval.approvalApiIpModified(apiIpModRequestDto.getApproval());
+            apiIpModRequestDto.setApproval(new ApiApproval(updateApproval));
+        }
+
+        System updateSystem = systemRepository.findBySystemName(apiIpModRequestDto.getSystemName());
+        apiIpModRequestDto.setSystem(updateSystem);
+
+        Member updateMember = memberRepository.findById(getALong(apiIpModRequestDto)).orElseThrow(() -> new BizException(NOT_FOUND_MEMBER));
+        apiIpModRequestDto.setMember(updateMember);
+
+        Ip updatedIp = getIpById(apiIpModRequestDto.getIpId());
+        updatedIp.apiIpModified(apiIpModRequestDto);
+
+        return modelMapper.map(updatedIp, ApiIpResponseDto.class);
+    }
+
+    @Override
+    public void deleteIp(Long ipId) {
+        Ip deletedIp = getIpById(ipId);
+        deletedIp.setValidityN();
+    }
+
+    private Ip getIpById(Long ipId) {
+        return ipRepository.findById(ipId).orElseThrow(() -> new BizException(NOT_FOUND_IP));
+    }
+
+    private static Long getALong(ApiIpModRequestDto apiIpModRequestDto) {
+        return apiIpModRequestDto.getMemberId();
+    }
+
+    private static Ip buildIp(ApiIpSaveRequestDto apiIpSaveRequestDto, System saveSystem, Member saveMember, Approval saveApproval) {
+        return Ip.builder()
                 .ipType(apiIpSaveRequestDto.getIpType())
                 .startIpAddr(apiIpSaveRequestDto.getStartIpAddr())
                 .endIpAddr(apiIpSaveRequestDto.getEndIpAddr())
@@ -83,37 +113,16 @@ public class ApiIpServiceImpl implements ApiIpService {
                 .endDate(apiIpSaveRequestDto.getEndDate())
                 .member(saveMember)
                 .approval(saveApproval).build();
-
-        Ip createdIp = ipRepository.save(saveIp);
-        return modelMapper.map(createdIp, ApiIpResponseDto.class);
     }
 
-    @Override
-    public ApiIpResponseDto updateIp(ApiIpModRequestDto apiIpModRequestDto) {
-        Approval updateApproval = new Approval();
-        if (apiIpModRequestDto.getApproval() != null) {
-            updateApproval = approvalRepository.findById(apiIpModRequestDto.getApproval().getApprovalId()).orElseThrow(() -> new BizException(NOT_FOUND_APPROVAL));
-            updateApproval.approvalApiIpModified(apiIpModRequestDto.getApproval());
-            apiIpModRequestDto.setApproval(new ApiApproval(updateApproval));
-        }
-
-        String systemName = apiIpModRequestDto.getSystemName();
-        System updateSystem = systemRepository.findBySystemName(systemName);
-        apiIpModRequestDto.setSystem(updateSystem);
-
-        Long memberId = apiIpModRequestDto.getMemberId();
-        Member updateMember = memberRepository.findById(memberId).orElseThrow(() -> new BizException(NOT_FOUND_MEMBER));
-        apiIpModRequestDto.setMember(updateMember);
-
-        Ip updatedIp = ipRepository.findById(apiIpModRequestDto.getIpId()).orElseThrow(() -> new BizException(NOT_FOUND_IP));
-        updatedIp.apiIpModified(apiIpModRequestDto);
-
-        return modelMapper.map(updatedIp, ApiIpResponseDto.class);
-    }
-
-    @Override
-    public void deleteIp(Long ipId) {
-        Ip deletedIp = ipRepository.findById(ipId).orElseThrow(() -> new BizException(NOT_FOUND_IP));
-        deletedIp.setValidityN();
+    private static Approval buildApproval(ApiIpSaveRequestDto apiIpSaveRequestDto) {
+        return Approval.builder()
+                .approvalNo(apiIpSaveRequestDto.getApproval().getApprovalNo())
+                .drafterId(apiIpSaveRequestDto.getApproval().getDrafterId())
+                .degree(apiIpSaveRequestDto.getApproval().getDegree())
+                .approverId(apiIpSaveRequestDto.getApproval().getApproverId())
+                .approvalStatus(apiIpSaveRequestDto.getApproval().getApprovalStatus())
+                .approveDate(apiIpSaveRequestDto.getApproval().getApproveDate())
+                .cancelDate(apiIpSaveRequestDto.getApproval().getCancelDate()).build();
     }
 }

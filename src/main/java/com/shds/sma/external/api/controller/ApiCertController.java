@@ -7,7 +7,6 @@ import com.shds.sma.external.api.service.ApiCertService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,30 +20,30 @@ public class ApiCertController {
     @GetMapping("/certs")
     public ResponseEntity<Page<ApiCertResponseDto>> getAllCerts(Pageable pageable) {
         Page<ApiCertResponseDto> certs = apiCertService.getAllCerts(pageable);
-        return new ResponseEntity<>(certs, HttpStatus.OK);
+        return ResponseEntity.ok(certs);
     }
 
     @GetMapping("/cert/{certId}")
     public ResponseEntity<ApiCertResponseDto> getCert(@PathVariable Long certId) {
         ApiCertResponseDto cert = apiCertService.getCert(certId);
-        return new ResponseEntity<>(cert, HttpStatus.OK);
+        return ResponseEntity.ok(cert);
     }
 
     @PostMapping("/cert")
     public ResponseEntity<ApiCertResponseDto> createCert(@RequestBody ApiCertSaveRequestDto apiCertSaveRequestDto) {
         ApiCertResponseDto createdCert = apiCertService.createCert(apiCertSaveRequestDto);
-        return new ResponseEntity<>(createdCert, HttpStatus.OK);
+        return ResponseEntity.ok(createdCert);
     }
 
     @PutMapping("/cert")
     public ResponseEntity<ApiCertResponseDto> updateCert(@RequestBody ApiCertModRequestDto apiCertModRequestDto) {
         ApiCertResponseDto updatedCert = apiCertService.updateCert(apiCertModRequestDto);
-        return new ResponseEntity<>(updatedCert, HttpStatus.OK);
+        return ResponseEntity.ok(updatedCert);
     }
 
     @DeleteMapping("/cert/{certId}")
     public ResponseEntity<Void> deleteCert(@PathVariable Long certId) {
         apiCertService.deleteCert(certId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 }

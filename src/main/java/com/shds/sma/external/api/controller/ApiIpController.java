@@ -7,7 +7,6 @@ import com.shds.sma.external.api.service.ApiIpService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,30 +20,30 @@ public class ApiIpController {
     @GetMapping("/ips")
     public ResponseEntity<Page<ApiIpResponseDto>> getAllIps(Pageable pageable) {
         Page<ApiIpResponseDto> ips = apiIpService.getAllIps(pageable);
-        return new ResponseEntity<>(ips, HttpStatus.OK);
+        return ResponseEntity.ok(ips);
     }
 
     @GetMapping("/ip/{ipId}")
     public ResponseEntity<ApiIpResponseDto> getIp(@PathVariable Long ipId) {
         ApiIpResponseDto ip = apiIpService.getIp(ipId);
-        return new ResponseEntity<>(ip, HttpStatus.OK);
+        return ResponseEntity.ok(ip);
     }
 
     @PostMapping("/ip")
     public  ResponseEntity<ApiIpResponseDto> createIp(@RequestBody ApiIpSaveRequestDto apiIpSaveRequestDto) {
         ApiIpResponseDto createdIp = apiIpService.createIp(apiIpSaveRequestDto);
-        return new ResponseEntity<>(createdIp, HttpStatus.OK);
+        return ResponseEntity.ok(createdIp);
     }
 
     @PutMapping("/ip")
     public ResponseEntity<ApiIpResponseDto> updateIp(@RequestBody ApiIpModRequestDto apiIpModRequestDto) {
         ApiIpResponseDto updatedIp = apiIpService.updateIp(apiIpModRequestDto);
-        return new ResponseEntity<>(updatedIp, HttpStatus.OK);
+        return ResponseEntity.ok(updatedIp);
     }
 
     @DeleteMapping("/ip/{ipId}")
     public ResponseEntity<Void> deleteIp(@PathVariable Long ipId) {
         apiIpService.deleteIp(ipId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 }

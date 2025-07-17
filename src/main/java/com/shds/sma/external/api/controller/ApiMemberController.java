@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,31 +22,31 @@ public class ApiMemberController {
     @GetMapping("/members")
     public ResponseEntity<Page<ApiMemberResponseDto>> getAllMembers(Pageable pageable) {
         Page<ApiMemberResponseDto> members = apiMemberService.getAllMembers(pageable);
-        return new ResponseEntity<>(members, HttpStatus.OK);
+        return ResponseEntity.ok(members);
     }
 
     @GetMapping("/member/{memberId}")
     public ResponseEntity<ApiMemberResponseDto> getMember(@PathVariable Long memberId) {
         ApiMemberResponseDto member = apiMemberService.getMember(memberId);
-        return new ResponseEntity<>(member, HttpStatus.OK);
+        return ResponseEntity.ok(member);
     }
 
     @PostMapping("/member")
     public  ResponseEntity<ApiMemberResponseDto> createMember(@RequestBody ApiMemberSaveRequestDto apiMemberSaveRequestDto) {
         ApiMemberResponseDto createdMember = apiMemberService.createMember(apiMemberSaveRequestDto);
-        return new ResponseEntity<>(createdMember, HttpStatus.OK);
+        return ResponseEntity.ok(createdMember);
     }
 
     @PutMapping("/member")
     public ResponseEntity<ApiMemberResponseDto> updateMember(@RequestBody ApiMemberModRequestDto apiMemberModRequestDto) {
         ApiMemberResponseDto updatedMember = apiMemberService.updateMember(apiMemberModRequestDto);
-        return new ResponseEntity<>(updatedMember, HttpStatus.OK);
+        return ResponseEntity.ok(updatedMember);
     }
 
     @DeleteMapping("/member/{memberId}")
     public ResponseEntity<Void> deleteMember(@PathVariable Long memberId) {
         apiMemberService.deleteMember(memberId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
 

@@ -13,7 +13,6 @@ import com.shds.sma.apps.cert.entity.Cert;
 import com.shds.sma.apps.cert.repository.CertRepository;
 import com.shds.sma.apps.admin.entity.Approval;
 import com.shds.sma.common.exception.BizException;
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -38,8 +37,6 @@ public class ApiCertServiceImpl implements ApiCertService {
 
     private final ApprovalRepository approvalRepository;
 
-    private final EntityManager em;
-
     private final ModelMapper modelMapper;
 
     @Override
@@ -50,46 +47,26 @@ public class ApiCertServiceImpl implements ApiCertService {
 
     @Override
     public ApiCertResponseDto getCert(Long certId) {
-        Cert cert = certRepository.findById(certId).orElseThrow(() -> new BizException(NOT_FOUND_CERT));
+        Cert cert = getCertById(certId);
         return modelMapper.map(cert, ApiCertResponseDto.class);
     }
 
     @Override
     public ApiCertResponseDto createCert(ApiCertSaveRequestDto apiCertSaveRequestDto) {
-        Approval saveApproval = new Approval();
+        Approval saveApproval = null;
         if (apiCertSaveRequestDto.getApproval() != null) {
-            saveApproval = Approval.builder()
-                    .approvalNo(apiCertSaveRequestDto.getApproval().getApprovalNo())
-                    .drafterId(apiCertSaveRequestDto.getApproval().getDrafterId())
-                    .degree(apiCertSaveRequestDto.getApproval().getDegree())
-                    .approverId(apiCertSaveRequestDto.getApproval().getApproverId())
-                    .approvalStatus(apiCertSaveRequestDto.getApproval().getApprovalStatus())
-                    .approveDate(apiCertSaveRequestDto.getApproval().getApproveDate())
-                    .cancelDate(apiCertSaveRequestDto.getApproval().getCancelDate()).build();
-
-            approvalRepository.save(saveApproval);
+            approvalRepository.save(buildApproval(apiCertSaveRequestDto));
         }
 
-        String systemName = apiCertSaveRequestDto.getSystemName();
-        System saveSystem = systemRepository.findBySystemName(systemName);
+        System saveSystem = systemRepository.findBySystemName(apiCertSaveRequestDto.getSystemName());
+        Member saveMember = memberRepository.findById(apiCertSaveRequestDto.getMemberId()).orElseThrow(() -> new BizException(NOT_FOUND_MEMBER));
 
-        Long memberId = apiCertSaveRequestDto.getMemberId();
-        Member saveMember = memberRepository.findById(memberId).orElseThrow(() -> new BizException(NOT_FOUND_MEMBER));
-
-        Cert savrCert = Cert.builder()
-                .certType(apiCertSaveRequestDto.getCertType())
-                .certName(apiCertSaveRequestDto.getCertName())
-                .applySystem(saveSystem)
-                .content(apiCertSaveRequestDto.getContent())
-                .siteLink(apiCertSaveRequestDto.getSiteLink())
-                .startDate(apiCertSaveRequestDto.getStartDate())
-                .endDate(apiCertSaveRequestDto.getEndDate())
-                .member(saveMember)
-                .approval(saveApproval).build();
-
+        Cert savrCert = buildCert(apiCertSaveRequestDto, saveSystem, saveMember, saveApproval);
         Cert createdCert = certRepository.save(savrCert);
+
         return modelMapper.map(createdCert, ApiCertResponseDto.class);
     }
+
     @Override
     public ApiCertResponseDto updateCert(ApiCertModRequestDto apiCertModRequestDto) {
         Approval updateApproval;
@@ -99,22 +76,50 @@ public class ApiCertServiceImpl implements ApiCertService {
             apiCertModRequestDto.setApproval(new ApiApproval(updateApproval));
         }
 
-        String systemName = apiCertModRequestDto.getSystemName();
-        System updateSystem = systemRepository.findBySystemName(systemName);
+        System updateSystem = systemRepository.findBySystemName(apiCertModRequestDto.getSystemName());
         apiCertModRequestDto.setSystem(updateSystem);
 
-        Long memberId = apiCertModRequestDto.getMemberId();
-        Member updateMember = memberRepository.findById(memberId).orElseThrow(() -> new BizException(NOT_FOUND_MEMBER));
+        Member updateMember = memberRepository.findById(apiCertModRequestDto.getMemberId()).orElseThrow(() -> new BizException(NOT_FOUND_MEMBER));
         apiCertModRequestDto.setMember(updateMember);
 
-        Cert updatedCert = certRepository.findById(apiCertModRequestDto.getCertId()).orElseThrow(() -> new BizException(NOT_FOUND_CERT));
+        Cert updatedCert = getCertById(apiCertModRequestDto.getCertId());
         updatedCert.apiCertModified(apiCertModRequestDto);
 
         return modelMapper.map(updatedCert, ApiCertResponseDto.class);
     }
     @Override
     public void deleteCert(Long certId) {
-        Cert deletedCert = certRepository.findById(certId).orElseThrow(() -> new BizException(NOT_FOUND_CERT));
+        Cert deletedCert = getCertById(certId);
         deletedCert.setValidityN();
+    }
+
+    private Cert getCertById(Long certId) {
+        return certRepository.findById(certId).orElseThrow(() -> new BizException(NOT_FOUND_CERT));
+    }
+
+    private static Approval buildApproval(ApiCertSaveRequestDto apiCertSaveRequestDto) {
+        Approval saveApproval;
+        saveApproval = Approval.builder()
+                .approvalNo(apiCertSaveRequestDto.getApproval().getApprovalNo())
+                .drafterId(apiCertSaveRequestDto.getApproval().getDrafterId())
+                .degree(apiCertSaveRequestDto.getApproval().getDegree())
+                .approverId(apiCertSaveRequestDto.getApproval().getApproverId())
+                .approvalStatus(apiCertSaveRequestDto.getApproval().getApprovalStatus())
+                .approveDate(apiCertSaveRequestDto.getApproval().getApproveDate())
+                .cancelDate(apiCertSaveRequestDto.getApproval().getCancelDate()).build();
+        return saveApproval;
+    }
+
+    private static Cert buildCert(ApiCertSaveRequestDto apiCertSaveRequestDto, System saveSystem, Member saveMember, Approval saveApproval) {
+        return Cert.builder()
+                .certType(apiCertSaveRequestDto.getCertType())
+                .certName(apiCertSaveRequestDto.getCertName())
+                .applySystem(saveSystem)
+                .content(apiCertSaveRequestDto.getContent())
+                .siteLink(apiCertSaveRequestDto.getSiteLink())
+                .startDate(apiCertSaveRequestDto.getStartDate())
+                .endDate(apiCertSaveRequestDto.getEndDate())
+                .member(saveMember)
+                .approval(saveApproval).build();
     }
 }
