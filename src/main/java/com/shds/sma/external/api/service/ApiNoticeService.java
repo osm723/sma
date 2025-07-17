@@ -11,9 +11,9 @@ public interface ApiNoticeService {
 
     ApiNoticeResponseDto getNotice(Long noticeId);
 
-    ApiNoticeResponseDto createNotice(ApiNoticeSaveRequestDto apiMemberSaveRequestDto);
+    ApiNoticeResponseDto createNotice(ApiNoticeSaveRequestDto apiNoticeSaveRequestDto);
 
-    ApiNoticeResponseDto updateNotice(ApiNoticeModRequestDto apiMemberModRequestDto);
+    ApiNoticeResponseDto updateNotice(ApiNoticeModRequestDto apiNoticeModRequestDto);
 
     void deleteNotice(Long noticeId);
 

@@ -37,15 +37,15 @@ public class ApiNoticeServiceImpl implements ApiNoticeService {
     }
 
     @Override
-    public ApiNoticeResponseDto createNotice(ApiNoticeSaveRequestDto apiMemberSaveRequestDto) {
-        Notice createdNotice = noticeRepository.save(modelMapper.map(apiMemberSaveRequestDto, Notice.class));
+    public ApiNoticeResponseDto createNotice(ApiNoticeSaveRequestDto apiNoticeSaveRequestDto) {
+        Notice createdNotice = noticeRepository.save(modelMapper.map(apiNoticeSaveRequestDto, Notice.class));
         return modelMapper.map(createdNotice, ApiNoticeResponseDto.class);
     }
 
     @Override
-    public ApiNoticeResponseDto updateNotice(ApiNoticeModRequestDto apiMemberModRequestDto) {
-        Notice updatedNotice = getNoticeById(apiMemberModRequestDto.getNoticeId());
-        updatedNotice.noticeModified(apiMemberModRequestDto);
+    public ApiNoticeResponseDto updateNotice(ApiNoticeModRequestDto apiNoticeModRequestDto) {
+        Notice updatedNotice = getNoticeById(apiNoticeModRequestDto.getNoticeId());
+        updatedNotice.noticeModified(apiNoticeModRequestDto);
         return modelMapper.map(updatedNotice, ApiNoticeResponseDto.class);
     }
 

@@ -51,7 +51,7 @@ public class ApiIpServiceImpl implements ApiIpService {
 
     @Override
     public ApiIpResponseDto createIp(ApiIpSaveRequestDto apiIpSaveRequestDto) {
-        Approval saveApproval = new Approval();
+        Approval saveApproval = null;
         if (apiIpSaveRequestDto.getApproval() != null) {
             approvalRepository.save(buildApproval(apiIpSaveRequestDto));
         }
@@ -77,7 +77,7 @@ public class ApiIpServiceImpl implements ApiIpService {
         System updateSystem = systemRepository.findBySystemName(apiIpModRequestDto.getSystemName());
         apiIpModRequestDto.setSystem(updateSystem);
 
-        Member updateMember = memberRepository.findById(getALong(apiIpModRequestDto)).orElseThrow(() -> new BizException(NOT_FOUND_MEMBER));
+        Member updateMember = memberRepository.findById(apiIpModRequestDto.getMemberId()).orElseThrow(() -> new BizException(NOT_FOUND_MEMBER));
         apiIpModRequestDto.setMember(updateMember);
 
         Ip updatedIp = getIpById(apiIpModRequestDto.getIpId());
@@ -94,10 +94,6 @@ public class ApiIpServiceImpl implements ApiIpService {
 
     private Ip getIpById(Long ipId) {
         return ipRepository.findById(ipId).orElseThrow(() -> new BizException(NOT_FOUND_IP));
-    }
-
-    private static Long getALong(ApiIpModRequestDto apiIpModRequestDto) {
-        return apiIpModRequestDto.getMemberId();
     }
 
     private static Ip buildIp(ApiIpSaveRequestDto apiIpSaveRequestDto, System saveSystem, Member saveMember, Approval saveApproval) {

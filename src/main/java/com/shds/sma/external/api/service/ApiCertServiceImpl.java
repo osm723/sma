@@ -61,8 +61,8 @@ public class ApiCertServiceImpl implements ApiCertService {
         System saveSystem = systemRepository.findBySystemName(apiCertSaveRequestDto.getSystemName());
         Member saveMember = memberRepository.findById(apiCertSaveRequestDto.getMemberId()).orElseThrow(() -> new BizException(NOT_FOUND_MEMBER));
 
-        Cert savrCert = buildCert(apiCertSaveRequestDto, saveSystem, saveMember, saveApproval);
-        Cert createdCert = certRepository.save(savrCert);
+        Cert saveCert = buildCert(apiCertSaveRequestDto, saveSystem, saveMember, saveApproval);
+        Cert createdCert = certRepository.save(saveCert);
 
         return modelMapper.map(createdCert, ApiCertResponseDto.class);
     }

@@ -32,7 +32,7 @@ public class ApiMemberController {
     }
 
     @PostMapping("/member")
-    public  ResponseEntity<ApiMemberResponseDto> createMember(@RequestBody ApiMemberSaveRequestDto apiMemberSaveRequestDto) {
+    public ResponseEntity<ApiMemberResponseDto> createMember(@RequestBody ApiMemberSaveRequestDto apiMemberSaveRequestDto) {
         ApiMemberResponseDto createdMember = apiMemberService.createMember(apiMemberSaveRequestDto);
         return ResponseEntity.ok(createdMember);
     }

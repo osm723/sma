@@ -30,7 +30,7 @@ public class ApiIpController {
     }
 
     @PostMapping("/ip")
-    public  ResponseEntity<ApiIpResponseDto> createIp(@RequestBody ApiIpSaveRequestDto apiIpSaveRequestDto) {
+    public ResponseEntity<ApiIpResponseDto> createIp(@RequestBody ApiIpSaveRequestDto apiIpSaveRequestDto) {
         ApiIpResponseDto createdIp = apiIpService.createIp(apiIpSaveRequestDto);
         return ResponseEntity.ok(createdIp);
     }

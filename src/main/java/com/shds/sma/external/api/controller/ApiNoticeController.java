@@ -7,7 +7,6 @@ import com.shds.sma.external.api.service.ApiNoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +30,7 @@ public class ApiNoticeController {
     }
 
     @PostMapping("/notice")
-    public  ResponseEntity<ApiNoticeResponseDto> createNotice(@RequestBody ApiNoticeSaveRequestDto apiNoticeSaveRequestDto) {
+    public ResponseEntity<ApiNoticeResponseDto> createNotice(@RequestBody ApiNoticeSaveRequestDto apiNoticeSaveRequestDto) {
         ApiNoticeResponseDto createdNotice = apiNoticeService.createNotice(apiNoticeSaveRequestDto);
         return ResponseEntity.ok(createdNotice);
     }
