@@ -2,7 +2,7 @@ package com.shds.sma.apps.system.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.shds.sma.apps.system.dto.SystemModRequestDto;
-import com.shds.sma.apps.admin.entity.Member;
+import com.shds.sma.apps.admin.member.entity.Member;
 import com.shds.sma.common.entity.BaseEntity;
 import com.shds.sma.apps.cert.entity.Cert;
 import com.shds.sma.apps.ip.entity.Ip;

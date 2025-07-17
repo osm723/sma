@@ -1,6 +1,6 @@
 package com.shds.sma.external.api.dto.common;
 
-import com.shds.sma.apps.admin.entity.Approval;
+import com.shds.sma.apps.admin.common.entity.Approval;
 import com.shds.sma.common.types.ApprovalStatus;
 import com.shds.sma.common.types.Degree;
 import lombok.Getter;

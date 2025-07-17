@@ -1,7 +1,7 @@
 package com.shds.sma.external.api.service;
 
-import com.shds.sma.apps.admin.entity.Notice;
-import com.shds.sma.apps.admin.repository.notice.NoticeRepository;
+import com.shds.sma.apps.admin.notice.entity.Notice;
+import com.shds.sma.apps.admin.notice.repository.NoticeRepository;
 import com.shds.sma.external.api.dto.notice.ApiNoticeModRequestDto;
 import com.shds.sma.external.api.dto.notice.ApiNoticeResponseDto;
 import com.shds.sma.external.api.dto.notice.ApiNoticeSaveRequestDto;

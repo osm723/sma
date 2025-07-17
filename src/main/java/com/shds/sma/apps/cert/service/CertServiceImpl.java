@@ -1,8 +1,5 @@
 package com.shds.sma.apps.cert.service;
 
-import com.shds.sma.apps.admin.dto.member.MemberResponseDto;
-import com.shds.sma.apps.system.dto.SystemResponseDto;
-import com.shds.sma.apps.admin.service.AdminService;
 import com.shds.sma.apps.alarm.service.AlarmService;
 import com.shds.sma.apps.alarm.types.AlarmSendType;
 import com.shds.sma.apps.cert.dto.CertAlarmRequestDto;

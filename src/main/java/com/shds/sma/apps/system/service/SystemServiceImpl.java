@@ -1,9 +1,9 @@
 package com.shds.sma.apps.system.service;
 
 import com.shds.sma.apps.system.dto.*;
-import com.shds.sma.apps.admin.entity.Member;
+import com.shds.sma.apps.admin.member.entity.Member;
 import com.shds.sma.apps.system.entity.System;
-import com.shds.sma.apps.admin.repository.member.MemberRepository;
+import com.shds.sma.apps.admin.member.repository.MemberRepository;
 import com.shds.sma.apps.system.repository.SystemRepository;
 import com.shds.sma.apps.cert.repository.CertRepository;
 import com.shds.sma.apps.ip.repository.IpRepository;

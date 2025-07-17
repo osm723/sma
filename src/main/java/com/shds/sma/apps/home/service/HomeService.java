@@ -1,6 +1,6 @@
 package com.shds.sma.apps.home.service;
 
-import com.shds.sma.apps.admin.dto.notice.NoticeHomeResponseDto;
+import com.shds.sma.apps.admin.notice.dto.NoticeHomeResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

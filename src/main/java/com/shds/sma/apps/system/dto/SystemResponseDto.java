@@ -1,7 +1,7 @@
 package com.shds.sma.apps.system.dto;
 
 import com.shds.sma.apps.system.entity.System;
-import com.shds.sma.apps.admin.entity.Member;
+import com.shds.sma.apps.admin.member.entity.Member;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;

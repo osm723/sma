@@ -1,6 +1,6 @@
 package com.shds.sma.apps.alarm.service.mail;
 
-import com.shds.sma.apps.admin.entity.Member;
+import com.shds.sma.apps.admin.member.entity.Member;
 import com.shds.sma.apps.alarm.dto.AlarmRequestDto;
 import com.shds.sma.apps.alarm.types.AlarmSendType;
 import com.shds.sma.apps.alarm.types.PreAlarmTarget;

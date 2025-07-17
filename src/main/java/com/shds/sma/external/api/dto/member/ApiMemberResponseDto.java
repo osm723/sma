@@ -1,9 +1,9 @@
 package com.shds.sma.external.api.dto.member;
 
-import com.shds.sma.apps.admin.entity.Member;
-import com.shds.sma.apps.admin.types.EmpAuth;
-import com.shds.sma.apps.admin.types.EmpStatus;
-import com.shds.sma.apps.admin.types.SystemRole;
+import com.shds.sma.apps.admin.member.entity.Member;
+import com.shds.sma.apps.admin.member.entity.type.EmpAuth;
+import com.shds.sma.apps.admin.member.entity.type.EmpStatus;
+import com.shds.sma.apps.system.entity.type.SystemRole;
 import com.shds.sma.external.api.dto.common.ApiClient;
 import com.shds.sma.external.api.dto.common.ApiSystem;
 import lombok.AccessLevel;

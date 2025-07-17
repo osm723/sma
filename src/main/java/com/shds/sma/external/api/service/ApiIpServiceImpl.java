@@ -1,15 +1,15 @@
 package com.shds.sma.external.api.service;
 
-import com.shds.sma.apps.admin.entity.Member;
+import com.shds.sma.apps.admin.member.entity.Member;
 import com.shds.sma.apps.system.entity.System;
-import com.shds.sma.apps.admin.repository.approval.ApprovalRepository;
-import com.shds.sma.apps.admin.repository.member.MemberRepository;
+import com.shds.sma.apps.admin.common.repository.ApprovalRepository;
+import com.shds.sma.apps.admin.member.repository.MemberRepository;
 import com.shds.sma.apps.system.repository.SystemRepository;
 import com.shds.sma.external.api.dto.common.ApiApproval;
 import com.shds.sma.external.api.dto.ip.ApiIpModRequestDto;
 import com.shds.sma.external.api.dto.ip.ApiIpResponseDto;
 import com.shds.sma.external.api.dto.ip.ApiIpSaveRequestDto;
-import com.shds.sma.apps.admin.entity.Approval;
+import com.shds.sma.apps.admin.common.entity.Approval;
 import com.shds.sma.common.exception.BizException;
 import com.shds.sma.apps.ip.entity.Ip;
 import com.shds.sma.apps.ip.repository.IpRepository;

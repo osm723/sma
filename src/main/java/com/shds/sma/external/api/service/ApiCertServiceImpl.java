@@ -1,9 +1,9 @@
 package com.shds.sma.external.api.service;
 
-import com.shds.sma.apps.admin.entity.Member;
+import com.shds.sma.apps.admin.member.entity.Member;
 import com.shds.sma.apps.system.entity.System;
-import com.shds.sma.apps.admin.repository.approval.ApprovalRepository;
-import com.shds.sma.apps.admin.repository.member.MemberRepository;
+import com.shds.sma.apps.admin.common.repository.ApprovalRepository;
+import com.shds.sma.apps.admin.member.repository.MemberRepository;
 import com.shds.sma.apps.system.repository.SystemRepository;
 import com.shds.sma.external.api.dto.cert.ApiCertModRequestDto;
 import com.shds.sma.external.api.dto.cert.ApiCertResponseDto;
@@ -11,7 +11,7 @@ import com.shds.sma.external.api.dto.cert.ApiCertSaveRequestDto;
 import com.shds.sma.external.api.dto.common.ApiApproval;
 import com.shds.sma.apps.cert.entity.Cert;
 import com.shds.sma.apps.cert.repository.CertRepository;
-import com.shds.sma.apps.admin.entity.Approval;
+import com.shds.sma.apps.admin.common.entity.Approval;
 import com.shds.sma.common.exception.BizException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

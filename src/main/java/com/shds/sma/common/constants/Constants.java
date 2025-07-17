@@ -27,6 +27,13 @@ public class Constants {
     public static final String CERT_UNUSE_SUCCESS = "인증서를 미사용처리 완료했습니다.";
     public static final String CERT_USE_SUCCESS = "인증서를 사용처리 완료했습니다.";
 
+    public static class UrlPath {
+        public static final String ADMIN_URL = "/admin";
+        public static final String ADMIN_CLIENT_URL = "/admin/client";
+        public static final String ADMIN_MEMBER_URL = "/admin/member";
+        public static final String ADMIN_NOTICE_URL = "/admin/notice";
+    }
+
 
 
 

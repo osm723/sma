@@ -1,8 +1,8 @@
 package com.shds.sma.external.api.dto.member;
 
-import com.shds.sma.apps.admin.types.EmpAuth;
-import com.shds.sma.apps.admin.types.EmpStatus;
-import com.shds.sma.apps.admin.types.SystemRole;
+import com.shds.sma.apps.admin.member.entity.type.EmpAuth;
+import com.shds.sma.apps.admin.member.entity.type.EmpStatus;
+import com.shds.sma.apps.system.entity.type.SystemRole;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,6 +1,6 @@
 package com.shds.sma.external.api.dto.notice;
 
-import com.shds.sma.apps.admin.types.NoticeType;
+import com.shds.sma.apps.admin.notice.entity.type.NoticeType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

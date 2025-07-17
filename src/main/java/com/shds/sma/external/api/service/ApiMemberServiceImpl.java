@@ -1,12 +1,12 @@
 package com.shds.sma.external.api.service;
 
-import com.shds.sma.apps.admin.entity.Client;
-import com.shds.sma.apps.admin.entity.Member;
+import com.shds.sma.apps.admin.client.entity.Client;
+import com.shds.sma.apps.admin.member.entity.Member;
 import com.shds.sma.apps.system.entity.System;
-import com.shds.sma.apps.admin.repository.client.ClientRepository;
-import com.shds.sma.apps.admin.repository.member.MemberRepository;
+import com.shds.sma.apps.admin.client.repository.ClientRepository;
+import com.shds.sma.apps.admin.member.repository.MemberRepository;
 import com.shds.sma.apps.system.repository.SystemRepository;
-import com.shds.sma.apps.admin.types.EmpStatus;
+import com.shds.sma.apps.admin.member.entity.type.EmpStatus;
 import com.shds.sma.external.api.dto.member.ApiMemberModRequestDto;
 import com.shds.sma.external.api.dto.member.ApiMemberSaveRequestDto;
 import com.shds.sma.external.api.dto.member.ApiMemberResponseDto;

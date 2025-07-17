@@ -1,8 +1,8 @@
 package com.shds.sma.apps.ip.dto;
 
-import com.shds.sma.apps.admin.entity.Member;
+import com.shds.sma.apps.admin.member.entity.Member;
 import com.shds.sma.apps.system.entity.System;
-import com.shds.sma.apps.admin.entity.Approval;
+import com.shds.sma.apps.admin.common.entity.Approval;
 import com.shds.sma.common.types.ApprovalStatus;
 import com.shds.sma.common.types.Degree;
 import com.shds.sma.apps.ip.entity.Ip;

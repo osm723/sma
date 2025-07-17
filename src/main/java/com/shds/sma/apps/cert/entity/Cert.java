@@ -1,11 +1,11 @@
 package com.shds.sma.apps.cert.entity;
 
-import com.shds.sma.apps.admin.entity.Member;
+import com.shds.sma.apps.admin.member.entity.Member;
 import com.shds.sma.external.api.dto.cert.ApiCertModRequestDto;
 import com.shds.sma.common.entity.BaseEntity;
 import com.shds.sma.apps.system.entity.System;
 import com.shds.sma.apps.cert.dto.CertModRequestDto;
-import com.shds.sma.apps.admin.entity.Approval;
+import com.shds.sma.apps.admin.common.entity.Approval;
 import com.shds.sma.apps.cert.types.CertType;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
