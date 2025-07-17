@@ -96,7 +96,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     @Transactional(readOnly = true)
     public NoticeResponseDto findNoticeById(Long noticeId) {
-        Notice notice = noticeRepository.findById(noticeId).orElseThrow(() -> new BizException(NOT_FOUND_NOTICE));
+        Notice notice = getNotice(noticeId);
         return modelMapper.map(notice, NoticeResponseDto.class);
     }
 
@@ -107,19 +107,19 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void modifiedNotice(NoticeModRequestDto noticeModRequestDto) {
-        Notice findNotice = noticeRepository.findById(noticeModRequestDto.getNoticeId()).orElseThrow(() -> new BizException(NOT_FOUND_NOTICE));
+        Notice findNotice = getNotice(noticeModRequestDto.getNoticeId());
         findNotice.noticeModified(noticeModRequestDto);
     }
 
     @Override
     public void removeNotice(Long noticeId) {
-        Notice findNotice = noticeRepository.findById(noticeId).orElseThrow(() -> new BizException(NOT_FOUND_NOTICE));
+        Notice findNotice = getNotice(noticeId);
         findNotice.setValidityN();
     }
 
     @Override
     public void useNotice(Long noticeId) {
-        Notice findNotice = noticeRepository.findById(noticeId).orElseThrow(() -> new BizException(NOT_FOUND_NOTICE));
+        Notice findNotice = getNotice(noticeId);
         findNotice.setValidityY();
     }
 
@@ -140,7 +140,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     @Transactional(readOnly = true)
     public SystemResponseDto findSystemById(Long systemId) {
-        System findSystem = systemRepository.findById(systemId).orElseThrow(() -> new BizException(NOT_FOUND_SYSTEM));
+        System findSystem = getSystem(systemId);
         return modelMapper.map(findSystem, SystemResponseDto.class);
     }
 
@@ -151,19 +151,19 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void modifiedSystem(SystemModRequestDto systemModRequestDto) {
-        System findSystem = systemRepository.findById(systemModRequestDto.getSystemId()).orElseThrow(() -> new BizException(NOT_FOUND_SYSTEM));
+        System findSystem = getSystem(systemModRequestDto.getSystemId());
         findSystem.systemModified(systemModRequestDto);
     }
 
     @Override
     public void removeSystem(Long systemId) {
-        System findSystem = systemRepository.findById(systemId).orElseThrow(() -> new BizException(NOT_FOUND_SYSTEM));
+        System findSystem = getSystem(systemId);
         findSystem.setValidityN();
     }
 
     @Override
     public void useSystem(Long systemId) {
-        System findSystem = systemRepository.findById(systemId).orElseThrow(() -> new BizException(NOT_FOUND_SYSTEM));
+        System findSystem = getSystem(systemId);
         findSystem.setValidityY();
     }
 
@@ -183,7 +183,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     @Transactional(readOnly = true)
     public ClientResponseDto findClientById(Long clientId) {
-        Client findClient = clientRepository.findById(clientId).orElseThrow(() -> new BizException(NOT_FOUND_CLIENT));
+        Client findClient = getClient(clientId);
         return modelMapper.map(findClient, ClientResponseDto.class);
     }
 
@@ -194,19 +194,19 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void modifiedClient(ClientModRequestDto clientModRequestDto) {
-        Client findClient = clientRepository.findById(clientModRequestDto.getClientId()).orElseThrow(() -> new BizException(NOT_FOUND_CLIENT));
+        Client findClient = getClient(clientModRequestDto.getClientId());
         findClient.clientModified(clientModRequestDto);
     }
 
     @Override
     public void removeClient(Long clientId) {
-        Client findClient = clientRepository.findById(clientId).orElseThrow(() -> new BizException(NOT_FOUND_CLIENT));
+        Client findClient = getClient(clientId);
         findClient.setValidityN();
     }
 
     @Override
     public void useClient(Long clientId) {
-        Client findClient = clientRepository.findById(clientId).orElseThrow(() -> new BizException(NOT_FOUND_CLIENT));
+        Client findClient = getClient(clientId);
         findClient.setValidityY();
     }
 
@@ -227,18 +227,16 @@ public class AdminServiceImpl implements AdminService {
     @Override
     @Transactional(readOnly = true)
     public MemberResponseDto findMemberById(Long memberId) {
-        Member member = memberRepository.findById(memberId).orElseThrow(() -> new BizException(NOT_FOUND_MEMBER));
+        Member member = getMember(memberId);
         return modelMapper.map(member, MemberResponseDto.class);
     }
 
     @Override
     public void saveMember(MemberSaveRequestDto memberSaveRequestDto) {
-        Long systemId = memberSaveRequestDto.getSystemId();
-        System findSystem = systemRepository.findById(systemId).orElseThrow(() -> new BizException(NOT_FOUND_SYSTEM));
+        System findSystem = getSystem(memberSaveRequestDto.getSystemId());
         memberSaveRequestDto.setSystem(findSystem);
 
-        Long clientId = memberSaveRequestDto.getClientId();
-        Client findClient = clientRepository.findById(clientId).orElseThrow(() -> new BizException(NOT_FOUND_CLIENT));
+        Client findClient = getClient(memberSaveRequestDto.getClientId());
         memberSaveRequestDto.setClient(findClient);
 
         memberRepository.save(buildMember(memberSaveRequestDto, findClient, findSystem));
@@ -246,21 +244,19 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void modifiedMember(MemberModRequestDto memberModRequestDto) {
-        Long systemId = memberModRequestDto.getSystemId();
-        System findSystem = systemRepository.findById(systemId).orElseThrow(() -> new BizException(NOT_FOUND_SYSTEM));
+        System findSystem = getSystem(memberModRequestDto.getSystemId());
         memberModRequestDto.setSystem(findSystem);
 
-        Long clientId = memberModRequestDto.getClientId();
-        Client findClient = clientRepository.findById(clientId).orElseThrow(() -> new BizException(NOT_FOUND_CLIENT));
+        Client findClient = getClient(memberModRequestDto.getClientId());
         memberModRequestDto.setClient(findClient);
 
-        Member findMember = memberRepository.findById(memberModRequestDto.getMemberId()).orElseThrow(() -> new BizException(NOT_FOUND_MEMBER));
+        Member findMember = getMember(memberModRequestDto.getMemberId());
         findMember.memberModified(memberModRequestDto);
     }
 
     @Override
     public void memberChangeStatus(Long memberId, EmpStatus empStatus) {
-        Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new BizException(NOT_FOUND_MEMBER));
+        Member findMember = getMember(memberId);
         findMember.empStatusChange(empStatus);
     }
 
@@ -274,7 +270,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     @Transactional(readOnly = true)
     public IpResponseDto findIpById(Long ipId) {
-        Ip findIp = ipRepository.findById(ipId).orElseThrow(() -> new BizException(NOT_FOUND_IP));
+        Ip findIp = getIp(ipId);
         return modelMapper.map(findIp, IpResponseDto.class);
     }
 
@@ -285,11 +281,9 @@ public class AdminServiceImpl implements AdminService {
             savedApproval = saveIpApproval(ipSaveRequestDto);
         }
 
-        Long systemId = ipSaveRequestDto.getApplySystemId();
-        System findSystem = systemRepository.findById(systemId).orElseThrow(() -> new BizException(NOT_FOUND_SYSTEM));
+        System findSystem = getSystem(ipSaveRequestDto.getApplySystemId());
 
-        Long memberId = ipSaveRequestDto.getMemberId();
-        Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new BizException(NOT_FOUND_MEMBER));
+        Member findMember = getMember(ipSaveRequestDto.getMemberId());
 
         ipRepository.save(buildIp(ipSaveRequestDto, findSystem, findMember, savedApproval));
     }
@@ -297,19 +291,17 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void modifiedIp(IpModRequestDto ipModRequestDto) {
         if (ipModRequestDto.getApprovalId() != null) {
-            Approval findApproval = approvalRepository.findById(ipModRequestDto.getApprovalId()).orElseThrow(() -> new BizException(NOT_FOUND_APPROVAL));
+            Approval findApproval = getApproval(ipModRequestDto.getApprovalId());
             findApproval.approvalIpModified(ipModRequestDto);
             ipModRequestDto.setApproval(findApproval);
         }
 
-        Ip findIp = ipRepository.findById(ipModRequestDto.getIpId()).orElseThrow(() -> new BizException(NOT_FOUND_IP));
+        Ip findIp = getIp(ipModRequestDto.getIpId());
 
-        Long systemId = ipModRequestDto.getApplySystemId();
-        System findSystem = systemRepository.findById(systemId).orElseThrow(() -> new BizException(NOT_FOUND_SYSTEM));
+        System findSystem = getSystem(ipModRequestDto.getApplySystemId());
         ipModRequestDto.setApplySystem(findSystem);
 
-        Long memberId = ipModRequestDto.getMemberId();
-        Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new BizException(NOT_FOUND_MEMBER));
+        Member findMember = getMember(ipModRequestDto.getMemberId());
         ipModRequestDto.setMember(findMember);
 
         findIp.ipModified(ipModRequestDto);
@@ -317,13 +309,13 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void removeIp(Long ipId) {
-        Ip findIp = ipRepository.findById(ipId).orElseThrow(() -> new BizException(NOT_FOUND_IP));
+        Ip findIp = getIp(ipId);
         findIp.setValidityN();
     }
 
     @Override
     public void useIp(Long ipId) {
-        Ip findIp = ipRepository.findById(ipId).orElseThrow(() -> new BizException(NOT_FOUND_IP));
+        Ip findIp = getIp(ipId);
         findIp.setValidityY();
     }
 
@@ -337,7 +329,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     @Transactional(readOnly = true)
     public CertResponseDto findCertById(Long certId) {
-        Cert findCert = certRepository.findById(certId).orElseThrow(() -> new BizException(NOT_FOUND_CERT));
+        Cert findCert = getCert(certId);
         return modelMapper.map(findCert, CertResponseDto.class);
     }
 
@@ -348,11 +340,8 @@ public class AdminServiceImpl implements AdminService {
             savedApproval = saveCertApproval(certSaveRequestDto);
         }
 
-        Long systemId = certSaveRequestDto.getApplySystemId();
-        System findSystem = systemRepository.findById(systemId).orElseThrow(() -> new BizException(NOT_FOUND_SYSTEM));
-
-        Long memberId = certSaveRequestDto.getMemberId();
-        Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new BizException(NOT_FOUND_MEMBER));
+        System findSystem = getSystem(certSaveRequestDto.getApplySystemId());
+        Member findMember = getMember(certSaveRequestDto.getMemberId());
 
         certRepository.save(buildCert(certSaveRequestDto, findSystem, findMember, savedApproval));
     }
@@ -360,19 +349,17 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void modifiedCert(CertModRequestDto certModRequestDto) {
         if (certModRequestDto.getApprovalId() != null) {
-            Approval findApproval = approvalRepository.findById(certModRequestDto.getApprovalId()).orElseThrow(() -> new BizException(NOT_FOUND_APPROVAL));
+            Approval findApproval = getApproval(certModRequestDto.getApprovalId());
             findApproval.approvalCertModified(certModRequestDto);
             certModRequestDto.setApproval(findApproval);
         }
 
-        Cert findCert = certRepository.findById(certModRequestDto.getCertId()).orElseThrow(() -> new BizException(NOT_FOUND_CERT));
+        Cert findCert = getCert(certModRequestDto.getCertId());
 
-        Long systemId = certModRequestDto.getApplySystemId();
-        System findSystem = systemRepository.findById(systemId).orElseThrow(() -> new BizException(NOT_FOUND_SYSTEM));
+        System findSystem = getSystem(certModRequestDto.getApplySystemId());
         certModRequestDto.setApplySystem(findSystem);
 
-        Long memberId = certModRequestDto.getMemberId();
-        Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new BizException(NOT_FOUND_MEMBER));
+        Member findMember = getMember(certModRequestDto.getMemberId());
         certModRequestDto.setMember(findMember);
 
         findCert.certModified(certModRequestDto);
@@ -380,14 +367,42 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void removeCert(Long certId) {
-        Cert findCert = certRepository.findById(certId).orElseThrow(() -> new BizException(NOT_FOUND_CERT));
+        Cert findCert = getCert(certId);
         findCert.setValidityN();
     }
 
     @Override
     public void useCert(Long certId) {
-        Cert findCert = certRepository.findById(certId).orElseThrow(() -> new BizException(NOT_FOUND_CERT));
+        Cert findCert = getCert(certId);
         findCert.setValidityY();
+    }
+
+    private System getSystem(Long systemId) {
+        return systemRepository.findById(systemId).orElseThrow(() -> new BizException(NOT_FOUND_SYSTEM));
+    }
+
+    private Client getClient(Long clientId) {
+        return clientRepository.findById(clientId).orElseThrow(() -> new BizException(NOT_FOUND_CLIENT));
+    }
+
+    private Member getMember(Long memberId) {
+        return memberRepository.findById(memberId).orElseThrow(() -> new BizException(NOT_FOUND_MEMBER));
+    }
+
+    private Approval getApproval(Long approvalId) {
+        return approvalRepository.findById(approvalId).orElseThrow(() -> new BizException(NOT_FOUND_APPROVAL));
+    }
+
+    private Cert getCert(Long certId) {
+        return certRepository.findById(certId).orElseThrow(() -> new BizException(NOT_FOUND_CERT));
+    }
+
+    private Ip getIp(Long ipId) {
+        return ipRepository.findById(ipId).orElseThrow(() -> new BizException(NOT_FOUND_IP));
+    }
+
+    private Notice getNotice(Long noticeId) {
+        return noticeRepository.findById(noticeId).orElseThrow(() -> new BizException(NOT_FOUND_NOTICE));
     }
 
     private static Member buildMember(MemberSaveRequestDto memberSaveRequestDto, Client findClient, System findSystem) {
